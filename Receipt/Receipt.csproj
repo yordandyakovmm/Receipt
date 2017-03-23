@@ -209,6 +209,21 @@
   <ItemGroup>
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\img\98749082-ad2b-45fd-81fa-04193611857f.jpeg" />
+    <Content Include="Content\img\image6.jpg" />
+    <Content Include="Content\img\images11.jpg" />
+    <Content Include="Content\img\images3.png" />
+    <Content Include="Content\img\images44.jpg" />
+    <Content Include="Content\img\images6.jpg" />
+    <Content Include="Content\img\images7.jpg" />
+    <Content Include="Content\img\images8.jpg" />
+    <Content Include="Content\img\images9.png" />
+    <Content Include="Content\img\inde3x.png" />
+    <Content Include="Content\img\index.jpg" />
+    <Content Include="Content\img\index.png" />
+    <Content Include="Content\img\index33.jpg" />
+    <Content Include="Content\img\index4.jpg" />
+    <Content Include="Content\img\index5.jpg" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
