@@ -13,7 +13,7 @@ namespace Receipt.Migrations
         
         string IMigrationMetadata.Id
         {
-            get { return "201703221743011_Initial"; }
+            get { return "201703241701445_Initial"; }
         }
         
         string IMigrationMetadata.Source
