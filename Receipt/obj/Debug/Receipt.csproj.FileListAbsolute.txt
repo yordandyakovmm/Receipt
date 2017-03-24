@@ -194,3 +194,4 @@ D:\Receipts\Receipt\obj\Debug\Receipt.Migrations.Initial.resources
 D:\Receipts\Receipt\obj\Debug\Receipt.csproj.GenerateResource.Cache
 D:\Receipts\Receipt\obj\Debug\Receipt.dll
 D:\Receipts\Receipt\obj\Debug\Receipt.pdb
+D:\Receipts\Receipt\obj\Debug\Receipt.Migrations.second.resources

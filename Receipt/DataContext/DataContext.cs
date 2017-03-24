@@ -23,48 +23,71 @@ namespace Receipt.DataContext
             return new ReceiptDataContext();
         }
 
-        public DbSet<Blog> Blogs { get; set; }
-        public DbSet<Post> Posts { get; set; }
+        public DbSet<Company> Companies { get; set; }
+        public DbSet<Product> Products { get; set; }
+        public DbSet<ProductQuantity> ProductQuantitys{ get; set; }
+        public DbSet<Receipt> Receipts { get; set; }
 
     }
 
-    public class Client
+    public class Company
     {
         [Key]
-        public int ClientId { get; set; }
+        public int CompanyId { get; set; }
         public string Name { get; set; }
         public string Bulstat { get; set; }
         public string Address { get; set; }
         public string Phone { get; set; }
+        public bool Deleted { get; set; }
 
-        [ForeignKey("UserId")]
-        public ApplicationUser User { get; set; }
+        public virtual ApplicationUser User { get; set; }
+
+        public virtual ICollection<Receipt> Receipt { get; set; }
     }
 
-
-    public class Blog
+    public class Product
     {
-        public int BlogId { get; set; }
+        [Key]
+        public int ProductId { get; set; }
+
+        public string Code { get; set; }
         public string Name { get; set; }
+        public decimal UnitPrice { get; set; }
+                
+        public virtual ApplicationUser User { get; set; }
 
-        public virtual List<Post> Posts { get; set; }
+        public virtual ICollection<ProductQuantity> ProductQuantity { get; set; }
     }
 
-    public class Post
+    public class ProductQuantity
     {
-        public int PostId { get; set; }
-        public string Title { get; set; }
-        public string Content { get; set; }
+        [Key]
+        public int ProductQuantityId{ get; set; }
 
-        public int BlogId { get; set; }
-        public virtual Blog Blog { get; set; }
+        public virtual Product Product { get; set; }
+
+        public virtual Receipt Receipt { get; set; }
+
+        public bool Countable { get; set; }
+        public double Quantity { get; set; }
+        public double Discount { get; set; }
     }
 
-    public class BloggingContext : DbContext
+    public class Receipt
     {
-        public DbSet<Blog> Blogs { get; set; }
-        public DbSet<Post> Posts { get; set; }
+        [Key]
+        public int ReceiptId { get; set; }
+        public DateTime Date { get; set; }
+        public int OrderNumner { get; set; }
+        public string UniqueNumber { get; set; }
+
+        public virtual Company Company { get; set; }
+              
+        public virtual ApplicationUser Operator { get; set; }
+
+        public virtual ICollection<ProductQuantity> ProductQuantity { get; set; }
     }
+
 
 
 }
