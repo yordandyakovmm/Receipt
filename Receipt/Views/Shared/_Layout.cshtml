@@ -7,6 +7,10 @@
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
 
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+
 </head>
 <body style="background-color: #d7d3d9">
     <div class="navbar navbar-fixed-top">
@@ -23,7 +27,7 @@
                     <li>@Html.ActionLink("Начало", "Index", "Home")</li>
                     @if (User.Identity.IsAuthenticated)
                     {
-                        <li>@Html.ActionLink("Клиенти", "Index", "Client")</li>
+                        <li>@Html.ActionLink("Фирми", "Index", "Companies")</li>
                         <li>@Html.ActionLink("Артикули", "Index", "Articule")</li>
                         <li>@Html.ActionLink("К.Бележки", "Index", "Receipts")</li>
                     }
@@ -38,8 +42,6 @@
         <footer></footer>
     </div>
 
-    @Scripts.Render("~/bundles/jquery")
-    @Scripts.Render("~/bundles/bootstrap")
-    @RenderSection("scripts", required: false)
+    
 </body>
 </html>
