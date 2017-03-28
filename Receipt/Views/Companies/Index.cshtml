@@ -5,13 +5,27 @@
 
 <div class="container">
     <div class="well well-sm">
-        <strong>Display</strong>
+        <strong>Изглед</strong>
         <div class="btn-group">
             <a href="#" id="list" class="btn btn-default btn-sm">
                 <span class="glyphicon glyphicon-th-list">
-                </span>List
-            </a> <a href="#" id="grid" class="btn btn-default btn-sm">
-                <span class="glyphicon glyphicon-th"></span>Grid
+                </span>Списък
+            </a> 
+            <a href="#" id="grid" class="btn btn-default btn-sm">
+                <span class="glyphicon glyphicon-th"></span>Таблица
+            </a>
+            @Ajax.ActionLink(" <span class='glyphicon glyphicon - edit'></span>Добави", "Edit",
+                 new {},
+                 new AjaxOptions
+                 {
+                     UpdateTargetId = "ModalBody",
+                     InsertionMode = InsertionMode.Replace,
+                     HttpMethod = "GET"
+
+                 })
+                                  
+            <a href="#" id="add" class="btn btn-default btn-sm" onclick="alert()"  data-toggle="modal" data-target="#myModal">
+                <span class='glyphicon glyphicon - edit'></span>Добави
             </a>
         </div>
     </div>
@@ -221,8 +235,29 @@
     }
 </style>
 
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel"></h4>
+            </div>
+            <div id="ModalBody" class="modal-body">
+                
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div>
 
 <script type="text/javascript">
+
+    
+
+
     $(document).ready(function () {
         $('#list').click(function (event) { event.preventDefault(); $('#products .item').addClass('list-group-item'); });
         $('#grid').click(function (event) { event.preventDefault(); $('#products .item').removeClass('list-group-item'); $('#products .item').addClass('grid-group-item'); });

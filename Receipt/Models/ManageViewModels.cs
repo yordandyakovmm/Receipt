@@ -83,4 +83,25 @@ namespace Receipt.Models
         public string SelectedProvider { get; set; }
         public ICollection<System.Web.Mvc.SelectListItem> Providers { get; set; }
     }
+
+
+    public class CompanyViewModel
+    {
+
+        public int CompanyId { get; set; }
+
+        [Required]
+        [Display(Name = "Име")]
+        public string Name { get; set; }
+
+        [Required]
+        [StringLength(100, ErrorMessage = "Невалидна дължина", MinimumLength = 6)]
+        [Display(Name = "Адрес")]
+        public string Address { get; set; }
+
+        [Required]
+        [Display(Name = "ЕИК")]
+        public string Eik { get; set; }
+    }
+
 }
