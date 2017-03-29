@@ -1,4 +1,5 @@
-﻿@{
+﻿@model List<Receipt.Models.CompanyViewModel>
+@{
     ViewBag.Title = "Фирми";
 }
 
@@ -19,281 +20,167 @@
         </div>
     </div>
     <div id="products" class="row list-group">
-        <div class="item  col-xs-4 col-lg-4">
-            <div class="thumbnail">
-                <img class="group list-group-image" src="http://placehold.it/400x250/000/fff" alt="" />
-                <div class="caption">
-                    <h4 class="group inner list-group-item-heading">
-                        Product title
-                    </h4>
-                    <p class="group inner list-group-item-text">
-                        Product description... Lorem ipsum dolor sit amet, consectetuer adipiscing elit,
-                        sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.
-                    </p>
-                    <div class="row">
-                        <div class="col-xs-12 col-md-6">
-                            <p class="lead">
-                                $21.000
-                            </p>
-                        </div>
-                        <div class="col-xs-12 col-md-6">
-                            <a class="btn btn-success" href="http://www.jquery2dotnet.com">Add to cart</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="item  col-xs-4 col-lg-4">
-            <div class="thumbnail">
-                <img class="group list-group-image" src="http://placehold.it/400x250/000/fff" alt="" />
-                <div class="caption">
-                    <h4 class="group inner list-group-item-heading">
-                        Product title
-                    </h4>
-                    <p class="group inner list-group-item-text">
-                        Product description... Lorem ipsum dolor sit amet, consectetuer adipiscing elit,
-                        sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.
-                    </p>
-                    <div class="row">
-                        <div class="col-xs-12 col-md-6">
-                            <p class="lead">
-                                $21.000
-                            </p>
-                        </div>
-                        <div class="col-xs-12 col-md-6">
-                            <a class="btn btn-success" href="http://www.jquery2dotnet.com">Add to cart</a>
+        @foreach (var c in Model)
+        {
+            <div class="item  col-xs-4 col-lg-4">
+                <div class="thumbnail">
+                    <img class="group list-group-image" src="http://placehold.it/400x250/000/fff" alt="" />
+                    <div class="caption">
+                        <h4 class="group inner list-group-item-heading">
+                            @c.Name
+                        </h4>
+                        <p class="group inner list-group-item-text">
+                            @c.Address
+                        </p>
+                        <div class="row">
+                            <div class="col-xs-12 col-md-6">
+                                <p class="lead">
+                                    @c.Eik
+                                </p>
+                            </div>
+                            <div class="col-xs-12 col-md-6">
+                                <a class="btn btn-danger"  onclick="deleteCompamy(@c.CompanyId, this)" href="javascript:void(0)">
+                                    <span class="glyphicon glyphicon-trash">
+                                    </span>
+                                </a>
+                                <a class="btn btn-success" onclick="loadModal(@c.CompanyId)" href="javascript:void(0)">
+                                    <span class="glyphicon glyphicon-edit">
+                                    </span>Редакция
+                                </a>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="item  col-xs-4 col-lg-4">
-            <div class="thumbnail">
-                <img class="group list-group-image" src="http://placehold.it/400x250/000/fff" alt="" />
-                <div class="caption">
-                    <h4 class="group inner list-group-item-heading">
-                        Product title
-                    </h4>
-                    <p class="group inner list-group-item-text">
-                        Product description... Lorem ipsum dolor sit amet, consectetuer adipiscing elit,
-                        sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.
-                    </p>
-                    <div class="row">
-                        <div class="col-xs-12 col-md-6">
-                            <p class="lead">
-                                $21.000
-                            </p>
-                        </div>
-                        <div class="col-xs-12 col-md-6">
-                            <a class="btn btn-success" href="http://www.jquery2dotnet.com">Add to cart</a>
-                        </div>
-                    </div>
+        }
+    </div>
+
+
+   
+
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">Добавяне</h4>
                 </div>
-            </div>
-        </div>
-        <div class="item  col-xs-4 col-lg-4">
-            <div class="thumbnail">
-                <img class="group list-group-image" src="http://placehold.it/400x250/000/fff" alt="" />
-                <div class="caption">
-                    <h4 class="group inner list-group-item-heading">
-                        Product title
-                    </h4>
-                    <p class="group inner list-group-item-text">
-                        Product description... Lorem ipsum dolor sit amet, consectetuer adipiscing elit,
-                        sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.
-                    </p>
-                    <div class="row">
-                        <div class="col-xs-12 col-md-6">
-                            <p class="lead">
-                                $21.000
-                            </p>
-                        </div>
-                        <div class="col-xs-12 col-md-6">
-                            <a class="btn btn-success" href="http://www.jquery2dotnet.com">Add to cart</a>
-                        </div>
-                    </div>
+                <div id="modal-body" class="modal-body">
+
                 </div>
-            </div>
-        </div>
-        <div class="item  col-xs-4 col-lg-4">
-            <div class="thumbnail">
-                <img class="group list-group-image" src="http://placehold.it/400x250/000/fff" alt="" />
-                <div class="caption">
-                    <h4 class="group inner list-group-item-heading">
-                        Product title
-                    </h4>
-                    <p class="group inner list-group-item-text">
-                        Product description... Lorem ipsum dolor sit amet, consectetuer adipiscing elit,
-                        sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.
-                    </p>
-                    <div class="row">
-                        <div class="col-xs-12 col-md-6">
-                            <p class="lead">
-                                $21.000
-                            </p>
-                        </div>
-                        <div class="col-xs-12 col-md-6">
-                            <a class="btn btn-success" href="http://www.jquery2dotnet.com">Add to cart</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="item  col-xs-4 col-lg-4">
-            <div class="thumbnail">
-                <img class="group list-group-image" src="http://placehold.it/400x250/000/fff" alt="" />
-                <div class="caption">
-                    <h4 class="group inner list-group-item-heading">
-                        Product title
-                    </h4>
-                    <p class="group inner list-group-item-text">
-                        Product description... Lorem ipsum dolor sit amet, consectetuer adipiscing elit,
-                        sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.
-                    </p>
-                    <div class="row">
-                        <div class="col-xs-12 col-md-6">
-                            <p class="lead">
-                                $21.000
-                            </p>
-                        </div>
-                        <div class="col-xs-12 col-md-6">
-                            <a class="btn btn-success" href="http://www.jquery2dotnet.com">Add to cart</a>
-                        </div>
-                    </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Отказ</button>
+                    <button id="save-btn" type="button" onclick="submitSave(this)" class="btn btn-primary"></button>
                 </div>
             </div>
         </div>
     </div>
-</div>
 
-<style type="text/css">
-    .glyphicon {
-        margin-right: 5px;
-    }
+    <script type="text/javascript">
 
-    .thumbnail {
-        margin-bottom: 20px;
-        padding: 0px;
-        -webkit-border-radius: 0px;
-        -moz-border-radius: 0px;
-        border-radius: 0px;
-    }
-
-    .item.list-group-item {
-        float: none;
-        width: 100%;
-        background-color: #fff;
-        margin-bottom: 10px;
-    }
-
-        .item.list-group-item:nth-of-type(odd):hover, .item.list-group-item:hover {
-            background: #428bca;
+        function submitSave(obj) {
+            debugger;
+            var $form = $('form[action^="/Companies/Edit"]');
+            $.post($form.attr("action"), $form.serialize(), function (data) {
+                $("#products").html(data);
+                $('.close').click();
+            })
         }
 
-        .item.list-group-item .list-group-image {
-            margin-right: 10px;
-        }
-
-        .item.list-group-item .thumbnail {
-            margin-bottom: 0px;
-        }
-
-        .item.list-group-item .caption {
-            padding: 9px 9px 0px 9px;
-        }
-
-        .item.list-group-item:nth-of-type(odd) {
-            background: #eeeeee;
-        }
-
-        .item.list-group-item:before, .item.list-group-item:after {
-            display: table;
-            content: " ";
-        }
-
-        .item.list-group-item img {
-            float: left;
-        }
-
-        .item.list-group-item:after {
-            clear: both;
-        }
-
-    .list-group-item-text {
-        margin: 0 0 11px;
-    }
-</style>
-
-<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="myModalLabel">Добавяне</h4>
-            </div>
-            <div id="modal-body" class="modal-body">
-
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Отказ</button>
-                <button id="save-btn" type="button" onclick="submitSave(this)" class="btn btn-primary"></button>
-            </div>
-        </div>
-    </div>
-</div>
-
-<script type="text/javascript">
-
-    function submitSave (obj) {
-        var $this = $(obj);
-        var $form = $this.parent().parent().find('form');
-        debugger;// obtain validator
-        var anyError = false;
-        $form.validate(
-            {
-                submitHandler: function (form) {
-                    alert("This is a valid form!");
+        function deleteCompamy(id, obj) {
+            $.ajax({
+                type: "GET",
+                url: '/companies/delete/' + id,
+                success: function (data, status) {
+                    $('.close').click();
+                    $(obj).closest('.item').remove();
+                },
+                error: function errorFunc() {
                 }
             });
-
-        $form.submit();
-        if (anyError)
-            return false; // exit if any error found    
-
-        $.post($form.attr("action"), $form.serialize(), function (data) {
-            alert(data);
-        })
-    }
-
-
-    function loadModal(id) {
-        if (typeof (id) != 'undefined') {
-            $('.modal-title').html('Редактиране');
-            $('#save-btn').html('Запиши');
         }
-        else
-        {
-            $('.modal-title').html('Добавяне');
-            $('#save-btn').html('Добави');
-        }
-        $.ajax({
-            type: "GET",
-            url: '/companies/edit',
-            //data: param = "",
-            //contentType: "application/json; charset=utf-8",
-            //dataType: "json",
-            success: function (data, status) {
-                $('#modal-body').html(data);
-            },
-            error: function errorFunc() {
+
+        function loadModal(id) {
+            var url = '/companies/edit/';
+            if (typeof (id) != 'undefined') {
+                $('.modal-title').html('Редактиране');
+                $('#save-btn').html('Запиши');
+                url = url + id;
             }
+            else {
+                $('.modal-title').html('Добавяне');
+                $('#save-btn').html('Добави');
+            }
+            $.ajax({
+                type: "GET",
+                url: url,
+                success: function (data, status) {
+                    $('#modal-body').html(data);
+                },
+                error: function errorFunc() {
+                }
+            });
+        }
+
+        $(document).ready(function () {
+            $('#list').click(function (event) { event.preventDefault(); $('#products .item').addClass('list-group-item'); });
+            $('#grid').click(function (event) { event.preventDefault(); $('#products .item').removeClass('list-group-item'); $('#products .item').addClass('grid-group-item'); });
         });
+    </script>
+    <style type="text/css">
+        .glyphicon {
+            margin-right: 5px;
+        }
 
-    }
+        .thumbnail {
+            margin-bottom: 20px;
+            padding: 0px;
+            -webkit-border-radius: 0px;
+            -moz-border-radius: 0px;
+            border-radius: 0px;
+        }
 
+        .item.list-group-item {
+            float: none;
+            width: 100%;
+            background-color: #fff;
+            margin-bottom: 10px;
+        }
 
-    $(document).ready(function () {
-        $('#list').click(function (event) { event.preventDefault(); $('#products .item').addClass('list-group-item'); });
-        $('#grid').click(function (event) { event.preventDefault(); $('#products .item').removeClass('list-group-item'); $('#products .item').addClass('grid-group-item'); });
-    });
-</script>
+            .item.list-group-item:nth-of-type(odd):hover, .item.list-group-item:hover {
+                background: #428bca;
+            }
+
+            .item.list-group-item .list-group-image {
+                margin-right: 10px;
+            }
+
+            .item.list-group-item .thumbnail {
+                margin-bottom: 0px;
+            }
+
+            .item.list-group-item .caption {
+                padding: 9px 9px 0px 9px;
+            }
+
+            .item.list-group-item:nth-of-type(odd) {
+                background: #eeeeee;
+            }
+
+            .item.list-group-item:before, .item.list-group-item:after {
+                display: table;
+                content: " ";
+            }
+
+            .item.list-group-item img {
+                float: left;
+            }
+
+            .item.list-group-item:after {
+                clear: both;
+            }
+
+        .list-group-item-text {
+            margin: 0 0 11px;
+        }
+    </style>

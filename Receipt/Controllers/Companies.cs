@@ -16,7 +16,15 @@ namespace Receipt.Controllers
         public ActionResult Index()
         {
             ReceiptDataContext dc = new ReceiptDataContext();
-            List<Company> companies = dc.Companies.ToList();
+            var companies = dc.Companies
+               .Select(c => new CompanyViewModel
+               {
+                   CompanyId = c.CompanyId,
+                   Name = c.Name,
+                   Address = c.Address,
+                   Eik = c.Bulstat
+               })
+                .ToList();
             return View(companies);
         }
 
@@ -50,9 +58,9 @@ namespace Receipt.Controllers
 
 
         [HttpPost]
-        public bool Edit(CompanyViewModel model)
+        public ActionResult Edit(CompanyViewModel model)
         {
-            
+
             if (model.CompanyId == 0)
             {
                 var company = new Company
@@ -74,9 +82,33 @@ namespace Receipt.Controllers
                 dc.SaveChanges();
             }
 
-            return true;
+            return RedirectToAction("list");
         }
 
+        [HttpGet]
+        public ActionResult List(string search)
+        {
+            var companies = dc.Companies
+               .Select(c => new CompanyViewModel
+               {
+                   CompanyId = c.CompanyId,
+                   Name = c.Name,
+                   Address = c.Address,
+                   Eik = c.Bulstat
+               })
+                .ToList();
 
+            return PartialView(companies);
+        }
+
+        [HttpGet]
+        public bool delete(int id)
+        {
+            var company = dc.Companies.Where(c => c.CompanyId == id).SingleOrDefault();
+            dc.Companies.Remove(company);
+            dc.SaveChanges();
+
+            return true;
+        }
     }
 }
