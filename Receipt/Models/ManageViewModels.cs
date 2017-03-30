@@ -102,6 +102,10 @@ namespace Receipt.Models
         [Required]
         [Display(Name = "ЕИК")]
         public string Eik { get; set; }
+
+        [Required]
+        [Display(Name = "Описание")]
+        public string Description { get; set; }
     }
 
 }

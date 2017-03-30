@@ -22,7 +22,8 @@ namespace Receipt.Controllers
                    CompanyId = c.CompanyId,
                    Name = c.Name,
                    Address = c.Address,
-                   Eik = c.Bulstat
+                   Eik = c.Bulstat,
+                   Description = c.Description
                })
                 .ToList();
             return View(companies);
@@ -43,7 +44,8 @@ namespace Receipt.Controllers
                     CompanyId = company.CompanyId,
                     Name = company.Name,
                     Address = company.Address,
-                    Eik = company.Bulstat
+                    Eik = company.Bulstat,
+                    Description = company.Description
                 };
             }
             else
@@ -68,7 +70,8 @@ namespace Receipt.Controllers
                     CompanyId = model.CompanyId,
                     Name = model.Name,
                     Address = model.Address,
-                    Bulstat = model.Eik
+                    Bulstat = model.Eik,
+                    Description = model.Description
                 };
                 dc.Companies.Add(company);
                 dc.SaveChanges();
@@ -79,6 +82,7 @@ namespace Receipt.Controllers
                 company.Address = model.Address;
                 company.Name = model.Name;
                 company.Bulstat = model.Eik;
+                company.Description = model.Description;
                 dc.SaveChanges();
             }
 
@@ -94,7 +98,8 @@ namespace Receipt.Controllers
                    CompanyId = c.CompanyId,
                    Name = c.Name,
                    Address = c.Address,
-                   Eik = c.Bulstat
+                   Eik = c.Bulstat,
+                   Description = c.Description
                })
                 .ToList();
 

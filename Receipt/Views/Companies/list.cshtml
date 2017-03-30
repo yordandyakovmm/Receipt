@@ -12,24 +12,26 @@
                 <p class="group inner list-group-item-text">
                     @c.Address
                 </p>
+                <p class="lead">
+                    ЕИК: @c.Eik
+                </p>
                 <div class="row">
-                    <div class="col-xs-12 col-md-6">
-                        <p class="lead">
-                            @c.Eik
-                        </p>
-                    </div>
-                    <div class="col-xs-12 col-md-6">
-                        <div class="btn-group">
-                            <a href="javascript:void(0)" id="list" onclick="deleteCompamy(@c.CompanyId, this)" class="btn btn-default btn-sm">
-                                <span class="glyphicon glyphicon-trash">
-                                </span>Изтрии
-                            </a>
-                            <a href="javascript:void(0)" id="grid" onclick="loadModal(@c.CompanyId)" class="btn btn-default btn-sm" data-toggle="modal" data-target="#myModal">
-                                <span class="glyphicon glyphicon-edit"></span>Редакция
-                            </a>
-                        </div>
+                    <div class="col-xs-24 col-md-12">
+                        <a class="btn btn-danger" onclick="deleteCompamy(@c.CompanyId, this)" href="javascript:void(0)">
+                            <span class="glyphicon glyphicon-trash">
+                            </span>
+                        </a>
+                        <a class="btn btn-success" onclick="loadModal(@c.CompanyId)" href="javascript:void(0)" data-toggle="modal" data-target="#myModal">
+                            <span class="glyphicon glyphicon-edit">
+                            </span>Редакция
+                        </a>
+                        <a style="float:right" class="btn btn-warning" onclick="deleteCompamy(@c.CompanyId, this)" href="javascript:void(0)">
+                            <span class="glyphicon glyphicon-barcode">
+                            </span>Добави
+                        </a>
                     </div>
                 </div>
+
             </div>
         </div>
     </div>

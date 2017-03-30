@@ -32,16 +32,19 @@
                         <p class="group inner list-group-item-text">
                             @c.Address
                         </p>
+                        <p class="group inner list-group-item-text">
+                            @c.Description
+                        </p>
                         <p class="lead">
                             ЕИК: @c.Eik
                         </p>
                         <div class="row">
                             <div class="col-xs-24 col-md-12">
-                                <a class="btn btn-danger" onclick="deleteCompamy(@c.CompanyId, this)" href="javascript:void(0)">
+                                <a class="btn btn-danger" onclick="if(confirm('Изтриване на @c.Name')){deleteCompamy(@c.CompanyId, this)}" href="javascript:void(0)">
                                     <span class="glyphicon glyphicon-trash">
                                     </span>
                                 </a>
-                                <a class="btn btn-success" onclick="loadModal(@c.CompanyId)" href="javascript:void(0)">
+                                <a class="btn btn-success" onclick="loadModal(@c.CompanyId)" href="javascript:void(0)" data-toggle="modal" data-target="#myModal">
                                     <span class="glyphicon glyphicon-edit">
                                     </span>Редакция
                                 </a>
@@ -88,6 +91,7 @@
         function deleteCompamy(id, obj) {
             $.ajax({
                 type: "GET",
+                cache: false,
                 url: '/companies/delete/' + id,
                 success: function (data, status) {
                     $('.close').click();
@@ -111,6 +115,7 @@
             }
             $.ajax({
                 type: "GET",
+                cache: false,
                 url: url,
                 success: function (data, status) {
                     $('#modal-body').html(data);
@@ -121,8 +126,15 @@
         }
 
         $(document).ready(function () {
-            $('#list').click(function (event) { event.preventDefault(); $('#products .item').addClass('list-group-item'); });
-            $('#grid').click(function (event) { event.preventDefault(); $('#products .item').removeClass('list-group-item'); $('#products .item').addClass('grid-group-item'); });
+            $('#list').click(function (event) {
+                event.preventDefault();
+                $('#products .item').addClass('list-group-item');
+            });
+            $('#grid').click(function (event) {
+                event.preventDefault();
+                $('#products .item').removeClass('list-group-item');
+                //$('#products .item').addClass('grid-group-item');
+            });
         });
     </script>
     <style type="text/css">

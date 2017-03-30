@@ -39,6 +39,8 @@ namespace Receipt.DataContext
         public string Address { get; set; }
         public string Phone { get; set; }
         public bool Deleted { get; set; }
+        public string Description { get; set; }
+
 
         public virtual ApplicationUser User { get; set; }
 
