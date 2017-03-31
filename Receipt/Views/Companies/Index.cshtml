@@ -22,6 +22,7 @@
     <div id="products" class="row list-group">
         @foreach (var c in Model)
         {
+            var BS = "BG" + c.Eik;
             <div class="item  col-xs-4 col-lg-4">
                 <div class="thumbnail">
                     <img class="group list-group-image" src="http://placehold.it/400x250/000/fff" alt="" />
@@ -32,13 +33,34 @@
                         <p class="group inner list-group-item-text">
                             @c.Address
                         </p>
-                        <p class="group inner list-group-item-text">
+                        <p class="group inner list-group-item-text list hide">
                             @c.Description
                         </p>
-                        <p class="lead">
-                            ЕИК: @c.Eik
+                        <p class="lead list hide">
+                            @BS
                         </p>
-                        <div class="row">
+                        <div class="row grid">
+                            <div class="col-xs-12 col-md-6">
+                                <p class="lead">
+                                    @BS
+                                </p>
+                            </div>
+                            <div class="col-xs-12 col-md-6">
+                                <a class="btn btn-default btn-sm" onclick="if(confirm('Изтриване на @c.Name')){deleteCompamy(@c.CompanyId, this)}" href="javascript:void(0)">
+                                    <span class="glyphicon glyphicon-trash">
+                                    </span>
+                                </a>
+                                <a class="btn btn-default btn-sm" onclick="loadModal(@c.CompanyId)" href="javascript:void(0)" data-toggle="modal" data-target="#myModal">
+                                    <span class="glyphicon glyphicon-edit">
+                                    </span>
+                                </a>
+                                <a style="float:right" class="btn btn-default btn-sm" onclick="alert('Не е готово')" href="javascript:void(0)">
+                                    <span class="glyphicon glyphicon-barcode">
+                                    </span>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="row list hide">
                             <div class="col-xs-24 col-md-12">
                                 <a class="btn btn-danger" onclick="if(confirm('Изтриване на @c.Name')){deleteCompamy(@c.CompanyId, this)}" href="javascript:void(0)">
                                     <span class="glyphicon glyphicon-trash">
@@ -48,13 +70,12 @@
                                     <span class="glyphicon glyphicon-edit">
                                     </span>Редакция
                                 </a>
-                                <a style="float:right" class="btn btn-warning" onclick="deleteCompamy(@c.CompanyId, this)" href="javascript:void(0)">
+                                <a style="float:right" class="btn btn-warning" onclick="alert('Не е готово')" href="javascript:void(0)">
                                     <span class="glyphicon glyphicon-barcode">
                                     </span>Добави
                                 </a>
                             </div>
                         </div>
-
                     </div>
                 </div>
             </div>
@@ -129,15 +150,23 @@
             $('#list').click(function (event) {
                 event.preventDefault();
                 $('#products .item').addClass('list-group-item');
+                $('.grid').addClass('hide');
+                $('.list').removeClass('hide');
             });
             $('#grid').click(function (event) {
                 event.preventDefault();
                 $('#products .item').removeClass('list-group-item');
-                //$('#products .item').addClass('grid-group-item');
+                $('.grid').removeClass('hide');
+                $('.list').addClass('hide');
+
             });
         });
     </script>
     <style type="text/css">
+        .hide {
+            display: none;
+        }
+
         .glyphicon {
             margin-right: 5px;
         }
