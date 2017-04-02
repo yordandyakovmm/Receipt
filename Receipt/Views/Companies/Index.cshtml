@@ -5,8 +5,9 @@
 
 <div class="container">
     <div class="well well-sm">
-        <strong>Изглед</strong>
-        <div class="btn-group">
+        <strong>Търсене</strong>
+        <input typt="text" id="search" class="input-sm" placeholder="Пиши тук за търсене" style="margin-left:10px; min-width:400px" onblur="search(this)" onkeyup="search(this)"/>
+        <div class="btn-group" style="float: right">
             <a href="#" id="list" class="btn btn-default btn-sm">
                 <span class="glyphicon glyphicon-th-list">
                 </span>Списък
@@ -24,6 +25,7 @@
         {
             var BS = "BG" + c.Eik;
             <div class="item  col-xs-4 col-lg-4">
+                <div style="display:none" id="data">@c.Eik.ToLower()|@c.Address.ToLower()|@c.Name.ToLower()|@c.Description.ToLower()</div>
                 <div class="thumbnail">
                     <img class="group list-group-image" src="http://placehold.it/400x250/000/fff" alt="" />
                     <div class="caption">
@@ -100,6 +102,23 @@
     </div>
 
     <script type="text/javascript">
+
+        function search(obj)
+        {
+            var text = $(obj).val().toLowerCase();
+            if (text == '' || text.length < 3) {
+                $('.item').show();
+            }
+            else {
+                $('.item').hide();
+                $('.item').each(function (index) {
+                    if ($(this).find('#data:contains("' + text + '")').length > 0)
+                    {
+                        $(this).show();
+                    }
+                });
+            }
+        }
 
         function submitSave(obj) {
             var $form = $('form[action^="/Companies/Edit"]');
