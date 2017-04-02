@@ -55,10 +55,10 @@ namespace Receipt.Models
 
         [Required]
         [DataType(DataType.Password)]
-        [Display(Name = "Password")]
+        [Display(Name = "Парола")]
         public string Password { get; set; }
 
-        [Display(Name = "Remember me?")]
+        [Display(Name = "Запомни ме")]
         public bool RememberMe { get; set; }
     }
 
@@ -68,6 +68,15 @@ namespace Receipt.Models
         [EmailAddress]
         [Display(Name = "Email")]
         public string Email { get; set; }
+
+
+        [Required]
+        [Display(Name = "First Name")]
+        public string FirstName { get; set; }
+
+        [Required]
+        [Display(Name = "Last Name")]
+        public string LastName { get; set; }
 
         [Required]
         [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]

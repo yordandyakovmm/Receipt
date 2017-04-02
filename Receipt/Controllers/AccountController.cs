@@ -87,7 +87,7 @@ namespace Receipt.Controllers
                 case SignInStatus.Failure:
                 default:
                     ModelState.AddModelError("", "Invalid login attempt.");
-                    return View(model);
+                    return RedirectToAction("Home/index",model);
             }
         }
 
@@ -151,10 +151,13 @@ namespace Receipt.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
+                var user = new ApplicationUser { UserName = model.Email, Email = model.Email, FirstName = model.FirstName, LastName = model.LastName};
                 var result = await UserManager.CreateAsync(user, model.Password);
+                
+                
                 if (result.Succeeded)
                 {
+                    
                     await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
                     
                     // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771
@@ -386,10 +389,10 @@ namespace Receipt.Controllers
         }
 
         //
-        // POST: /Account/LogOff
+        // POST: /Account/Logout
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult LogOff()
+        public ActionResult Logout()
         {
             AuthenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
             return RedirectToAction("Index", "Home");
@@ -419,7 +422,7 @@ namespace Receipt.Controllers
                     _signInManager = null;
                 }
             }
-
+            
             base.Dispose(disposing);
         }
 

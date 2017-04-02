@@ -3,6 +3,7 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
+using System.Security.Principal;
 
 namespace Receipt.Models
 {
@@ -16,7 +17,33 @@ namespace Receipt.Models
             // Add custom user claims here
             return userIdentity;
         }
+
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
     }
 
-    
+
+    public static class GenericPrincipalExtensions
+    {
+        public static string FullName(this IPrincipal user)
+        {
+            if (user.Identity.IsAuthenticated)
+            {
+
+                var claimsIdentity = user.Identity as ClaimsIdentity;
+                if (claimsIdentity != null)
+                {
+                    foreach (var claim in claimsIdentity.Claims)
+                    {
+                        if (claim.Type == "FullName")
+                            return claim.Value;
+                    }
+                }
+                return "";
+            }
+            else
+                return "";
+        }
+    }
+
 }

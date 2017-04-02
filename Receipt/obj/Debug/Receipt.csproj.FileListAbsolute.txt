@@ -294,3 +294,4 @@ E:\Code\Receipt\Receipt\obj\Debug\Receipt.dll
 E:\Code\Receipt\Receipt\obj\Debug\Receipt.pdb
 E:\Code\Receipt\Receipt\obj\Debug\Receipt.Migrations.Description.resources
 D:\Receipts\Receipt\obj\Debug\Receipt.Migrations.Description.resources
+E:\Code\Receipt\Receipt\obj\Debug\Receipt.Migrations.userName.resources
