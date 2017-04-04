@@ -6,7 +6,7 @@
 <div class="container">
     <div class="well well-sm">
         <strong>Търсене</strong>
-        <input typt="text" id="search" class="input-sm" placeholder="Пиши тук за търсене" style="margin-left:10px; min-width:400px" onblur="search(this)" onkeyup="search(this)"/>
+        <input typt="text" id="search" class="input-sm" placeholder="Пиши тук за търсене" style="margin-left:10px; min-width:400px" onblur="search(this)" onkeyup="search(this)" />
         <div class="btn-group" style="float: right">
             <a href="#" id="list" class="btn btn-default btn-sm">
                 <span class="glyphicon glyphicon-th-list">
@@ -100,145 +100,144 @@
             </div>
         </div>
     </div>
+</div>
 
-    <script type="text/javascript">
+<script type="text/javascript">
 
-        function search(obj)
-        {
-            var text = $(obj).val().toLowerCase();
-            if (text == '' || text.length < 3) {
-                $('.item').show();
-            }
-            else {
-                $('.item').hide();
-                $('.item').each(function (index) {
-                    if ($(this).find('#data:contains("' + text + '")').length > 0)
-                    {
-                        $(this).show();
-                    }
-                });
-            }
+    function search(obj) {
+        var text = $(obj).val().toLowerCase();
+        if (text == '' || text.length < 3) {
+            $('.item').show();
         }
+        else {
+            $('.item').hide();
+            $('.item').each(function (index) {
+                if ($(this).find('#data:contains("' + text + '")').length > 0) {
+                    $(this).show();
+                }
+            });
+        }
+    }
 
-        function submitSave(obj) {
-            var $form = $('form[action^="/Companies/Edit"]');
-            $.post($form.attr("action"), $form.serialize(), function (data) {
-                $("#products").html(data);
+    function submitSave(obj) {
+        var $form = $('form[action^="/Companies/Edit"]');
+        $.post($form.attr("action"), $form.serialize(), function (data) {
+            $("#products").html(data);
+            $('.close').click();
+        })
+    }
+
+    function deleteCompamy(id, obj) {
+        $.ajax({
+            type: "GET",
+            cache: false,
+            url: '/companies/delete/' + id,
+            success: function (data, status) {
                 $('.close').click();
-            })
-        }
-
-        function deleteCompamy(id, obj) {
-            $.ajax({
-                type: "GET",
-                cache: false,
-                url: '/companies/delete/' + id,
-                success: function (data, status) {
-                    $('.close').click();
-                    $(obj).closest('.item').remove();
-                },
-                error: function errorFunc() {
-                }
-            });
-        }
-
-        function loadModal(id) {
-            var url = '/companies/edit/';
-            if (typeof (id) != 'undefined') {
-                $('.modal-title').html('Редактиране');
-                $('#save-btn').html('Запиши');
-                url = url + id;
+                $(obj).closest('.item').remove();
+            },
+            error: function errorFunc() {
             }
-            else {
-                $('.modal-title').html('Добавяне');
-                $('#save-btn').html('Добави');
-            }
-            $.ajax({
-                type: "GET",
-                cache: false,
-                url: url,
-                success: function (data, status) {
-                    $('#modal-body').html(data);
-                },
-                error: function errorFunc() {
-                }
-            });
-        }
-
-        $(document).ready(function () {
-            $('#list').click(function (event) {
-                event.preventDefault();
-                $('#products .item').addClass('list-group-item');
-                $('.grid').addClass('hide');
-                $('.list').removeClass('hide');
-            });
-            $('#grid').click(function (event) {
-                event.preventDefault();
-                $('#products .item').removeClass('list-group-item');
-                $('.grid').removeClass('hide');
-                $('.list').addClass('hide');
-
-            });
         });
-    </script>
-    <style type="text/css">
-        .hide {
-            display: none;
+    }
+
+    function loadModal(id) {
+        var url = '/companies/edit/';
+        if (typeof (id) != 'undefined') {
+            $('.modal-title').html('Редактиране');
+            $('#save-btn').html('Запиши');
+            url = url + id;
+        }
+        else {
+            $('.modal-title').html('Добавяне');
+            $('#save-btn').html('Добави');
+        }
+        $.ajax({
+            type: "GET",
+            cache: false,
+            url: url,
+            success: function (data, status) {
+                $('#modal-body').html(data);
+            },
+            error: function errorFunc() {
+            }
+        });
+    }
+
+    $(document).ready(function () {
+        $('#list').click(function (event) {
+            event.preventDefault();
+            $('#products .item').addClass('list-group-item');
+            $('.grid').addClass('hide');
+            $('.list').removeClass('hide');
+        });
+        $('#grid').click(function (event) {
+            event.preventDefault();
+            $('#products .item').removeClass('list-group-item');
+            $('.grid').removeClass('hide');
+            $('.list').addClass('hide');
+
+        });
+    });
+</script>
+<style type="text/css">
+    .hide {
+        display: none;
+    }
+
+    .glyphicon {
+        margin-right: 5px;
+    }
+
+    .thumbnail {
+        margin-bottom: 20px;
+        padding: 0px;
+        -webkit-border-radius: 0px;
+        -moz-border-radius: 0px;
+        border-radius: 0px;
+    }
+
+    .item.list-group-item {
+        float: none;
+        width: 100%;
+        background-color: #fff;
+        margin-bottom: 10px;
+    }
+
+        .item.list-group-item:nth-of-type(odd):hover, .item.list-group-item:hover {
+            background: #428bca;
         }
 
-        .glyphicon {
-            margin-right: 5px;
+        .item.list-group-item .list-group-image {
+            margin-right: 10px;
         }
 
-        .thumbnail {
-            margin-bottom: 20px;
-            padding: 0px;
-            -webkit-border-radius: 0px;
-            -moz-border-radius: 0px;
-            border-radius: 0px;
+        .item.list-group-item .thumbnail {
+            margin-bottom: 0px;
         }
 
-        .item.list-group-item {
-            float: none;
-            width: 100%;
-            background-color: #fff;
-            margin-bottom: 10px;
+        .item.list-group-item .caption {
+            padding: 9px 9px 0px 9px;
         }
 
-            .item.list-group-item:nth-of-type(odd):hover, .item.list-group-item:hover {
-                background: #428bca;
-            }
-
-            .item.list-group-item .list-group-image {
-                margin-right: 10px;
-            }
-
-            .item.list-group-item .thumbnail {
-                margin-bottom: 0px;
-            }
-
-            .item.list-group-item .caption {
-                padding: 9px 9px 0px 9px;
-            }
-
-            .item.list-group-item:nth-of-type(odd) {
-                background: #eeeeee;
-            }
-
-            .item.list-group-item:before, .item.list-group-item:after {
-                display: table;
-                content: " ";
-            }
-
-            .item.list-group-item img {
-                float: left;
-            }
-
-            .item.list-group-item:after {
-                clear: both;
-            }
-
-        .list-group-item-text {
-            margin: 0 0 11px;
+        .item.list-group-item:nth-of-type(odd) {
+            background: #eeeeee;
         }
-    </style>
+
+        .item.list-group-item:before, .item.list-group-item:after {
+            display: table;
+            content: " ";
+        }
+
+        .item.list-group-item img {
+            float: left;
+        }
+
+        .item.list-group-item:after {
+            clear: both;
+        }
+
+    .list-group-item-text {
+        margin: 0 0 11px;
+    }
+</style>

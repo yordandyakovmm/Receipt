@@ -287,7 +287,6 @@ E:\Code\Receipt\Receipt\bin\Microsoft.AI.DependencyCollector.xml
 E:\Code\Receipt\Receipt\bin\Microsoft.AI.ServerTelemetryChannel.xml
 E:\Code\Receipt\Receipt\bin\Microsoft.AI.WindowsServer.xml
 E:\Code\Receipt\Receipt\bin\Microsoft.AI.Web.xml
-E:\Code\Receipt\Receipt\obj\Debug\Receipt.csprojResolveAssemblyReference.cache
 E:\Code\Receipt\Receipt\obj\Debug\Receipt.Migrations.Initial.resources
 E:\Code\Receipt\Receipt\obj\Debug\Receipt.csproj.GenerateResource.Cache
 E:\Code\Receipt\Receipt\obj\Debug\Receipt.dll
@@ -295,3 +294,4 @@ E:\Code\Receipt\Receipt\obj\Debug\Receipt.pdb
 E:\Code\Receipt\Receipt\obj\Debug\Receipt.Migrations.Description.resources
 D:\Receipts\Receipt\obj\Debug\Receipt.Migrations.Description.resources
 E:\Code\Receipt\Receipt\obj\Debug\Receipt.Migrations.userName.resources
+E:\Code\Receipt\Receipt\obj\Debug\Receipt.csprojResolveAssemblyReference.cache
