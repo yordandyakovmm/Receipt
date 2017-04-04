@@ -16,7 +16,11 @@ namespace Receipt.Controllers
     {
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
-        
+
+        public  HomeController()
+        {
+            ViewBag.location = "home";
+        }
 
         public ActionResult Index()
         {

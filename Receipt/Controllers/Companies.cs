@@ -11,6 +11,11 @@ namespace Receipt.Controllers
     [Authorize]
     public class CompaniesController : Controller
     {
+        public CompaniesController()
+        {
+            ViewBag.location = "companies";
+        }
+
         private ReceiptDataContext dc = new ReceiptDataContext();
 
         public ActionResult Index()

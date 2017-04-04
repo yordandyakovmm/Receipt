@@ -27,12 +27,40 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Начало", "Index", "Home")</li>
+                    @if (ViewBag.location == "home")
+                    {
+                        <li class="menu selected">@Html.ActionLink("Начало", "Index", "Home")</li>
+                    }
+                    else
+                    {
+                        <li class="menu">@Html.ActionLink("Начало", "Index", "Home")</li>
+                    }
                     @if (User.Identity.IsAuthenticated)
                     {
-                        <li>@Html.ActionLink("Фирми", "Index", "Companies")</li>
-                        <li>@Html.ActionLink("Артикули", "Index", "Articule")</li>
-                        <li>@Html.ActionLink("К.Бележки", "Index", "Receipt")</li>
+                        if (ViewBag.location == "companies")
+                        {
+                            <li class="menu selected">@Html.ActionLink("Фирми", "Index", "Companies")</li>
+                        }
+                        else
+                        {
+                            <li class="menu">@Html.ActionLink("Фирми", "Index", "Companies")</li>
+                        }
+                        if (ViewBag.location == "articule")
+                        {
+                            <li class="menu selected">@Html.ActionLink("Артикули", "Index", "Articule")</li>
+                        }
+                        else
+                        {
+                            <li class="menu">@Html.ActionLink("Артикули", "Index", "Articule")</li>
+                        }
+                        if (ViewBag.location == "receipt")
+                        {
+                            <li class="menu selected">@Html.ActionLink("К.Бележки", "Index", "Receipt")</li>
+                        }
+                        else
+                        {
+                            <li class="menu">@Html.ActionLink("К.Бележки", "Index", "Receipt")</li>
+                        }
                     }
                 </ul>
                 @Html.Partial("_LoginPartial")
@@ -44,7 +72,5 @@
         <hr />
         <footer></footer>
     </div>
-
-    
 </body>
 </html>

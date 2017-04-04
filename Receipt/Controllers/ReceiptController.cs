@@ -13,6 +13,11 @@ namespace Receipt.Controllers
     {
         private ReceiptDataContext dc = new ReceiptDataContext();
 
+        public ReceiptController()
+        {
+            ViewBag.location = "receipt";
+        }
+
         public ActionResult Index()
         {
             var companies = dc.Companies

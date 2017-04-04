@@ -22,3 +22,17 @@ select,
 textarea {
     /*max-width: 280px;*/
 }
+
+li.selected > a {
+    background-color: #f3eef6;
+    font-weight: 200;
+}
+
+li.menu > a {
+    font-weight: 200;
+    color: #a9a9a9 !important;
+}
+
+li.menu > a :hover {
+    color: red !important;
+}
