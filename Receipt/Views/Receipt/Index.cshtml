@@ -20,19 +20,63 @@
                                 <ul class="dropdown-menu option" role="menu">
                                     @foreach (var c in Model)
                                     {
-                                        <li id="@c.CompanyId"><a href="javascript:void(0)">@c.Name</a></li>
+                                    <li id="@c.CompanyId"><a href="javascript:void(0)">@c.Name</a></li>
                                     }
                                 </ul>
                             </div>
                         </div>
-                        <div class="form-group">
-                            <label class="control-label"> Дата </label>
-                            <div>
-                                <div class='input-group date' id='datetimepicker1'>
-                                    <input type='text' class="form-control" />
-                                    <span class="input-group-addon">
-                                        <span class="glyphicon glyphicon-calendar"></span>
-                                    </span>
+                    </div>
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <label class="control-label"> Дата </label>
+                                <div>
+                                    <div class='input-group date' id='datetimepicker1'>
+                                        <input type='text' class="form-control" />
+                                        <span class="input-group-addon">
+                                            <span class="glyphicon glyphicon-calendar"></span>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <label class="control-label"> Оператор </label>
+                                <div>
+                                    <div class="input-group-btn select" id="select2">
+                                        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                                            <span class="selected">Избери</span>
+                                            <span class="caret"></span>
+                                        </button>
+                                        <ul class="dropdown-menu option" role="menu">
+                                            <li id="op1"><a href="javascript:void(0)">01 Оператор</a></li>
+                                            <li id="op1"><a href="javascript:void(0)">02 Оператор</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <label class="control-label"> Артикул </label>
+                                <div>
+                                    <div class="input-group-btn select" id="select3">
+                                        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                                            <span class="selected">Избери</span>
+                                            <span class="caret"></span>
+                                        </button>
+                                        <ul class="dropdown-menu option" role="menu">
+                                            <li id="ar1"><a href="javascript:void(0)">Услуги</a></li>
+                                            <li id="ar2"><a href="javascript:void(0)">Стоки</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <label class="control-label"> Стойност </label>
+                                <div>
+                                    <input type="text" required="" placeholder="42,00" class="form-control" id="amount" />
                                 </div>
                             </div>
                         </div>
@@ -40,6 +84,7 @@
                 </div>
             </div>
         </div>
+
         <div class="col-lg-6">
             <div class="panel panel-primary">
                 <div class="panel-heading">Преглед</div>
@@ -77,14 +122,24 @@
         $('#datetimepicker1').datetimepicker({
             locale: 'bg'
         });
+
+        $("#amount").on("input", function () {
+            // allow numbers, a comma or a dot
+            var v = $(this).val(), vc = v.replace(/[^0-9,\.]/, '');
+            if (v !== vc)
+                $(this).val(vc);
+        });
+
+        $('body').on('click', '.option li', function () {
+            var i = $(this).parents('.select').attr('id');
+            var v = $(this).children().text();
+            var o = $(this).attr('id');
+            $('#' + i + ' .selected').attr('id', o);
+            $('#' + i + ' .selected').text(v);
+        });
+
     });
-    $('body').on('click', '.option li', function () {
-        var i = $(this).parents('.select').attr('id');
-        var v = $(this).children().text();
-        var o = $(this).attr('id');
-        $('#' + i + ' .selected').attr('id', o);
-        $('#' + i + ' .selected').text(v);
-    });
+   
 </script>
 
 <style type="text/css">

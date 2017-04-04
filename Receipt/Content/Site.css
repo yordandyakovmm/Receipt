@@ -25,14 +25,15 @@ textarea {
 
 li.selected > a {
     background-color: #f3eef6;
-    font-weight: 200;
+    font-weight: 600;
+    color: crimson !important;
 }
 
-li.menu > a {
-    font-weight: 200;
-    color: #a9a9a9 !important;
+li.menu a {
+    font-weight: 600;
+    /*color: #a9a9a9 !important;*/
 }
 
-li.menu > a :hover {
+li.menu a :hover {
     color: red !important;
 }
