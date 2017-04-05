@@ -34,6 +34,20 @@ li.menu a {
     /*color: #a9a9a9 !important;*/
 }
 
-li.menu a :hover {
-    color: red !important;
+    li.menu a :hover {
+        color: red !important;
+    }
+
+.a-list {
+    /*padding-left: 15px;
+    padding-right: 15px;*/
+}
+
+.nom {
+    counter-reset: my-badass-counter;
+}
+
+.nom {
+     content: counter(my-badass-counter);
+     counter-increment: my-badass-counter;
 }

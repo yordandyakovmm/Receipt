@@ -56,32 +56,60 @@
                             </div>
                         </div>
                     </div>
-                    <div class="form-group">
+                    <div class="form-group" id="dArticle">
                         <div class="row">
                             <div class="col-lg-6">
                                 <label class="control-label"> Артикул </label>
                                 <div>
                                     <div class="input-group-btn select" id="select3">
                                         <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                                            <span class="selected">Избери</span>
+                                            <span class="selected" idd="sArticle">Избери</span>
                                             <span class="caret"></span>
                                         </button>
-                                        <ul class="dropdown-menu option" role="menu">
+                                        <ul class="dropdown-menu option" id="uArticle" role="menu">
                                             <li id="ar1"><a href="javascript:void(0)">Услуги</a></li>
                                             <li id="ar2"><a href="javascript:void(0)">Стоки</a></li>
                                         </ul>
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-lg-6">
+                            <div class="col-lg-5">
                                 <label class="control-label"> Стойност </label>
                                 <div>
-                                    <input type="text" required="" placeholder="42,00" class="form-control" id="amount" />
+                                    <input type="text" required="" placeholder="42.00" class="form-control" id="amount" />
+                                </div>
+                            </div>
+                            <div class="col-lg-1">
+                                <label class="control-label"> &nbsp; </label>
+                                <div>
+                                    <a style="float:right" class="btn btn-default btn-md" onclick="addArticle()" href="javascript:void(0)">
+                                        <span class="glyphicon glyphicon-euro">
+                                        </span>
+                                    </a>
                                 </div>
                             </div>
                         </div>
                     </div>
+                    <div class="form-group">
+                        <div class="col-lg-1"></div>
+                        <div class="col-lg-10">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Артикул</th>
+                                        <th style="text-align:right">Стойност</th>
+                                        <th style="text-align:right">Изтрии</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="tArticle"></tbody>
+                            </table>
+                        </div>
+                        <div class="col-lg-1"></div>
+
+                    </div>
                 </div>
+               
             </div>
         </div>
 
@@ -117,20 +145,62 @@
 
 
 <script type="text/javascript">
+    function deleteArticle(obj)
+    {
+        $(obj).parent().parent().remove();
+    }
 
+    function vArticle()
+    {
+        var res = true;
+        var a = $('[idd="sArticle"]').text();
+        var s = $('#amount').val();
+        if (a == '' || s == '')
+        {
+            $('#dArticle').addClass('has-error')
+            res = false;
+        }
+        return res;
+    }
+
+    function addArticle() {
+        if (!vArticle())
+        {
+            return false;
+        }
+        var a = $('[idd="sArticle"]').text();
+        var s = $('#amount').val();
+        var html = '<tr>' +
+            '<th scope="row" class="nom"></th>' +
+            '<td>{a}</td>' +
+            '<td align="right">{s}</td>' +
+            '<td align="centar"> <a style="float:right" class="btn btn-default btn-sm" onclick="deleteArticle(this)" href="javascript:void(0)">' +
+            '<span class="glyphicon glyphicon-trash" >' +
+            '</span>' +
+            '</a></td>' +
+            '</tr>';
+        html = html.replace('{a}', a).replace('{s}', s);
+        $('#tArticle').append(html);
+        $('#dArticle').removeClass('has-error');
+        $('#dArticle').addClass('has-success');
+    }
     $(function () {
         $('#datetimepicker1').datetimepicker({
             locale: 'bg'
         });
 
         $("#amount").on("input", function () {
+            $('#dArticle').removeClass('has-error');
+            $('#dArticle').removeClass('has-success');
             // allow numbers, a comma or a dot
-            var v = $(this).val(), vc = v.replace(/[^0-9,\.]/, '');
+            var v = $(this).val(), vc = v.replace(/[^0-9\.]/, '');
             if (v !== vc)
                 $(this).val(vc);
         });
 
         $('body').on('click', '.option li', function () {
+            $('#dArticle').removeClass('has-error');
+            $('#dArticle').removeClass('has-success');
             var i = $(this).parents('.select').attr('id');
             var v = $(this).children().text();
             var o = $(this).attr('id');
@@ -139,7 +209,7 @@
         });
 
     });
-   
+
 </script>
 
 <style type="text/css">
