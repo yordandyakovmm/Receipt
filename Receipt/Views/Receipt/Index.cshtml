@@ -9,30 +9,30 @@
             <div class="panel panel-primary">
                 <div class="panel-heading">Касова бележка</div>
                 <div class="panel-body">
-                    <div class="form-group">
+                    <div class="form-group" id="dCompany" >
                         <label class="control-label"> Фирма </label>
                         <div>
                             <div class="input-group-btn select" id="select1">
                                 <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                                    <span class="selected">Избери фирма</span>
+                                    <span class="selected" idd="sCompany">Избери фирма</span>
                                     <span class="caret"></span>
                                 </button>
                                 <ul class="dropdown-menu option" role="menu">
                                     @foreach (var c in Model)
                                     {
-                                    <li id="@c.CompanyId"><a href="javascript:void(0)">@c.Name</a></li>
+                                        <li id="@c.CompanyId"><a href="javascript:void(0)">@c.Name</a></li>
                                     }
                                 </ul>
                             </div>
                         </div>
                     </div>
-                    <div class="form-group">
+                    <div class="form-group" id="dDate">
                         <div class="row">
                             <div class="col-lg-6">
                                 <label class="control-label"> Дата </label>
                                 <div>
                                     <div class='input-group date' id='datetimepicker1'>
-                                        <input type='text' class="form-control" />
+                                        <input type='text' id="iDate" class="form-control" />
                                         <span class="input-group-addon">
                                             <span class="glyphicon glyphicon-calendar"></span>
                                         </span>
@@ -44,7 +44,7 @@
                                 <div>
                                     <div class="input-group-btn select" id="select2">
                                         <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                                            <span class="selected">Избери</span>
+                                            <span class="selected" idd="sOperator">Избери</span>
                                             <span class="caret"></span>
                                         </button>
                                         <ul class="dropdown-menu option" role="menu">
@@ -61,8 +61,8 @@
                             <div class="col-lg-6">
                                 <label class="control-label"> Артикул </label>
                                 <div>
-                                    <div class="input-group-btn select" id="select3">
-                                        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                                    <div class="input-group-btn select " id="select3">
+                                        <button type="button" class="btn btn-default dropdown-toggle form-control" data-toggle="dropdown" aria-expanded="false">
                                             <span class="selected" idd="sArticle">Избери</span>
                                             <span class="caret"></span>
                                         </button>
@@ -91,6 +91,7 @@
                         </div>
                     </div>
                     <div class="form-group">
+                        <label class="control-label has-error" id="iExist" style="display: none"> Трябва да има поне един артикул </label>
                         <div class="col-lg-1"></div>
                         <div class="col-lg-10">
                             <table class="table">
@@ -109,7 +110,7 @@
 
                     </div>
                 </div>
-               
+
             </div>
         </div>
 
@@ -145,18 +146,16 @@
 
 
 <script type="text/javascript">
-    function deleteArticle(obj)
-    {
+
+    function deleteArticle(obj) {
         $(obj).parent().parent().remove();
     }
 
-    function vArticle()
-    {
+    function vArticle() {
         var res = true;
         var a = $('[idd="sArticle"]').text();
         var s = $('#amount').val();
-        if (a == '' || s == '')
-        {
+        if (a == '' || s == '') {
             $('#dArticle').addClass('has-error')
             res = false;
         }
@@ -164,13 +163,13 @@
     }
 
     function addArticle() {
-        if (!vArticle())
-        {
+        if (!vArticle()) {
             return false;
         }
         var a = $('[idd="sArticle"]').text();
         var s = $('#amount').val();
-        var html = '<tr>' +
+        var html =
+            '<tr>' +
             '<th scope="row" class="nom"></th>' +
             '<td>{a}</td>' +
             '<td align="right">{s}</td>' +
@@ -184,6 +183,44 @@
         $('#dArticle').removeClass('has-error');
         $('#dArticle').addClass('has-success');
     }
+
+    function validateForm() {
+        var isValid = true;
+        var companyId = $('[idd="sCompany"]').attr('id');
+        if (!companyId) {
+            $('#dCompany').addClass('has-error');
+            isValid = false;
+        }
+        var date = $('#iDate').val();
+        if (date) {
+            $('#dDate').addClass('has-error');
+            isValid = false;
+        }
+        var operator = $('[idd="sOperator"]').text();
+        if (operator == '' || operator.indexOf('Избери') > -1) {
+            $('#dDate').addClass('has-error');
+            isValid = false;
+        }
+
+        var rows = $('#tArticle tr');
+        if (rows.length == 0)
+        {
+            $('#lExsist').show();
+            isValid = false;
+        }
+
+        return isValid;
+    }
+
+    function clearValidation()
+    {
+        $('#lExsist').hide();
+        $('#dDate').removeClass('has-error');
+        $('#dCompany').removeClass('has-error');
+        $('#dArticle').removeClass('has-error');
+        $('#dArticle').removeClass('has-success');
+    }
+
     $(function () {
         $('#datetimepicker1').datetimepicker({
             locale: 'bg'
@@ -192,7 +229,6 @@
         $("#amount").on("input", function () {
             $('#dArticle').removeClass('has-error');
             $('#dArticle').removeClass('has-success');
-            // allow numbers, a comma or a dot
             var v = $(this).val(), vc = v.replace(/[^0-9\.]/, '');
             if (v !== vc)
                 $(this).val(vc);
