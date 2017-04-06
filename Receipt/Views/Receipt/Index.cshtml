@@ -1,6 +1,6 @@
-﻿@model List<Receipt.Models.CompanyViewModel>
+﻿@model Receipt.Models.ReceiptViewModel
 @{
-    ViewBag.Title = "Бележки";
+    ViewBag.Title = "Касови Бележки";
 }
 
 <div class="container">
@@ -18,7 +18,7 @@
                                     <span class="caret"></span>
                                 </button>
                                 <ul class="dropdown-menu option" role="menu">
-                                    @foreach (var c in Model)
+                                    @foreach (var c in Model.companies)
                                     {
                                         <li id="@c.CompanyId"><a href="javascript:void(0)">@c.Name</a></li>
                                     }
@@ -140,9 +140,6 @@
         </div>
     </div>
 </div>
-
-
-
 
 
 <script type="text/javascript">

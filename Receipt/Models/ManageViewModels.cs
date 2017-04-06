@@ -2,6 +2,8 @@
 using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNet.Identity;
 using Microsoft.Owin.Security;
+using System;
+using System.Linq;
 
 namespace Receipt.Models
 {
@@ -95,6 +97,11 @@ namespace Receipt.Models
         public string Name { get; set; }
 
         [Required]
+        [StringLength(100, ErrorMessage = "Невалидна дължина", MinimumLength = 4)]
+        [Display(Name = "Град")]
+        public string City { get; set; }
+
+        [Required]
         [StringLength(100, ErrorMessage = "Невалидна дължина", MinimumLength = 6)]
         [Display(Name = "Адрес")]
         public string Address { get; set; }
@@ -106,6 +113,39 @@ namespace Receipt.Models
         [Required]
         [Display(Name = "Описание")]
         public string Description { get; set; }
+
+        public bool Selected { get; set; }
+
+    }
+
+
+    public class ReceiptViewModel
+    {
+
+        public int ReceiptId { get; set; }
+               
+        public int CompanyId { get; set; }
+
+        public List<ArticleViewModel> Articles { get; set; }
+        
+        public DateTime? Date { get; set; }
+
+        public decimal TotalPrice {
+            get {
+                return Articles.ToList().Sum(a => a.Price);
+            }
+        }
+
+        public List<CompanyViewModel> companies { get; set; }
+
+    }
+
+
+    public class ArticleViewModel
+    {
+        public string ArticleName { get; set; }
+
+        public decimal Price { get; set; }
     }
 
 }

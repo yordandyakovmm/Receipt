@@ -40,10 +40,7 @@ namespace Receipt.DataContext
         public string Phone { get; set; }
         public bool Deleted { get; set; }
         public string Description { get; set; }
-
-
         public virtual ApplicationUser User { get; set; }
-
         public virtual ICollection<Receipt> Receipt { get; set; }
     }
 
@@ -59,6 +56,33 @@ namespace Receipt.DataContext
         public virtual ApplicationUser User { get; set; }
 
         public virtual ICollection<ProductQuantity> ProductQuantity { get; set; }
+    }
+
+    public class Article
+    {
+        [Key]
+        public int ArticleId { get; set; }
+
+        public string Name { get; set; }
+        public decimal Price { get; set; }
+
+         public virtual Receipt Receipt { get; set; }
+    }
+
+    public class WorkList
+    {
+        [Key]
+        public int WorkListId { get; set; }
+
+        public string Name { get; set; }
+
+        public DateTime Date { get; set; }
+
+        public virtual ApplicationUser User { get; set; }
+
+        public bool IsActive { get; set; }
+
+        public virtual ICollection<Receipt> Receipts { get; set; }
     }
 
     public class ProductQuantity
@@ -83,8 +107,12 @@ namespace Receipt.DataContext
         public int OrderNumner { get; set; }
         public string UniqueNumber { get; set; }
 
+        public virtual ICollection<Article> Articles { get; set; }
+
         public virtual Company Company { get; set; }
-              
+
+        public virtual WorkList WorkList { get; set; }
+
         public virtual ApplicationUser Operator { get; set; }
 
         public virtual ICollection<ProductQuantity> ProductQuantity { get; set; }
