@@ -209,9 +209,9 @@
     <Compile Include="Migrations\201704011510547_userName.Designer.cs">
       <DependentUpon>201704011510547_userName.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201704062125351_atricle.cs" />
-    <Compile Include="Migrations\201704062125351_atricle.Designer.cs">
-      <DependentUpon>201704062125351_atricle.cs</DependentUpon>
+    <Compile Include="Migrations\201704071632252_addtable.cs" />
+    <Compile Include="Migrations\201704071632252_addtable.Designer.cs">
+      <DependentUpon>201704071632252_addtable.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -424,8 +424,8 @@
     <EmbeddedResource Include="Migrations\201704011510547_userName.resx">
       <DependentUpon>201704011510547_userName.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201704062125351_atricle.resx">
-      <DependentUpon>201704062125351_atricle.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201704071632252_addtable.resx">
+      <DependentUpon>201704071632252_addtable.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

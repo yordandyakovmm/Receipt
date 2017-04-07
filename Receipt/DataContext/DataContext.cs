@@ -27,6 +27,8 @@ namespace Receipt.DataContext
         public DbSet<Product> Products { get; set; }
         public DbSet<ProductQuantity> ProductQuantitys{ get; set; }
         public DbSet<Receipt> Receipts { get; set; }
+        public DbSet<WorkList> WorkList { get; set; }
+        public DbSet<Article> Article { get; set; }
 
     }
 

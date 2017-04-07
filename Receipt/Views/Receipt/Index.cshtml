@@ -4,12 +4,36 @@
 }
 
 <div class="container">
+
+     <input type="hidden" id="receiptId" value="@Model.ReceiptId">
     <div class="row" style="padding-top:10px;">
+        <div class="col-lg-12">
+            @if (Model.ReceiptId == 0)
+            {
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h4>Добавяне</h4>
+                    </div>
+                </div>
+            }
+            else
+            {
+                <div class="bs-callout bs-callout-danger" id="callout-glyphicons-dont-mix">
+                    <h4>Рекактиране</h4>
+                    <p>
+                        Редактиране на касова бележка
+                    </p>
+                </div>
+            }
+        </div>
+    </div>
+
+    <div class="row" style="padding-top:0px;">
         <div class="col-lg-6">
             <div class="panel panel-primary">
                 <div class="panel-heading">Касова бележка</div>
-                <div class="panel-body">
-                    <div class="form-group" id="dCompany" >
+                <div class="panel-body" style="min-height: 450px;">
+                    <div class="form-group" id="dCompany">
                         <label class="control-label"> Фирма </label>
                         <div>
                             <div class="input-group-btn select" id="select1">
@@ -20,7 +44,7 @@
                                 <ul class="dropdown-menu option" role="menu">
                                     @foreach (var c in Model.companies)
                                     {
-                                        <li id="@c.CompanyId"><a href="javascript:void(0)">@c.Name</a></li>
+                                    <li id="@c.CompanyId"><a href="javascript:void(0)">@c.Name</a></li>
                                     }
                                 </ul>
                             </div>
@@ -117,7 +141,7 @@
         <div class="col-lg-6">
             <div class="panel panel-primary">
                 <div class="panel-heading">Преглед</div>
-                <div class="panel-body">
+                <div class="panel-body" style="min-height: 450px;">
                     <div style="background-color: antiquewhite; padding:0; margin:0; width: 20em">
                         <div style="text-align: center">Папур груп ООД</div>
                         <div style="text-align: center">ЕИК: 563456456</div>
@@ -139,6 +163,26 @@
             </div>
         </div>
     </div>
+
+    <div class="row" style="padding-top:0px;">
+        <div class="col-lg-12">
+            <div class="row" style="padding-top:10px;">
+                <div class="col-lg-12">
+
+                    @if (Model.ReceiptId == 0)
+                    {
+                        <button type="button" class="btn btn-outline-primary btn-lg" style="width:100%;" onclick="save();">Добави</button>
+                    }
+                    else
+                    {
+                        <button type="button" class="btn btn-outline-primary btn-lg" style="width:100%;" onclick="save();">Запиши</button>
+                    }
+                </div>
+            </div>
+
+        </div>
+    </div>
+
 </div>
 
 
@@ -168,8 +212,8 @@
         var html =
             '<tr>' +
             '<th scope="row" class="nom"></th>' +
-            '<td>{a}</td>' +
-            '<td align="right">{s}</td>' +
+            '<td id="a">{a}</td>' +
+            '<td id="p" align="right">{s}</td>' +
             '<td align="centar"> <a style="float:right" class="btn btn-default btn-sm" onclick="deleteArticle(this)" href="javascript:void(0)">' +
             '<span class="glyphicon glyphicon-trash" >' +
             '</span>' +
@@ -179,6 +223,41 @@
         $('#tArticle').append(html);
         $('#dArticle').removeClass('has-error');
         $('#dArticle').addClass('has-success');
+    }
+
+    function save()
+    {
+        if (!validateForm())
+        {
+            return false;
+        }
+        var receiptId = $('#receiptId]').val();
+        var companyId = $('[idd="sCompany"]').attr('id');
+        var date = $('#iDate').val();
+        var operator = $('[idd="sOperator"]').text();
+        var rows = $('#tArticle tr');
+
+        var articles = [];
+        rows.each(function (index) {
+            var article  $(this).find("#a").text();
+            var price = $(this).find("#p").text();
+            articles.push({
+                ArticleName: article,
+                Price: price
+            });
+        });
+
+        var model = {
+            ReceiptId: receiptId,
+            CompanyId: companyId,
+            Date: date,
+            Articles = articles
+        };
+
+        $.post("/receipt/save", model, function (data) {
+            alert(data);
+        })
+
     }
 
     function validateForm() {
@@ -199,9 +278,10 @@
             isValid = false;
         }
 
-        var rows = $('#tArticle tr');
-        if (rows.length == 0)
-        {
+        
+
+
+        if (rows.length == 0) {
             $('#lExsist').show();
             isValid = false;
         }
@@ -209,8 +289,7 @@
         return isValid;
     }
 
-    function clearValidation()
-    {
+    function clearValidation() {
         $('#lExsist').hide();
         $('#dDate').removeClass('has-error');
         $('#dCompany').removeClass('has-error');
