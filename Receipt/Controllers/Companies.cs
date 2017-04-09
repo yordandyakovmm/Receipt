@@ -28,7 +28,8 @@ namespace Receipt.Controllers
                    Name = c.Name,
                    Address = c.Address,
                    Eik = c.Bulstat,
-                   Description = c.Description
+                   Description = c.Description,
+                   hasReceipt = c.Receipts.Count() > 0
                })
                 .ToList();
             return View(companies);
@@ -50,7 +51,8 @@ namespace Receipt.Controllers
                     Name = company.Name,
                     Address = company.Address,
                     Eik = company.Bulstat,
-                    Description = company.Description
+                    Description = company.Description,
+                    hasReceipt = company.Receipts.Count() > 0
                 };
             }
             else
@@ -104,7 +106,8 @@ namespace Receipt.Controllers
                    Name = c.Name,
                    Address = c.Address,
                    Eik = c.Bulstat,
-                   Description = c.Description
+                   Description = c.Description,
+                   hasReceipt = c.Receipts.Count() > 0
                })
                 .ToList();
 

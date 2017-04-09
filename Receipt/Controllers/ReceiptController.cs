@@ -29,13 +29,14 @@ namespace Receipt.Controllers
 
                 model = new ReceiptViewModel
                 {
+                    CompanyId = receipt.Company.CompanyId,
                     ReceiptId = receipt.ReceiptId,
                     Articles = receipt.Articles.Select(a => new ArticleViewModel
                     {
                         ArticleName = a.Name,
                         Price = a.Price
                     }).ToList(),
-                    companies = dc.Companies.Select(c => new CompanyViewModel
+                    Companies = dc.Companies.Select(c => new CompanyViewModel
                     {
                         CompanyId = c.CompanyId,
                         Name = c.Name,
@@ -44,15 +45,25 @@ namespace Receipt.Controllers
                         Description = c.Description,
                         Selected = c.CompanyId == receipt.Company.CompanyId
                     }).ToList(),
+                    Company = new CompanyViewModel
+                    {
+                        CompanyId = receipt.Company.CompanyId,
+                        Name = receipt.Company.Name,
+                        Address = receipt.Company.Address,
+                        Eik = receipt.Company.Bulstat,
+                        Description = receipt.Company.Description
+                    },
+                    Operator = receipt.OperatorS,
                     Date = receipt.Date
                 };
                 return View(model);
             }
             model = new ReceiptViewModel
             {
+                CompanyId = 0,
                 ReceiptId = 0,
                 Articles = new List<ArticleViewModel>(),
-                companies = dc.Companies.Select(c => new CompanyViewModel
+                Companies = dc.Companies.Select(c => new CompanyViewModel
                 {
                     CompanyId = c.CompanyId,
                     Name = c.Name,
@@ -61,24 +72,28 @@ namespace Receipt.Controllers
                     Description = c.Description,
                     Selected = c.CompanyId == companyId
                 }).ToList(),
+                Operator = "",
                 Date = null
             };
             return View(model);
 
         }
 
-        public bool Save(ReceiptViewModel model)
+        public int Save(ReceiptViewModel model)
         {
 
             if (model.ReceiptId == 0)
             {
-
+                var userID = User.Identity.GetUserId();
+                var _user = dc.Users.Where(u => u.Id == userID).SingleOrDefault();
                 var company = dc.Companies.Where(c => c.CompanyId == model.CompanyId).SingleOrDefault();
 
                 Receipt.DataContext.Receipt receipt = new Receipt.DataContext.Receipt()
                 {
                     Date = (DateTime)model.Date,
                     Company = company,
+                    OperatorS = model.Operator,
+                    Operator = _user
                 };
 
                 dc.Receipts.Add(receipt);
@@ -93,7 +108,7 @@ namespace Receipt.Controllers
                     receipt.Articles.Add(artcle);
                 }
 
-                var userID = User.Identity.GetUserId();
+               
 
                 var wl = dc.WorkList.Where(w => w.User.Id == userID && w.IsActive).SingleOrDefault();
 
@@ -103,14 +118,14 @@ namespace Receipt.Controllers
                     {
                         Date = DateTime.Now,
                         Name = "",
-                        User = dc.Users.Where(u => u.Id == userID).SingleOrDefault(),
+                        User = _user,
                         IsActive = true
                     };
                 }
 
                 receipt.WorkList = wl;
-
                 dc.SaveChanges();
+                model.ReceiptId = receipt.ReceiptId;
             }
             else
             {
@@ -118,6 +133,7 @@ namespace Receipt.Controllers
                 var company = dc.Companies.Where(c => c.CompanyId == model.CompanyId).SingleOrDefault();
                 receipt.Company = company;
                 receipt.Date = (DateTime)model.Date;
+                receipt.OperatorS = model.Operator;
                 receipt.Articles = new List<Article>();
                 foreach (var a in model.Articles)
                 {
@@ -128,11 +144,10 @@ namespace Receipt.Controllers
                     };
                     receipt.Articles.Add(artcle);
                 }
+                dc.SaveChanges();
             }
 
-            return true;
-
-
+            return model.ReceiptId;
 
         }
 

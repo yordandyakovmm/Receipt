@@ -5,7 +5,7 @@
 
 <div class="container">
 
-     <input type="hidden" id="receiptId" value="@Model.ReceiptId">
+    <input type="hidden" id="receiptId" value="@Model.ReceiptId" />
     <div class="row" style="padding-top:10px;">
         <div class="col-lg-12">
             @if (Model.ReceiptId == 0)
@@ -37,14 +37,22 @@
                         <label class="control-label"> Фирма </label>
                         <div>
                             <div class="input-group-btn select" id="select1">
-                                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                                    <span class="selected" idd="sCompany">Избери фирма</span>
+                                <button type="button" class="btn btn-default dropdown-toggle form-control" data-toggle="dropdown" aria-expanded="false">
+                                    @if (Model.CompanyId != 0)
+                                    {
+                                        <span class="selected" id="@Model.CompanyId" idd="sCompany">@Model.Company.Name</span>
+                                    }
+                                    else
+                                    {
+                                        <span class="selected" id="@Model.CompanyId" idd="sCompany">Избери фирма</span>
+                                    }
+
                                     <span class="caret"></span>
                                 </button>
                                 <ul class="dropdown-menu option" role="menu">
-                                    @foreach (var c in Model.companies)
+                                    @foreach (var c in Model.Companies)
                                     {
-                                    <li id="@c.CompanyId"><a href="javascript:void(0)">@c.Name</a></li>
+                                        <li id="@c.CompanyId"><a href="javascript:void(0)">@c.Name</a></li>
                                     }
                                 </ul>
                             </div>
@@ -56,7 +64,7 @@
                                 <label class="control-label"> Дата </label>
                                 <div>
                                     <div class='input-group date' id='datetimepicker1'>
-                                        <input type='text' id="iDate" class="form-control" />
+                                        <input type='text' id="iDate" class="form-control" value="@(Model.Date != null ? Model.Date.ToString() : string.Empty)" />
                                         <span class="input-group-addon">
                                             <span class="glyphicon glyphicon-calendar"></span>
                                         </span>
@@ -67,8 +75,15 @@
                                 <label class="control-label"> Оператор </label>
                                 <div>
                                     <div class="input-group-btn select" id="select2">
-                                        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                                            <span class="selected" idd="sOperator">Избери</span>
+                                        <button type="button" class="btn btn-default dropdown-toggle form-control" data-toggle="dropdown" aria-expanded="false">
+                                            @if (Model.Operator == "")
+                                            {
+                                                <span class="selected" idd="sOperator">Избери</span>
+                                            }
+                                            else
+                                            {
+                                                <span class="selected" id="op1" idd="sOperator">@Model.Operator</span>
+                                            }
                                             <span class="caret"></span>
                                         </button>
                                         <ul class="dropdown-menu option" role="menu">
@@ -115,7 +130,7 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="control-label has-error" id="iExist" style="display: none"> Трябва да има поне един артикул </label>
+
                         <div class="col-lg-1"></div>
                         <div class="col-lg-10">
                             <table class="table">
@@ -127,8 +142,25 @@
                                         <th style="text-align:right">Изтрии</th>
                                     </tr>
                                 </thead>
-                                <tbody id="tArticle"></tbody>
+                                <tbody id="tArticle">
+                                    @foreach (var c in Model.Articles)
+                                    {
+                                        <tr>
+                                            <th scope="row" class="nom"></th>
+                                            <td id="a">@c.ArticleName</td>
+                                            <td id="p" align="right">@c.Price</td>
+                                            <td align="center">
+                                                <a style="float:right" class="btn btn-default btn-sm" onclick="deleteArticle(this)" href="javascript:void(0)">
+                                                    <span class="glyphicon glyphicon-trash">
+                                                    </span>
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+
                             </table>
+                            <label class="control-label has-error" id="lExist" style="color:red; display: none"> Трябва да има поне един артикул </label>
                         </div>
                         <div class="col-lg-1"></div>
 
@@ -140,48 +172,37 @@
 
         <div class="col-lg-6">
             <div class="panel panel-primary">
-                <div class="panel-heading">Преглед</div>
+                <div class="panel-heading" style="text-align: center">Преглед</div>
                 <div class="panel-body" style="min-height: 450px;">
-                    <div style="background-color: antiquewhite; padding:0; margin:0; width: 20em">
-                        <div style="text-align: center">Папур груп ООД</div>
-                        <div style="text-align: center">ЕИК: 563456456</div>
-                        <div style="text-align: center">гр. Горна Оряховица</div>
-                        <div style="text-align: center">ул. Бузлоджа #2 ET.3</div>
-                        <div style="width:100%">
-                            <div style="width:15%; text-align:left; display: inline-block;">
-                                01
-                            </div>
-                            <div style="width:70%; text-align:center; display: inline-block;">
-                                ОПЕРАТОР
-                            </div>
-                            <div style="width:15%; display: inline-block;">
-
-                            </div>
+                    <div style="position: absolute; top: 50%; left: 50%; transform: scale(2, 2); transform: translate(-50%, -50%);">
+                        <div style="transform: scale(1.5, 1.5);">
+                             @Html.Partial("Receipt", model: Model)
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+</div>
 
-    <div class="row" style="padding-top:0px;">
-        <div class="col-lg-12">
-            <div class="row" style="padding-top:10px;">
-                <div class="col-lg-12">
+<div class="row" style="padding-top:0px;">
+    <div class="col-lg-12">
+        <div class="row" style="padding-top:10px;">
+            <div class="col-lg-12">
 
-                    @if (Model.ReceiptId == 0)
-                    {
-                        <button type="button" class="btn btn-outline-primary btn-lg" style="width:100%;" onclick="save();">Добави</button>
-                    }
-                    else
-                    {
-                        <button type="button" class="btn btn-outline-primary btn-lg" style="width:100%;" onclick="save();">Запиши</button>
-                    }
-                </div>
+                @if (Model.ReceiptId == 0)
+                {
+                    <button type="button" class="btn btn-success btn-lg" style="width:100%;" onclick="save();">Добави</button>
+                }
+                else
+                {
+                    <button type="button" class="btn btn-success btn-lg" style="width:100%;" onclick="save();">Запиши</button>
+                }
             </div>
-
         </div>
+
     </div>
+</div>
 
 </div>
 
@@ -214,7 +235,7 @@
             '<th scope="row" class="nom"></th>' +
             '<td id="a">{a}</td>' +
             '<td id="p" align="right">{s}</td>' +
-            '<td align="centar"> <a style="float:right" class="btn btn-default btn-sm" onclick="deleteArticle(this)" href="javascript:void(0)">' +
+            '<td align="center"> <a style="float:right" class="btn btn-default btn-sm" onclick="deleteArticle(this)" href="javascript:void(0)">' +
             '<span class="glyphicon glyphicon-trash" >' +
             '</span>' +
             '</a></td>' +
@@ -223,15 +244,14 @@
         $('#tArticle').append(html);
         $('#dArticle').removeClass('has-error');
         $('#dArticle').addClass('has-success');
+        $('#lExist').hide();
     }
 
-    function save()
-    {
-        if (!validateForm())
-        {
+    function save() {
+        if (!validateForm()) {
             return false;
         }
-        var receiptId = $('#receiptId]').val();
+        var receiptId = $('#receiptId').val();
         var companyId = $('[idd="sCompany"]').attr('id');
         var date = $('#iDate').val();
         var operator = $('[idd="sOperator"]').text();
@@ -239,7 +259,7 @@
 
         var articles = [];
         rows.each(function (index) {
-            var article  $(this).find("#a").text();
+            var article = $(this).find("#a").text();
             var price = $(this).find("#p").text();
             articles.push({
                 ArticleName: article,
@@ -251,11 +271,11 @@
             ReceiptId: receiptId,
             CompanyId: companyId,
             Date: date,
-            Articles = articles
+            Articles: articles
         };
 
         $.post("/receipt/save", model, function (data) {
-            alert(data);
+            window.location.href = '/receipt/?receiptId=' + data;
         })
 
     }
@@ -263,12 +283,12 @@
     function validateForm() {
         var isValid = true;
         var companyId = $('[idd="sCompany"]').attr('id');
-        if (!companyId) {
+        if (companyId == 0) {
             $('#dCompany').addClass('has-error');
             isValid = false;
         }
         var date = $('#iDate').val();
-        if (date) {
+        if (date == '') {
             $('#dDate').addClass('has-error');
             isValid = false;
         }
@@ -277,12 +297,10 @@
             $('#dDate').addClass('has-error');
             isValid = false;
         }
-
-        
-
+        var rows = $('#tArticle tr');
 
         if (rows.length == 0) {
-            $('#lExsist').show();
+            $('#lExist').show();
             isValid = false;
         }
 
@@ -290,7 +308,7 @@
     }
 
     function clearValidation() {
-        $('#lExsist').hide();
+        $('#lExist').hide();
         $('#dDate').removeClass('has-error');
         $('#dCompany').removeClass('has-error');
         $('#dArticle').removeClass('has-error');
@@ -300,6 +318,8 @@
     $(function () {
         $('#datetimepicker1').datetimepicker({
             locale: 'bg'
+        }).on('change', function (ev) {
+            $('#datetimepicker1').Close();
         });
 
         $("#amount").on("input", function () {

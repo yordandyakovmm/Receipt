@@ -114,6 +114,8 @@ namespace Receipt.Models
         [Display(Name = "Описание")]
         public string Description { get; set; }
 
+        public bool hasReceipt { get; set; }
+
         public bool Selected { get; set; }
 
     }
@@ -136,7 +138,11 @@ namespace Receipt.Models
             }
         }
 
-        public List<CompanyViewModel> companies { get; set; }
+        public List<CompanyViewModel> Companies { get; set; }
+
+        public CompanyViewModel Company { get; set; }
+
+        public string Operator { get; set; }
 
     }
 

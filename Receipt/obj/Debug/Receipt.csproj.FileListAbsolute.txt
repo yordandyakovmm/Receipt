@@ -295,4 +295,5 @@ E:\Code\Receipt\Receipt\obj\Debug\Receipt.Migrations.Description.resources
 D:\Receipts\Receipt\obj\Debug\Receipt.Migrations.Description.resources
 E:\Code\Receipt\Receipt\obj\Debug\Receipt.Migrations.userName.resources
 E:\Code\Receipt\Receipt\obj\Debug\Receipt.csprojResolveAssemblyReference.cache
-E:\Code\Receipt\Receipt\obj\Debug\Receipt.Migrations.atricle.resources
+E:\Code\Receipt\Receipt\obj\Debug\Receipt.Migrations.addtable.resources
+E:\Code\Receipt\Receipt\obj\Debug\Receipt.Migrations.updatereceit.resources

@@ -43,7 +43,7 @@ namespace Receipt.DataContext
         public bool Deleted { get; set; }
         public string Description { get; set; }
         public virtual ApplicationUser User { get; set; }
-        public virtual ICollection<Receipt> Receipt { get; set; }
+        public virtual ICollection<Receipt> Receipts { get; set; }
     }
 
     public class Product
@@ -103,11 +103,16 @@ namespace Receipt.DataContext
 
     public class Receipt
     {
+        public Receipt()
+        {
+            this.Articles = new List<Article>();
+        }
         [Key]
         public int ReceiptId { get; set; }
         public DateTime Date { get; set; }
         public int OrderNumner { get; set; }
         public string UniqueNumber { get; set; }
+        public string OperatorS { get; set; }
 
         public virtual ICollection<Article> Articles { get; set; }
 
