@@ -1,0 +1,137 @@
+﻿@using Receipt.DataContext
+@using Microsoft.AspNet.Identity
+@model List<WorkList>
+@{
+    ViewBag.Title = "Работни листи";
+}
+
+<div class="container">
+    <div class="well well-sm">
+        <strong>Търсене</strong>
+        <input typt="text" id="search" class="input-sm" placeholder="Пиши тук за търсене" style="margin-left:10px; min-width:400px" onblur="search(this)" onkeyup="search(this)" />
+        <div class="btn-group" style="float: right">
+            <a href="#" id="add" class="btn btn-default btn-sm" onclick="loadModal()" data-toggle="modal" data-target="#myModal">
+                <span class='glyphicon glyphicon-edit'></span>Добави
+            </a>
+        </div>
+    </div>
+    <div class="list-group table-striped">
+        @foreach (var c in Model)
+        {
+            <div class="list-group-item">
+                <div class="col-lg-3">
+                    @(c.Name == "" ? "--" : c.Name)
+                </div>
+                <div class="col-lg-3">
+                    @c.Date
+                </div>
+                <div class="col-lg-3">
+                    @c.User.FirstName
+                </div>
+                <div class="col-lg-3">
+                    <button class="btn btn-default btn-sm">
+                        Детаили
+                    </button>
+                </div>
+            </div>
+
+        }
+    </div>
+
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">Добавяне</h4>
+                </div>
+                <div id="modal-body" class="modal-body">
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Отказ</button>
+                    <button id="save-btn" type="button" onclick="submitSave(this)" class="btn btn-primary"></button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+
+    function search(obj) {
+        var text = $(obj).val().toLowerCase();
+        if (text == '' || text.length < 3) {
+            $('.item').show();
+        }
+        else {
+            $('.item').hide();
+            $('.item').each(function (index) {
+                if ($(this).find('#data:contains("' + text + '")').length > 0) {
+                    $(this).show();
+                }
+            });
+        }
+    }
+
+    function submitSave(obj) {
+        var $form = $('form[action^="/Companies/Edit"]');
+        $.post($form.attr("action"), $form.serialize(), function (data) {
+            $("#products").html(data);
+            $('.close').click();
+        })
+    }
+
+    function deleteCompamy(id, obj) {
+        $.ajax({
+            type: "GET",
+            cache: false,
+            url: '/companies/delete/' + id,
+            success: function (data, status) {
+                $('.close').click();
+                $(obj).closest('.item').remove();
+            },
+            error: function errorFunc() {
+            }
+        });
+    }
+
+    function loadModal(id) {
+        var url = '/companies/edit/';
+        if (typeof (id) != 'undefined') {
+            $('.modal-title').html('Редактиране');
+            $('#save-btn').html('Запиши');
+            url = url + id;
+        }
+        else {
+            $('.modal-title').html('Добавяне');
+            $('#save-btn').html('Добави');
+        }
+        $.ajax({
+            type: "GET",
+            cache: false,
+            url: url,
+            success: function (data, status) {
+                $('#modal-body').html(data);
+            },
+            error: function errorFunc() {
+            }
+        });
+    }
+
+    $(document).ready(function () {
+        $('#list').click(function (event) {
+            event.preventDefault();
+            $('#products .item').addClass('list-group-item');
+            $('.grid').addClass('hide');
+            $('.list').removeClass('hide');
+        });
+        $('#grid').click(function (event) {
+            event.preventDefault();
+            $('#products .item').removeClass('list-group-item');
+            $('.grid').removeClass('hide');
+            $('.list').addClass('hide');
+
+        });
+    });
+</script>

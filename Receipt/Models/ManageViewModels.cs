@@ -154,4 +154,19 @@ namespace Receipt.Models
         public decimal Price { get; set; }
     }
 
+    public class WorkListViewModel
+    {
+
+        public string name { get; set; }
+
+        public List<ReceiptViewModel> receipts { get; set; } 
+        
+        public bool isActive { get; set; }
+
+        public DateTime  dateCreated { get; set; }
+
+        public ApplicationUser user { get; set; }
+
+    }
+
 }

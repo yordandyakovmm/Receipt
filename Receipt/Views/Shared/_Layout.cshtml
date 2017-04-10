@@ -61,6 +61,22 @@
                         {
                             <li class="menu">@Html.ActionLink("К.Бележки", "Index", "Receipt")</li>
                         }
+                        if (ViewBag.location == "worklist")
+                        {
+                            <li class="menu selected">@Html.ActionLink("Р. Листи", "Index", "Worklist")</li>
+                        }
+                        else
+                        {
+                            <li class="menu">@Html.ActionLink("Р. Листи", "Index", "Worklist")</li>
+                        }
+                        if (ViewBag.location == "pdf")
+                        {
+                            <li class="menu selected">@Html.ActionLink("PDF", "Index", "pdf")</li>
+                        }
+                        else
+                        {
+                            <li class="menu">@Html.ActionLink("PDF", "Index", "pdf")</li>
+                        }
                     }
                 </ul>
                 @Html.Partial("_LoginPartial")
