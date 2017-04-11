@@ -45,14 +45,16 @@
                         {
                             <li class="menu">@Html.ActionLink("Фирми", "Index", "Companies")</li>
                         }
+
                         if (ViewBag.location == "articule")
                         {
                             <li class="menu selected">@Html.ActionLink("Артикули", "Index", "Articule")</li>
                         }
                         else
                         {
-                            <li class="menu">@Html.ActionLink("Артикули", "Index", "Articule")</li>
+                            <li class="menu"> <a disabled> Артикули </a> </li>
                         }
+
                         if (ViewBag.location == "receipt")
                         {
                             <li class="menu selected">@Html.ActionLink("К.Бележки", "Index", "Receipt")</li>

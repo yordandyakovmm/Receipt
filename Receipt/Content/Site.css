@@ -26,7 +26,7 @@ textarea {
 li.selected > a {
     background-color: #f3eef6;
     font-weight: 600;
-    color: crimson !important;
+    color: rebeccapurple !important;
 }
 
 li.menu a {

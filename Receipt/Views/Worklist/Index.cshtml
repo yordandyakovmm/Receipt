@@ -1,6 +1,8 @@
 ﻿@using Receipt.DataContext
 @using Microsoft.AspNet.Identity
+
 @model List<WorkList>
+
 @{
     ViewBag.Title = "Работни листи";
 }
@@ -10,48 +12,59 @@
         <strong>Търсене</strong>
         <input typt="text" id="search" class="input-sm" placeholder="Пиши тук за търсене" style="margin-left:10px; min-width:400px" onblur="search(this)" onkeyup="search(this)" />
         <div class="btn-group" style="float: right">
-            <a href="#" id="add" class="btn btn-default btn-sm" onclick="loadModal()" data-toggle="modal" data-target="#myModal">
+            <a href="#" id="add" class="btn btn-default btn-sm" onclick="$('#iId').val('0');" data-toggle="modal" data-target="#myModal">
                 <span class='glyphicon glyphicon-edit'></span>Добави
             </a>
         </div>
     </div>
-    <div class="list-group table-striped">
+    <div class="list-group">
         @foreach (var c in Model)
-        {
-            <div class="list-group-item">
+            {
+            <div class="row well well-sm @(c.IsActive ? "bg-success" : "")" >
                 <div class="col-lg-3">
                     @(c.Name == "" ? "--" : c.Name)
                 </div>
-                <div class="col-lg-3">
-                    @c.Date
+                <div class="col-lg-3 te">
+                    @c.Date.ToShortDateString()
                 </div>
                 <div class="col-lg-3">
-                    @c.User.FirstName
+                    @(c.User != null ? c.User.FirstName : "")
                 </div>
                 <div class="col-lg-3">
                     <button class="btn btn-default btn-sm">
                         Детаили
                     </button>
+                    <button @(c.IsActive ? "disable" : "") onclick="SetActive(@c.WorkListId)" class="btn btn-default btn-sm">
+                        Активирай
+                    </button>
+
                 </div>
             </div>
-
         }
     </div>
 
-    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title" id="myModalLabel">Добавяне</h4>
-                </div>
-                <div id="modal-body" class="modal-body">
 
+</div>
+
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">Добавяне</h4>
+            </div>
+            <div id="modal-body" class="modal-body">
+                <div class="form-group">
+                    <label class="control-label">Име</label>
+                    <div class="col-md-10">
+                        <input type="hidden" id="iId" value="0">
+                        <input type="text" class="form-control" id="iName"/>
+                   </div>
                 </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Отказ</button>
-                    <button id="save-btn" type="button" onclick="submitSave(this)" class="btn btn-primary"></button>
-                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Отказ</button>
+                <button id="save-btn" type="button" onclick="submitSave(this)" class="btn btn-primary"></button>
             </div>
         </div>
     </div>
@@ -75,10 +88,16 @@
     }
 
     function submitSave(obj) {
-        var $form = $('form[action^="/Companies/Edit"]');
-        $.post($form.attr("action"), $form.serialize(), function (data) {
-            $("#products").html(data);
-            $('.close').click();
+        var id = $('#iId').val();
+        var name = $('#iName').val();
+        $.post('/worklist/edit', { id: id, name: name }, function (data) {
+            window.location.reload();
+        })
+    }
+
+    function SetActive(id) {
+        $.post('/worklist/SetActive', { id: id,}, function (data) {
+            window.location.reload();
         })
     }
 
@@ -96,42 +115,16 @@
         });
     }
 
-    function loadModal(id) {
-        var url = '/companies/edit/';
-        if (typeof (id) != 'undefined') {
-            $('.modal-title').html('Редактиране');
-            $('#save-btn').html('Запиши');
-            url = url + id;
-        }
-        else {
-            $('.modal-title').html('Добавяне');
-            $('#save-btn').html('Добави');
-        }
-        $.ajax({
-            type: "GET",
-            cache: false,
-            url: url,
-            success: function (data, status) {
-                $('#modal-body').html(data);
-            },
-            error: function errorFunc() {
-            }
-        });
+
+</script>
+
+
+<style type="text/css">
+    .hide {
+        display: none;
     }
 
-    $(document).ready(function () {
-        $('#list').click(function (event) {
-            event.preventDefault();
-            $('#products .item').addClass('list-group-item');
-            $('.grid').addClass('hide');
-            $('.list').removeClass('hide');
-        });
-        $('#grid').click(function (event) {
-            event.preventDefault();
-            $('#products .item').removeClass('list-group-item');
-            $('.grid').removeClass('hide');
-            $('.list').addClass('hide');
-
-        });
-    });
-</script>
+    .glyphicon {
+        margin-right: 5px;
+    }
+</style>

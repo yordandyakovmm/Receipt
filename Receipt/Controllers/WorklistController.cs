@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using Microsoft.AspNet.Identity;
 
 namespace Receipt.Controllers
 {
@@ -20,7 +21,6 @@ namespace Receipt.Controllers
 
         public ActionResult Index()
         {
-            ReceiptDataContext dc = new ReceiptDataContext();
             List<WorkList> list = dc.WorkList.ToList();
             return View(list);
         }
@@ -37,11 +37,46 @@ namespace Receipt.Controllers
 
 
         [HttpPost]
-        public bool Edit(int id, string name)
+        public bool Edit(int? id, string name)
         {
-            var list = dc.WorkList.Where(w => w.WorkListId == id).SingleOrDefault();
-            list.Name = name;
+            if (id.HasValue && id != 0)
+            {
+                var list = dc.WorkList.Where(w => w.WorkListId == id).SingleOrDefault();
+                list.Name = name;
+                dc.SaveChanges();
+            }
+            else
+            {
+                dc.WorkList.Where(l => l.IsActive).ToList().ForEach(l =>
+                {
+                    l.IsActive = false;
+                });
+                var userID = User.Identity.GetUserId();
+                var _user = dc.Users.Where(u => u.Id == userID).SingleOrDefault();
+                WorkList wl = new WorkList
+                {
+                    IsActive = true,
+                    Name = name,
+                    Date = DateTime.Now,
+                    User = _user
+                };
+                dc.WorkList.Add(wl);
+                dc.SaveChanges();
+            }
+            return true;
+        }
+
+        [HttpPost]
+        public bool SetActive(int id)
+        {
+
+            dc.WorkList.Where(l => l.IsActive).ToList().ForEach(l =>
+            {
+                l.IsActive = false;
+            });
+            dc.WorkList.Where(l => l.WorkListId == id).SingleOrDefault().IsActive = true;
             dc.SaveChanges();
+
             return true;
         }
 
@@ -76,9 +111,9 @@ namespace Receipt.Controllers
                     Date = receipt.Date
                 }).ToList()
             };
-            
+
             return View(model);
         }
-                
+
     }
 }

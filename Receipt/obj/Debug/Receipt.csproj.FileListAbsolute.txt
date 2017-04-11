@@ -297,3 +297,10 @@ E:\Code\Receipt\Receipt\obj\Debug\Receipt.Migrations.userName.resources
 E:\Code\Receipt\Receipt\obj\Debug\Receipt.csprojResolveAssemblyReference.cache
 E:\Code\Receipt\Receipt\obj\Debug\Receipt.Migrations.addtable.resources
 E:\Code\Receipt\Receipt\obj\Debug\Receipt.Migrations.updatereceit.resources
+D:\Receipts\Receipt\obj\Debug\Receipt.Migrations.userName.resources
+D:\Receipts\Receipt\obj\Debug\Receipt.Migrations.addtable.resources
+D:\Receipts\Receipt\obj\Debug\Receipt.Migrations.updatereceit.resources
+D:\Receipts\Receipt\bin\NReco.PdfGenerator.dll
+D:\Receipts\Receipt\bin\RazorEngine.dll
+D:\Receipts\Receipt\bin\NReco.PdfGenerator.xml
+D:\Receipts\Receipt\bin\RazorEngine.xml
