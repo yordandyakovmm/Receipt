@@ -20,7 +20,7 @@
     <div class="list-group">
         @foreach (var c in Model)
             {
-            <div class="row well well-sm @(c.IsActive ? "bg-success" : "")" >
+            <div class="row well well-sm @(c.IsActive ? "bg-success" : "")">
                 <div class="col-lg-3">
                     @(c.Name == "" ? "--" : c.Name)
                 </div>
@@ -31,13 +31,14 @@
                     @(c.User != null ? c.User.FirstName : "")
                 </div>
                 <div class="col-lg-3">
-                    <button class="btn btn-default btn-sm">
-                        Детаили
-                    </button>
-                    <button @(c.IsActive ? "disable" : "") onclick="SetActive(@c.WorkListId)" class="btn btn-default btn-sm">
-                        Активирай
-                    </button>
-
+                    <a class="btn btn-default btn-sm" onclick="" href="/worklist/details/@c.WorkListId">
+                        <span class="glyphicon glyphicon-compressed">
+                        </span>Детаили
+                    </a>
+                    <a class="btn btn-default btn-sm" @(c.IsActive ? "disabled" : "") onclick="SetActive(@c.WorkListId)" href="javascript:void(0)">
+                        <span class="glyphicon glyphicon-adjust">
+                        </span>Активирай
+                    </a>
                 </div>
             </div>
         }
@@ -58,8 +59,8 @@
                     <label class="control-label">Име</label>
                     <div class="col-md-10">
                         <input type="hidden" id="iId" value="0">
-                        <input type="text" class="form-control" id="iName"/>
-                   </div>
+                        <input type="text" class="form-control" id="iName" />
+                    </div>
                 </div>
             </div>
             <div class="modal-footer">
@@ -96,7 +97,7 @@
     }
 
     function SetActive(id) {
-        $.post('/worklist/SetActive', { id: id,}, function (data) {
+        $.post('/worklist/SetActive', { id: id, }, function (data) {
             window.location.reload();
         })
     }
