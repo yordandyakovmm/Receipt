@@ -80,12 +80,17 @@ namespace Receipt.Controllers
             return true;
         }
 
+
+
+
+
         [HttpGet]
         public ActionResult Details(int id)
         {
             var wl = dc.WorkList.Where(w => w.WorkListId == id).SingleOrDefault();
             var model = new WorkListViewModel
             {
+                id = wl.WorkListId,
                 name = wl.Name,
                 user = wl.User,
                 dateCreated = wl.Date,
@@ -112,8 +117,25 @@ namespace Receipt.Controllers
                 }).ToList()
             };
 
+
             return View(model);
         }
 
+        [HttpGet]
+        public ActionResult deleteReceipt(int id)
+        {
+            var rec = dc.Receipts.Where(w => w.ReceiptId == id).SingleOrDefault();
+            rec.Articles.ToList().ForEach(a => {
+                dc.Article.Remove(a);
+            });
+            var workListId = rec.WorkList.WorkListId;
+            rec.WorkList.Receipts.Remove(rec);
+
+            dc.Receipts.Remove(rec);
+            dc.SaveChanges();
+
+            return RedirectToAction("Details", new { id = workListId });
+
+        }
     }
 }
