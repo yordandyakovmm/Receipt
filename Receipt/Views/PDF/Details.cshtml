@@ -4,19 +4,19 @@
 
     <div class="row">
         <div class="col-lg-12" style="padding-top: 40px; padding-bottom: 40px;">
-            <img src="/">
+            <img src="" id="qr" />
         </div>
     </div>
     <div class="row">
         <div class="col-lg-6">
-            <a class="btn btn-danger" onclick="" href="@Model.url">
+            <a class="btn btn-success btn-lg" onclick="" href="@Model.url">
                 <span class="glyphicon glyphicon-download">
                 </span>Свали
             </a>
 
         </div>
         <div class="col-lg-6">
-            <a class="btn btn-danger" onclick="" href="@Model.url">
+            <a class="btn btn-danger btn-lg" onclick="" href="@Model.url">
                 <span class="glyphicon glyphicon-download">
                 </span>Свали
             </a>
@@ -26,10 +26,10 @@
 <script type="text/javascript" src="~/Scripts/jquery.qrcode.min.js"></script>
 
 <script>
-    $(selector).qrcode(options);
-    var a = {
+    
+    var options = {
         // render method: 'canvas', 'image' or 'div'
-        render: 'canvas',
+        render: 'image',
 
         // version range somewhere in 1 .. 40
         minVersion: 1,
@@ -77,7 +77,9 @@
         fontcolor: '#000',
 
         image: null
-    }
+    };
+
+    $('#qr').qrcode(options);
 </script>
 
 

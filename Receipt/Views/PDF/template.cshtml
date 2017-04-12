@@ -1,1 +1,11 @@
-﻿<h2> Hello </h2>
+﻿@model Receipt.Models.WorkListViewModel
+
+@foreach (var c in Model.receipts)
+{
+    <div style="position: absolute; left: 50%; transform: translate(-50%, 10px); border-style:dotted; border-width: thin;">
+        <div style="  transform: scale(0.8, 0.8);">
+            @Model.name
+            @*@Html.Partial("Receipt", model: c)*@
+        </div>
+    </div>
+}

@@ -6,6 +6,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
+using System.IO;
 
 namespace Receipt.Controllers
 {
@@ -125,7 +126,8 @@ namespace Receipt.Controllers
         public ActionResult deleteReceipt(int id)
         {
             var rec = dc.Receipts.Where(w => w.ReceiptId == id).SingleOrDefault();
-            rec.Articles.ToList().ForEach(a => {
+            rec.Articles.ToList().ForEach(a =>
+            {
                 dc.Article.Remove(a);
             });
             var workListId = rec.WorkList.WorkListId;
@@ -137,5 +139,69 @@ namespace Receipt.Controllers
             return RedirectToAction("Details", new { id = workListId });
 
         }
+
+        [HttpGet]
+        public ActionResult generatePdf(int id)
+        {
+            var wl = dc.WorkList.Where(w => w.WorkListId == id).SingleOrDefault();
+            var model = new WorkListViewModel
+            {
+                id = wl.WorkListId,
+                name = wl.Name,
+                user = wl.User,
+                dateCreated = wl.Date,
+                isActive = wl.IsActive,
+                receipts = wl.Receipts.Select(receipt => new ReceiptViewModel
+                {
+                    CompanyId = receipt.Company.CompanyId,
+                    ReceiptId = receipt.ReceiptId,
+                    Articles = receipt.Articles.Select(a => new ArticleViewModel
+                    {
+                        ArticleName = a.Name,
+                        Price = a.Price
+                    }).ToList(),
+                    Company = new CompanyViewModel
+                    {
+                        CompanyId = receipt.Company.CompanyId,
+                        Name = receipt.Company.Name,
+                        Address = receipt.Company.Address,
+                        Eik = receipt.Company.Bulstat,
+                        Description = receipt.Company.Description
+                    },
+                    Operator = receipt.OperatorS,
+                    Date = receipt.Date
+                }).ToList()
+            };
+
+            Random r = new Random();
+            string securityCode = r.Next(1, 1000000).ToString("000000");
+
+            var userID = User.Identity.GetUserId();
+            var _user = dc.Users.Where(u => u.Id == userID).SingleOrDefault();
+            var name = string.Format("{0}-{1}-{2}", wl.Name.Replace(" ", "") != "" ? wl.Name : "####", DateTime.Now.ToString("dd.MM.yyyy"), securityCode);
+            var url = string.Format("{0}/Content/pdf/{1}.pdf", GetBaseUrl(), name);
+            byte[] data = Hellper.PdfGenerator.GeneratePdf(model);
+            var pdf = new Pdf
+            {
+                Date = DateTime.Now,
+                Name = name,
+                securityCode = securityCode,
+                User = _user,
+                url = url
+            };
+            dc.Pdfs.Add(pdf);
+            dc.SaveChanges();
+            var path = Path.Combine(Server.MapPath("~/Content/pdf/"), name + ".pdf");
+            System.IO.File.WriteAllBytes(path, data);
+
+            return RedirectToAction("Details", "pdf", new { id = pdf.PdfId});
+
+        }
+
+        private string GetBaseUrl()
+        {
+            return Request.Url.AbsoluteUri.Replace(Request.Url.PathAndQuery, "");
+        }
+
     }
 }

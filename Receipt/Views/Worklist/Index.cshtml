@@ -17,32 +17,40 @@
             </a>
         </div>
     </div>
-    <div class="list-group">
-        @foreach (var c in Model)
+
+
+    <table class="table table-hover table-striped">
+        <tbody>
+            @foreach (var c in Model)
             {
-            <div class="row well well-sm @(c.IsActive ? "bg-success" : "")">
-                <div class="col-lg-3">
-                    @(c.Name == "" ? "--" : c.Name)
-                </div>
-                <div class="col-lg-3 te">
-                    @c.Date.ToShortDateString()
-                </div>
-                <div class="col-lg-3">
-                    @(c.User != null ? c.User.FirstName : "")
-                </div>
-                <div class="col-lg-3">
-                    <a class="btn btn-default btn-sm" onclick="" href="/worklist/details/@c.WorkListId">
-                        <span class="glyphicon glyphicon-compressed">
-                        </span>Детаили
-                    </a>
-                    <a class="btn btn-default btn-sm" @(c.IsActive ? "disabled" : "") onclick="SetActive(@c.WorkListId)" href="javascript:void(0)">
-                        <span class="glyphicon glyphicon-adjust">
-                        </span>Активирай
-                    </a>
-                </div>
-            </div>
-        }
-    </div>
+
+                <tr class='@(@c.IsActive ? "success" : "")'>
+                    <td>
+                        @if (c.IsActive)
+                        {
+                            <span class='glyphicon glyphicon-check'></span>
+                        }
+                    </td>
+                    <td><span class="badge">@c.Receipts.Count()</span></td>
+                    <td>@(c.Name == "" ? "--" : c.Name)</td>
+                    <td>@c.Date.ToString("dd.mm.yyyy")</td>
+                    <td>@(c.User != null ? c.User.FirstName : "")</td>
+                    <td align="right">
+                        <a class="btn btn-default btn-sm" onclick="" href="/worklist/details/@c.WorkListId">
+                            <span class="glyphicon glyphicon-compressed">
+                            </span>Детаили
+                        </a>
+                        <a class="btn btn-default btn-sm" @(c.IsActive ? "disabled" : "") onclick="SetActive(@c.WorkListId)" href="javascript:void(0)">
+                            <span class="glyphicon glyphicon-adjust">
+                            </span>Активирай
+                        </a>
+                    </td>
+                </tr>
+
+            }
+        </tbody>
+
+    </table>
 
 
 </div>
@@ -55,17 +63,17 @@
                 <h4 class="modal-title" id="myModalLabel">Добавяне</h4>
             </div>
             <div id="modal-body" class="modal-body">
+                <input type="hidden" id="iId" value="0">
                 <div class="form-group">
-                    <label class="control-label">Име</label>
+                    <label class="control-label col-md-1" style="margin-top:5px; margin-left:20px;">Име</label>
                     <div class="col-md-10">
-                        <input type="hidden" id="iId" value="0">
                         <input type="text" class="form-control" id="iName" />
                     </div>
                 </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Отказ</button>
-                <button id="save-btn" type="button" onclick="submitSave(this)" class="btn btn-primary"></button>
+                <button id="save-btn" type="button" onclick="submitSave(this)" class="btn btn-primary">Добави</button>
             </div>
         </div>
     </div>

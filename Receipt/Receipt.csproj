@@ -443,7 +443,9 @@
   <ItemGroup>
     <Content Include="Scripts\jquery-1.10.2.min.map" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Content\pdf\" />
+  </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201703241701445_Initial.resx">
       <DependentUpon>201703241701445_Initial.cs</DependentUpon>

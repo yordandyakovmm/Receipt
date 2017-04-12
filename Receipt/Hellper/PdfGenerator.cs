@@ -24,14 +24,13 @@ namespace Receipt.Hellper
                 }),
             };
             config.Namespaces.Add("System.Web");
-            config.Namespaces.Add("TsiLicenseManager.Web.Common");
-            config.Namespaces.Add("TsiLicenseManager.Web.Resources");
-            config.Namespaces.Add("TsiLicenseManager.Web.ViewModels.RedemptionCodes");
-
+            config.Namespaces.Add("Receipt.Models");
+           
             Engine.Razor = RazorEngineService.Create(config);
 
             string body = string.Empty;
-            body = Engine.Razor.RunCompile("/view/pdf/template.cshtml", model.GetType(), model, null);
+            
+            body = Engine.Razor.RunCompile("/views/pdf/template.cshtml", model.GetType(), model, null);
             return body;
         }
 
