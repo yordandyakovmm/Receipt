@@ -29,6 +29,7 @@ namespace Receipt.DataContext
         public DbSet<Receipt> Receipts { get; set; }
         public DbSet<WorkList> WorkList { get; set; }
         public DbSet<Article> Article { get; set; }
+        public DbSet<Pdf> Pdfs { get; set; }
 
     }
 
@@ -125,6 +126,18 @@ namespace Receipt.DataContext
         public virtual ICollection<ProductQuantity> ProductQuantity { get; set; }
     }
 
+    public class Pdf
+    {
+        [Key]
+        public int PdfId { get; set; }
+        public string Name { get; set; }
+        public DateTime Date { get; set; }
+        public string securityCode { get; set; }
+        public string url { get; set; }
 
+        public virtual ApplicationUser User { get; set; }
+
+        
+    }
 
 }

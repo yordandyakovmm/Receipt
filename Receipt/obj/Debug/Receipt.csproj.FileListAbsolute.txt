@@ -304,3 +304,4 @@ D:\Receipts\Receipt\bin\NReco.PdfGenerator.dll
 D:\Receipts\Receipt\bin\RazorEngine.dll
 D:\Receipts\Receipt\bin\NReco.PdfGenerator.xml
 D:\Receipts\Receipt\bin\RazorEngine.xml
+D:\Receipts\Receipt\obj\Debug\Receipt.Migrations.pdf.resources

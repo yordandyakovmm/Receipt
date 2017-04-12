@@ -1,0 +1,152 @@
+﻿@model List<Receipt.DataContext.Pdf>
+@{
+    ViewBag.Title = "Pdf";
+}
+
+<div class="container">
+    <div class="well well-sm">
+        <strong>Търсене</strong>
+        <input typt="text" id="search" class="input-sm" placeholder="Пиши тук за търсене" style="margin-left:10px; min-width:400px" onblur="search(this)" onkeyup="search(this)" />
+        
+    </div>
+    <div id="products" class="row list-group">
+        @foreach (var c in Model)
+        {
+            
+            <div class="item  col-xs-4 col-lg-4">
+                <div style="display:none" id="data">@c.Name|@c.Date</div>
+                <div class="thumbnail">
+                    <img class="group list-group-image" src="~/Content/img/pdf-flat.png" alt="" />
+                    <div class="caption">
+                        <h4 class="group inner list-group-item-heading">
+                            @c.User.FirstName
+                        </h4>
+                        <p class="group inner list-group-item-text list hide">
+                            (@c.Name == "" ? "###" : @c.Name 
+                        </p>
+                        <p class="lead list hide">
+                            
+                        </p>
+                        <div class="row grid">
+                            <div class="col-xs-12 col-md-6">
+                                <a class="btn btn-danger" onclick="" href="@c.url">
+                                    <span class="glyphicon glyphicon-download">
+                                    </span>Свали
+                                </a>
+                            </div>
+                            <div class="col-xs-12 col-md-6">
+                                 <a class="btn btn-danger" onclick="" href="@c.url">
+                                    <span class="glyphicon glyphicon-download">
+                                    </span>Свали
+                                </a>
+                                <a style="float:right" class="btn btn-success " href="/pdf/details/@c.PdfId">
+                                    <span class="glyphicon glyphicon-barcode">
+                                    </span>Детайли
+                                </a>
+                            </div>
+                        </div>
+                       
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">Добавяне</h4>
+                </div>
+                <div id="modal-body" class="modal-body">
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Отказ</button>
+                    <button id="save-btn" type="button" onclick="submitSave(this)" class="btn btn-primary"></button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+
+    function search(obj) {
+        var text = $(obj).val().toLowerCase();
+        if (text == '' || text.length < 3) {
+            $('.item').show();
+        }
+        else {
+            $('.item').hide();
+            $('.item').each(function (index) {
+                if ($(this).find('#data:contains("' + text + '")').length > 0) {
+                    $(this).show();
+                }
+            });
+        }
+    }
+
+    
+</script>
+<style type="text/css">
+    .hide {
+        display: none;
+    }
+
+    .glyphicon {
+        margin-right: 5px;
+    }
+
+    .thumbnail {
+        margin-bottom: 20px;
+        padding: 0px;
+        -webkit-border-radius: 0px;
+        -moz-border-radius: 0px;
+        border-radius: 0px;
+    }
+
+    .item.list-group-item {
+        float: none;
+        width: 100%;
+        background-color: #fff;
+        margin-bottom: 10px;
+    }
+
+        .item.list-group-item:nth-of-type(odd):hover, .item.list-group-item:hover {
+            background: #428bca;
+        }
+
+        .item.list-group-item .list-group-image {
+            margin-right: 10px;
+        }
+
+        .item.list-group-item .thumbnail {
+            margin-bottom: 0px;
+        }
+
+        .item.list-group-item .caption {
+            padding: 9px 9px 0px 9px;
+        }
+
+        .item.list-group-item:nth-of-type(odd) {
+            background: #eeeeee;
+        }
+
+        .item.list-group-item:before, .item.list-group-item:after {
+            display: table;
+            content: " ";
+        }
+
+        .item.list-group-item img {
+            float: left;
+        }
+
+        .item.list-group-item:after {
+            clear: both;
+        }
+
+    .list-group-item-text {
+        margin: 0 0 11px;
+    }
+</style>

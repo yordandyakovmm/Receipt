@@ -1,68 +1,84 @@
-﻿@model List<Receipt.Models.CompanyViewModel>
+﻿@model Receipt.DataContext.Pdf
 
-@foreach (var c in Model)
-{
-    var BS = "BG" + c.Eik;
-    <div class="item  col-xs-4 col-lg-4">
-        <div class="thumbnail">
-            <img class="group list-group-image" src="http://placehold.it/400x250/000/fff" alt="" />
-            <div class="caption">
-                <h4 class="group inner list-group-item-heading">
-                    @c.Name
-                </h4>
-                <p class="group inner list-group-item-text">
-                    @c.Address
-                </p>
-                <p class="group inner list-group-item-text list hide">
-                    @c.Description
-                </p>
-                <p class="lead list hide">
-                    @BS
-                </p>
-                <div class="row grid">
-                    <div class="col-xs-12 col-md-6">
-                        <p class="lead">
-                            @BS
-                        </p>
-                    </div>
-                    <div class="col-xs-12 col-md-6">
-                        <a class="btn btn-default btn-sm" onclick="if(confirm('Изтриване на @c.Name')){deleteCompamy(@c.CompanyId, this)}" href="javascript:void(0)">
-                            <span class="glyphicon glyphicon-trash">
-                            </span>
-                        </a>
-                        <a class="btn btn-default btn-sm" onclick="loadModal(@c.CompanyId)" href="javascript:void(0)" data-toggle="modal" data-target="#myModal">
-                            <span class="glyphicon glyphicon-edit">
-                            </span>
-                        </a>
-                        <a style="float:right" class="btn btn-default btn-sm" onclick="alert('Не е готово')" href="javascript:void(0)">
-                            <span class="glyphicon glyphicon-barcode">
-                            </span>
-                        </a>
-                    </div>
-                </div>
-                <div class="row list hide">
-                    <div style="height:auto">
-                    </div>
-                    <div class="col-xs-24 col-md-12">
-                        <a class="btn btn-danger" onclick="if(confirm('Изтриване на @c.Name')){deleteCompamy(@c.CompanyId, this)}" href="javascript:void(0)">
-                            <span class="glyphicon glyphicon-trash">
-                            </span>
-                        </a>
-                        <a class="btn btn-success" onclick="loadModal(@c.CompanyId)" href="javascript:void(0)" data-toggle="modal" data-target="#myModal">
-                            <span class="glyphicon glyphicon-edit">
-                            </span>Редакция
-                        </a>
-                        <a style="float:right" class="btn btn-warning" onclick="alert('Не е готово')" href="javascript:void(0)">
-                            <span class="glyphicon glyphicon-barcode">
-                            </span>Добави
-                        </a>
-                    </div>
-                </div>
+<div class="container">
 
-            </div>
+    <div class="row">
+        <div class="col-lg-12" style="padding-top: 40px; padding-bottom: 40px;">
+            <img src="/">
         </div>
     </div>
-}
+    <div class="row">
+        <div class="col-lg-6">
+            <a class="btn btn-danger" onclick="" href="@Model.url">
+                <span class="glyphicon glyphicon-download">
+                </span>Свали
+            </a>
+
+        </div>
+        <div class="col-lg-6">
+            <a class="btn btn-danger" onclick="" href="@Model.url">
+                <span class="glyphicon glyphicon-download">
+                </span>Свали
+            </a>
+        </div>
+    </div>
+</div>
+<script type="text/javascript" src="~/Scripts/jquery.qrcode.min.js"></script>
+
+<script>
+    $(selector).qrcode(options);
+    var a = {
+        // render method: 'canvas', 'image' or 'div'
+        render: 'canvas',
+
+        // version range somewhere in 1 .. 40
+        minVersion: 1,
+        maxVersion: 40,
+
+        // error correction level: 'L', 'M', 'Q' or 'H'
+        ecLevel: 'L',
+
+        // offset in pixel if drawn onto existing canvas
+        left: 0,
+        top: 0,
+
+        // size in pixel
+        size: 200,
+
+        // code color or image element
+        fill: '#000',
+
+        // background color or image element, null for transparent background
+        background: null,
+
+        // content
+        text: 'no text',
+
+        // corner radius relative to module width: 0.0 .. 0.5
+        radius: 0,
+
+        // quiet zone in modules
+        quiet: 0,
+
+        // modes
+        // 0: normal
+        // 1: label strip
+        // 2: label box
+        // 3: image strip
+        // 4: image box
+        mode: 0,
+
+        mSize: 0.1,
+        mPosX: 0.5,
+        mPosY: 0.5,
+
+        label: 'no label',
+        fontname: 'sans',
+        fontcolor: '#000',
+
+        image: null
+    }
+</script>
 
 
 

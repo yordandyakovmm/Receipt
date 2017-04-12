@@ -195,6 +195,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\PdfController.cs" />
     <Compile Include="Controllers\WorklistController.cs" />
     <Compile Include="Controllers\ReceiptController.cs" />
     <Compile Include="Controllers\Companies.cs" />
@@ -224,6 +225,10 @@
     <Compile Include="Migrations\201704091158588_updatereceit.cs" />
     <Compile Include="Migrations\201704091158588_updatereceit.Designer.cs">
       <DependentUpon>201704091158588_updatereceit.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201704121555216_pdf.cs" />
+    <Compile Include="Migrations\201704121555216_pdf.Designer.cs">
+      <DependentUpon>201704121555216_pdf.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -266,6 +271,7 @@
     <Content Include="Content\img\index33.jpg" />
     <Content Include="Content\img\index4.jpg" />
     <Content Include="Content\img\index5.jpg" />
+    <Content Include="Content\img\pdf-flat.png" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -364,6 +370,9 @@
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
+    <Content Include="Scripts\jquery.qrcode.js" />
+    <Content Include="Scripts\jquery.qrcode.min.js" />
+    <Content Include="Scripts\jquery.qrcode.min.js.map" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
@@ -375,6 +384,8 @@
     <Content Include="Scripts\moment.js" />
     <Content Include="Scripts\moment.min.js" />
     <Content Include="Scripts\npm.js" />
+    <Content Include="Scripts\qrcode.js" />
+    <Content Include="Scripts\qrcode.min.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Web.config" />
@@ -420,6 +431,8 @@
     <Content Include="Views\Worklist\Index.cshtml" />
     <Content Include="Views\PDF\Details.cshtml" />
     <Content Include="Views\PDF\template.cshtml" />
+    <Content Include="Views\PDF\Index.cshtml" />
+    <Content Include="Scripts\qrcode.min.js.map" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
@@ -446,6 +459,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201704091158588_updatereceit.resx">
       <DependentUpon>201704091158588_updatereceit.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201704121555216_pdf.resx">
+      <DependentUpon>201704121555216_pdf.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
