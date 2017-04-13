@@ -16,7 +16,7 @@
             <div class="item  col-xs-4 col-lg-4">
                 <div style="display:none" id="data">@c.Name|@c.Date</div>
                 <div class="thumbnail">
-                    <img class="group list-group-image" src="~/Content/img/pdf-flat.png" alt="" />
+                    <img class="group list-group-image" height="200" src="~/Content/img/pdf-flat.png" alt="" />
                     <div class="caption">
                         <h4 class="group inner list-group-item-heading">
                             @c.User.FirstName
@@ -28,18 +28,18 @@
                             
                         </p>
                         <div class="row grid">
-                            <div class="col-xs-12 col-md-6">
-                                <a class="btn btn-danger" onclick="" href="@c.url">
+                            <div class="col-xs-10 col-md-5">
+                                <a class="btn btn-danger btn-sm" onclick="" href="@c.url">
                                     <span class="glyphicon glyphicon-download">
                                     </span>Свали
                                 </a>
                             </div>
-                            <div class="col-xs-12 col-md-6">
-                                 <a class="btn btn-danger" onclick="" href="@c.url">
-                                    <span class="glyphicon glyphicon-download">
-                                    </span>Свали
+                            <div class="col-xs-14 col-md-7">
+                                 <a class="btn btn-warning btn-sm" onclick="" href="@c.url" target="_blank">
+                                    <span class="glyphicon glyphicon-camera">
+                                    </span>Преглед
                                 </a>
-                                <a style="float:right" class="btn btn-success " href="/pdf/details/@c.PdfId">
+                                <a style="float:right" class="btn btn-success btn-sm" href="/pdf/details/@c.PdfId">
                                     <span class="glyphicon glyphicon-barcode">
                                     </span>Детайли
                                 </a>
@@ -104,12 +104,13 @@
         -webkit-border-radius: 0px;
         -moz-border-radius: 0px;
         border-radius: 0px;
+        background-color: #333;
     }
 
     .item.list-group-item {
         float: none;
         width: 100%;
-        background-color: #fff;
+        background-color: #777;
         margin-bottom: 10px;
     }
 
@@ -130,7 +131,7 @@
         }
 
         .item.list-group-item:nth-of-type(odd) {
-            background: #eeeeee;
+            background: #777777;
         }
 
         .item.list-group-item:before, .item.list-group-item:after {

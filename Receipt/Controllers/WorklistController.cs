@@ -178,7 +178,7 @@ namespace Receipt.Controllers
 
             var userID = User.Identity.GetUserId();
             var _user = dc.Users.Where(u => u.Id == userID).SingleOrDefault();
-            var name = string.Format("{0}-{1}-{2}", wl.Name.Replace(" ", "") != "" ? wl.Name : "####", DateTime.Now.ToString("dd.MM.yyyy"), securityCode);
+            var name = string.Format("{0}-{1}-{2}", wl.Name.Replace(" ", "") != "" ? wl.Name : "XXXXXX", DateTime.Now.ToString("dd.MM.yyyy"), securityCode);
             var url = string.Format("{0}/Content/pdf/{1}.pdf", GetBaseUrl(), name);
             byte[] data = Hellper.PdfGenerator.GeneratePdf(model);
             var pdf = new Pdf
