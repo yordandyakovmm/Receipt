@@ -6,6 +6,7 @@ using RazorEngine.Text;
 using System;
 using System.IO;
 using System.Web.Hosting;
+using System.Collections.Generic;
 
 namespace Receipt.Hellper
 {
@@ -23,9 +24,13 @@ namespace Receipt.Hellper
                     return content;
                 }),
             };
+            config.Namespaces.Add("System");
             config.Namespaces.Add("System.Web");
+            config.Namespaces.Add("System.Linq");
             config.Namespaces.Add("Receipt.Models");
-           
+            config.Namespaces.Add("System.Collections");
+            config.Namespaces.Add("System.Collections.Generic");
+
             Engine.Razor = RazorEngineService.Create(config);
 
             string body = string.Empty;

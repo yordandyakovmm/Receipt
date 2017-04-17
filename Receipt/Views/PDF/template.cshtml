@@ -1,6 +1,9 @@
 ﻿@model Receipt.Models.WorkListViewModel
 
 <html>
+<head>
+    <meta charset="utf-8" />
+</head>
 <body>
 
     <div style="text-align:center">
@@ -10,15 +13,15 @@
     </div>
     <div>
         @foreach (var c in Model.receipts)
-        {
+            {
             <div class="dotet">
                 <div class="rfont main">
                     <div style="text-align: center; font-size:3mm">@c.Company.Name</div>
                     <div style="text-align: center">@(c.Company.City + ", " + c.Company.Address)</div>
                     <div style="text-align: center">ЕИК: @c.Company.Eik</div>
-                    <div style="text-align: center; font-size:3mm">@c.Company.Name</div>
+                    <div style="text-align: center; font-size:3mm">c.Company.Name</div>
                     <div style="text-align: center">@(c.Company.City + ", " + c.Company.Address)</div>
-                    <div style="text-align: center">@("ЗДДС: N:BG" + @c.Company.Eik)</div>
+                    <div style="text-align: center">@("ЗДДС: N:BG" + c.Company.Eik)</div>
                     <div style="min-height:2mm">&nbsp;</div>
                     <div class="aParent">
                         <div style="width:20%; text-align:left; display: inline-block;" class="allCaps">
@@ -32,7 +35,7 @@
                         </div>
                     </div>
                     <div style="min-height:2mm">&nbsp;</div>
-                    @foreach (var cc in c)
+                    @foreach (var cc in c.Articles)
                     {
                         <div class="aParent allCaps">
                             <div style="width:80%; text-align:left; display: inline-block;">

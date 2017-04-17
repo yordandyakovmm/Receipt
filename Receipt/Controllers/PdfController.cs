@@ -31,5 +31,18 @@ namespace Receipt.Controllers
             var model = dc.Pdfs.Where(p => p.PdfId == id).SingleOrDefault();
             return View(model);
         }
+
+        public ActionResult Download(string file)
+        {
+            file += ".pdf";
+            string filePath = Server.MapPath("~/Content/pdf/") + file;
+            Response.Clear();
+            Response.ContentType = "application/pdf";
+            Response.AppendHeader("Content-Disposition", "attachment; filename=foo.pdf");
+            Response.TransmitFile(filePath);
+            Response.End();
+            return null;
+        }
+
     }
 }
