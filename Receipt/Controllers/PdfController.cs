@@ -29,6 +29,7 @@ namespace Receipt.Controllers
         public ActionResult Details(int id)
         {
             var model = dc.Pdfs.Where(p => p.PdfId == id).SingleOrDefault();
+            ViewBag.link = GetBaseUrl() + "/pdf/download/?file=" + model.Name;
             return View(model);
         }
 
@@ -42,6 +43,11 @@ namespace Receipt.Controllers
             Response.TransmitFile(filePath);
             Response.End();
             return null;
+        }
+
+        private string GetBaseUrl()
+        {
+            return Request.Url.AbsoluteUri.Replace(Request.Url.PathAndQuery, "");
         }
 
     }
