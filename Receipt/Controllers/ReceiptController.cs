@@ -3,6 +3,7 @@ using Receipt.DataContext;
 using Receipt.Models;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -31,6 +32,8 @@ namespace Receipt.Controllers
                 {
                     CompanyId = receipt.Company.CompanyId,
                     ReceiptId = receipt.ReceiptId,
+                    BugNumber = Hellper.Hellper.GenerateBigNumber(),
+                    Number = "0000000",
                     Articles = receipt.Articles.Select(a => new ArticleViewModel
                     {
                         ArticleName = a.Name,
@@ -51,16 +54,32 @@ namespace Receipt.Controllers
                         Name = receipt.Company.Name,
                         Address = receipt.Company.Address,
                         Eik = receipt.Company.Bulstat,
-                        Description = receipt.Company.Description
+                        Description = receipt.Company.Description,
+                        City = receipt.Company.City,
+                        LeftNumber = receipt.Company.LeftNumber,
+                        RigthNumber = receipt.Company.RigthNumber
                     },
                     Operator = receipt.OperatorS,
-                    Date = receipt.Date
+                    Date = receipt.Date,
+                    DateF = receipt.Date.ToString("dd-MM-yyyy hh:mm:ss")
                 };
                 return View(model);
             }
+            var company = dc.Companies.Where(c => c.CompanyId == companyId).SingleOrDefault();
             model = new ReceiptViewModel
             {
-                CompanyId = 0,
+                CompanyId = companyId.HasValue ? companyId.Value : 0,
+                BugNumber = Hellper.Hellper.GenerateBigNumber(),
+                Company = companyId.HasValue ? new CompanyViewModel {
+                    CompanyId = company.CompanyId,
+                    Name = company.Name,
+                    Address = company.Address,
+                    Eik = company.Bulstat,
+                    Description = company.Description,
+                    City = company.City,
+                    LeftNumber = company.LeftNumber,
+                    RigthNumber = company.RigthNumber
+                } : null,
                 ReceiptId = 0,
                 Articles = new List<ArticleViewModel>(),
                 Companies = dc.Companies.Select(c => new CompanyViewModel
@@ -88,6 +107,8 @@ namespace Receipt.Controllers
                 var _user = dc.Users.Where(u => u.Id == userID).SingleOrDefault();
                 var company = dc.Companies.Where(c => c.CompanyId == model.CompanyId).SingleOrDefault();
 
+                
+
                 Receipt.DataContext.Receipt receipt = new Receipt.DataContext.Receipt()
                 {
                     Date = (DateTime)model.Date,
@@ -110,7 +131,7 @@ namespace Receipt.Controllers
 
 
 
-                var wl = dc.WorkList.Where(w => w.User.Id == userID && w.IsActive).SingleOrDefault();
+                var wl = dc.WorkLists.Where(w => w.User.Id == userID && w.IsActive).SingleOrDefault();
 
                 if (wl == null)
                 {

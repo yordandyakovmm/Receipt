@@ -1,11 +1,153 @@
 ﻿@model Receipt.Models.WorkListViewModel
 
-@foreach (var c in Model.receipts)
-{
-    <div style="position: absolute; left: 50%; transform: translate(-50%, 10px); border-style:dotted; border-width: thin;">
-        <div style="  transform: scale(0.8, 0.8);">
-            @Model.name
-            @*@Html.Partial("Receipt", model: c)*@
-        </div>
+<html>
+<body>
+
+    <div style="text-align:center">
+        <h4>
+            Образец за сканиране на белажките за отчета
+        </h4>
     </div>
-}
+    <div>
+        @foreach (var c in Model.receipts)
+        {
+            <div class="dotet">
+                <div class="rfont main">
+                    <div style="text-align: center; font-size:3mm">@c.Company.Name</div>
+                    <div style="text-align: center">@(c.Company.City + ", " + c.Company.Address)</div>
+                    <div style="text-align: center">ЕИК: @c.Company.Eik</div>
+                    <div style="text-align: center; font-size:3mm">@c.Company.Name</div>
+                    <div style="text-align: center">@(c.Company.City + ", " + c.Company.Address)</div>
+                    <div style="text-align: center">@("ЗДДС: N:BG" + @c.Company.Eik)</div>
+                    <div style="min-height:2mm">&nbsp;</div>
+                    <div class="aParent">
+                        <div style="width:20%; text-align:left; display: inline-block;" class="allCaps">
+                            @c.Operator.Split(new[] { " " }, StringSplitOptions.None)[0]
+                        </div>
+                        <div style="width:60%; text-align:left; display: inline-block;" class="allCaps">
+                            @c.Operator.Split(new[] { " " }, StringSplitOptions.None)[1]
+                        </div>
+                        <div style="width:20%; text-align:right; display: inline-block;">
+                            @c.Operator.Split(new[] { " " }, StringSplitOptions.None)[2]
+                        </div>
+                    </div>
+                    <div style="min-height:2mm">&nbsp;</div>
+                    @foreach (var cc in c)
+                    {
+                        <div class="aParent allCaps">
+                            <div style="width:80%; text-align:left; display: inline-block;">
+                                @cc.ArticleName
+                            </div>
+                            <div style="width:20%; text-align:right; display: inline-block;">
+                                @cc.Price.ToString("0.00")
+                            </div>
+                        </div>
+                    }
+                    <div style="text-align: center">---------------------------------------------------------</div>
+                    <div class="aParent allCaps tbold">
+                        <div style="width:40%; text-align:left; display: inline-block;">
+                            ОБЩО
+                        </div>
+                        <div style="width:60%; text-align:right; display: inline-block;">
+                            @c.Articles.Sum(a => a.Price).ToString("0.00")
+                        </div>
+                    </div>
+                    <div class="aParent allCaps">
+                        <div style="width:80%; text-align:left; display: inline-block;">
+                            В БРОЙ
+                        </div>
+                        <div style="width:20%; text-align:right; display: inline-block;">
+                            @c.Articles.Sum(a => a.Price).ToString("0.00")
+                        </div>
+                    </div>
+                    <div style="text-align: center">Б Л А Г О Д А Р И М &nbsp;&nbsp; В И !</div>
+                    <div style="text-align: center">@c.Articles.Count() @(c.Articles.Count() == 1 ? "АРТИКУЛ" : "АРТИКУЛА")</div>
+                    <div class="aParent allCaps">
+                        <div style="width:20%; text-align:left; display: inline-block;">
+                            0000000
+                        </div>
+                        <div style="width:80%; text-align:right; display: inline-block;">
+                            @c.DateF
+                        </div>
+                    </div>
+                    <div class="aParent allCaps">
+                        <div style="width:18%; text-align:center; display: inline-block;">
+                            <img class="img" src="~/Content/img/bg.png">
+                        </div>
+                        <div class="tbold" style="width:82%; text-align:left; display: inline-block;">
+                            ФИСКАЛЕН БОН
+                        </div>
+
+                    </div>
+                    <div class="aParent allCaps">
+                        <div style="width:50%; text-align:left; display: inline-block;">
+                            @c.Company.LeftNumber
+                        </div>
+                        <div style="width:50%; text-align:right; display: inline-block;">
+                            @c.Company.RigthNumber
+                        </div>
+                    </div>
+                    <div class="clearFix smalFont">@c.BugNumber</div>
+                </div>
+            </div>
+
+        }
+    </div>
+
+
+
+    <style type="text/css">
+        .rfont {
+            font-size: 3mm !important;
+            line-height: normal;
+        }
+
+        .smalFont {
+            font-size: 2.5mm;
+        }
+
+        .main {
+            width: 57mm !important;
+            padding: 0;
+            margin: 0;
+            margin-left: 3mm;
+            margin-right: 4mm;
+            margin-top: 8mm;
+            margin-bottom: 8mm;
+        }
+
+        .dotet {
+            padding: 0;
+            margin: 0;
+            border-style: dashed;
+            border-width: 1px;
+        }
+
+        .allCaps {
+            text-transform: uppercase;
+        }
+
+        .aParent div {
+            float: left;
+            clear: none;
+        }
+
+        .tbold {
+            font-weight: bolder;
+            font-size: 4mm;
+        }
+
+        .clearFix {
+            clear: both;
+        }
+
+        .img {
+            height: 4mm;
+        }
+    </style>
+
+
+
+
+</body>
+</html>

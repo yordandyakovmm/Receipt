@@ -26,6 +26,7 @@ namespace Receipt.Controllers
                {
                    CompanyId = c.CompanyId,
                    Name = c.Name,
+                   City = c.City,
                    Address = c.Address,
                    Eik = c.Bulstat,
                    Description = c.Description,
@@ -49,6 +50,7 @@ namespace Receipt.Controllers
                 {
                     CompanyId = company.CompanyId,
                     Name = company.Name,
+                    City = company.City,
                     Address = company.Address,
                     Eik = company.Bulstat,
                     Description = company.Description,
@@ -72,13 +74,19 @@ namespace Receipt.Controllers
 
             if (model.CompanyId == 0)
             {
+                var random = new Random();
+                var numver = random.Next(100000, 999999);
                 var company = new Company
                 {
+                    
                     CompanyId = model.CompanyId,
                     Name = model.Name,
+                    City = model.City,
                     Address = model.Address,
                     Bulstat = model.Eik,
-                    Description = model.Description
+                    LeftNumber = $"DT{numver}",
+                    RigthNumber = $"02{numver}",
+                    Description = model.Description != null ? model.Description : ""
                 };
                 dc.Companies.Add(company);
                 dc.SaveChanges();
@@ -87,9 +95,10 @@ namespace Receipt.Controllers
             {
                 var company = dc.Companies.Where(c => c.CompanyId == model.CompanyId).SingleOrDefault();
                 company.Address = model.Address;
+                company.City = model.City;
                 company.Name = model.Name;
                 company.Bulstat = model.Eik;
-                company.Description = model.Description;
+                company.Description = model.Description != null ? model.Description : "";
                 dc.SaveChanges();
             }
 

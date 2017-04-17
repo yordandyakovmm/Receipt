@@ -118,6 +118,10 @@ namespace Receipt.Models
 
         public bool Selected { get; set; }
 
+        public string LeftNumber { get; set; }
+
+        public string RigthNumber { get; set; }
+
     }
 
 
@@ -144,6 +148,12 @@ namespace Receipt.Models
 
         public string Operator { get; set; }
 
+        public string DateF { get; set; }
+
+        public string Number { get; set; }
+
+        public string BugNumber { get; set; }
+
     }
 
 
@@ -167,6 +177,21 @@ namespace Receipt.Models
         public DateTime  dateCreated { get; set; }
 
         public ApplicationUser user { get; set; }
+
+    }
+
+    public class UserViewModel
+    {
+       
+        public string userID { get; set; }
+
+        [Display(Name = "Име")]
+        public string FirstName { get; set; }
+
+        [Display(Name = "Фамиля")]
+        public string LastName { get; set; }
+
+        
 
     }
 

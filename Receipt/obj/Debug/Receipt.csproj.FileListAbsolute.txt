@@ -310,3 +310,6 @@ E:\Code\Receipt\Receipt\bin\RazorEngine.dll
 E:\Code\Receipt\Receipt\bin\NReco.PdfGenerator.xml
 E:\Code\Receipt\Receipt\bin\RazorEngine.xml
 E:\Code\Receipt\Receipt\obj\Debug\Receipt.Migrations.pdf.resources
+E:\Code\Receipt\Receipt\obj\Debug\Receipt.Migrations.addcity.resources
+E:\Code\Receipt\Receipt\obj\Debug\Receipt.Migrations.test.resources
+E:\Code\Receipt\Receipt\obj\Debug\Receipt.Migrations.atricle.resources

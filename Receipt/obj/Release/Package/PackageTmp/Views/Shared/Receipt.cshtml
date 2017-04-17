@@ -1,0 +1,26 @@
+﻿@model Receipt.Models.ReceiptViewModel
+
+@if (Model.Company != null)
+{
+<div  padding:0; margin:0; width: 20em">
+    <div style="text-align: center">Папур груп ООД</div>
+    <div style="text-align: center">ЕИК: 563456456</div>
+    <div style="text-align: center">гр. Горна Оряховица</div>
+    <div style="text-align: center">ул. Бузлоджа #2 ET.3</div>
+    <div style="width:100%">
+        <div style="width:15%; text-align:left; display: inline-block;">
+            01
+        </div>
+        <div style="width:70%; text-align:center; display: inline-block;">
+            ОПЕРАТОР
+        </div>
+        <div style="width:15%; display: inline-block;">
+
+        </div>
+    </div>
+</div>
+}
+else
+{
+    <label class="glyphicon-ban-circle" />
+}

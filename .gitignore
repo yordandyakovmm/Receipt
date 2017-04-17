@@ -253,3 +253,5 @@ Receipt/obj/Release/TransformWebConfig/assist/Web.config
 Receipt/obj/Release/TransformWebConfig/original/Web.config
 Receipt/obj/Release/TransformWebConfig/transformed/Web.config
 Receipt/obj/Release/_WPPLastBuildInfo.txt
+Receipt/bin/
+packages/

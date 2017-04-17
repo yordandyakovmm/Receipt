@@ -33,7 +33,7 @@
                     </td>
                     <td><span class="badge">@c.Receipts.Count()</span></td>
                     <td>@(c.Name == "" ? "--" : c.Name)</td>
-                    <td>@c.Date.ToString("dd.mm.yyyy")</td>
+                    <td>@c.Date.ToString("dd.MM.yyyy")</td>
                     <td>@(c.User != null ? c.User.FirstName : "")</td>
                     <td align="right">
                         <a class="btn btn-default btn-sm" onclick="" href="/worklist/details/@c.WorkListId">

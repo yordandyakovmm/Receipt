@@ -27,21 +27,29 @@ namespace Receipt.DataContext
         public DbSet<Product> Products { get; set; }
         public DbSet<ProductQuantity> ProductQuantitys{ get; set; }
         public DbSet<Receipt> Receipts { get; set; }
-        public DbSet<WorkList> WorkList { get; set; }
-        public DbSet<Article> Article { get; set; }
+        public DbSet<WorkList> WorkLists { get; set; }
+        public DbSet<Article> Articles { get; set; }
         public DbSet<Pdf> Pdfs { get; set; }
 
     }
 
     public class Company
     {
+        public Company()
+        {
+            this.Receipts = new List<Receipt>();
+        }
+
         [Key]
         public int CompanyId { get; set; }
         public string Name { get; set; }
+        public string City { get; set; }
         public string Bulstat { get; set; }
         public string Address { get; set; }
         public string Phone { get; set; }
         public bool Deleted { get; set; }
+        public string LeftNumber { get; set; }
+        public string RigthNumber { get; set; }
         public string Description { get; set; }
         public virtual ApplicationUser User { get; set; }
         public virtual ICollection<Receipt> Receipts { get; set; }
@@ -124,6 +132,7 @@ namespace Receipt.DataContext
         public virtual ApplicationUser Operator { get; set; }
 
         public virtual ICollection<ProductQuantity> ProductQuantity { get; set; }
+
     }
 
     public class Pdf

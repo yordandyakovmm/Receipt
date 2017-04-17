@@ -9,7 +9,7 @@
 {
     <div class="row">
         <div class="col-lg-12" style="padding-top:10px">
-            <p class="h3 panel-body alert-warning text-center">Страничката за детски песнички е закрита</p>
+            <p class="h3 panel-body alert-warning text-center">Страничката за детски  рисунки е закрита</p>
             <p> <img class="img-responsive" src="~/Content/img/Children.jpg" />  </p>
         </div>
     </div>
@@ -73,8 +73,11 @@ else
 
 @{ if (ViewBag.loginError != null)
     {
+      
         <script type="text/javascript">
-            $('#loginLink').click();
+            $(document).ready(function () {
+                $('#loginLink').click();
+            });
         </script>
     }
 }

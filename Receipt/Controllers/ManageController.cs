@@ -220,6 +220,46 @@ namespace Receipt.Controllers
             return View();
         }
 
+        [HttpGet]
+        public ActionResult Users()
+        {
+            var model = UserManager.Users.Select(a => a).ToList();
+            return View(model);
+        }
+
+        [HttpGet]
+        public ActionResult deleteUser(string id)
+        {
+            var user = UserManager.FindByEmail(id);
+            UserManager.Delete(user);
+            return RedirectToAction("Users");
+        }
+
+        [HttpGet]
+        public ActionResult EditUser(string id)
+        {
+            var user = UserManager.FindByEmail(id);
+            var model = new UserViewModel
+            {
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                userID = user.Email
+            };
+            return View(model);
+        }
+
+        [HttpPost]
+        public ActionResult EditUser(UserViewModel model)
+        {
+            var user = UserManager.FindByEmail(model.userID);
+            user.FirstName = model.FirstName;
+            user.LastName = model.LastName;
+            UserManager.Update(user);
+
+            return RedirectToAction("Users");
+
+        }
+
         //
         // POST: /Manage/ChangePassword
         [HttpPost]

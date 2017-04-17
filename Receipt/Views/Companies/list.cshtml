@@ -4,6 +4,7 @@
 {
     var BS = "BG" + c.Eik;
     <div class="item  col-xs-4 col-lg-4">
+        <div style="display:none" id="data">@c.Eik.ToLower()|@c.Address.ToLower()|@c.Name.ToLower()|@c.Description.ToLower()</div>
         <div class="thumbnail">
             <img class="group list-group-image" src="http://placehold.it/400x250/000/fff" alt="" />
             <div class="caption">
@@ -11,7 +12,7 @@
                     @c.Name
                 </h4>
                 <p class="group inner list-group-item-text">
-                    @c.Address
+                    @c.City @c.Address
                 </p>
                 <p class="group inner list-group-item-text list hide">
                     @c.Description
@@ -26,7 +27,7 @@
                         </p>
                     </div>
                     <div class="col-xs-12 col-md-6">
-                        <a class="btn btn-default btn-sm" onclick="if(confirm('Изтриване на @c.Name')){deleteCompamy(@c.CompanyId, this)}" href="javascript:void(0)">
+                        <a @(c.hasReceipt ? "disabled" : "") class="btn btn-default btn-sm" onclick="if(confirm('Изтриване на @c.Name')){deleteCompamy(@c.CompanyId, this)}" href="javascript:void(0)">
                             <span class="glyphicon glyphicon-trash">
                             </span>
                         </a>
@@ -34,17 +35,15 @@
                             <span class="glyphicon glyphicon-edit">
                             </span>
                         </a>
-                        <a style="float:right" class="btn btn-default btn-sm" onclick="alert('Не е готово')" href="javascript:void(0)">
+                        <a style="float:right" class="btn btn-default btn-sm" href="/receipt/?companyId=@c.CompanyId">
                             <span class="glyphicon glyphicon-barcode">
                             </span>
                         </a>
                     </div>
                 </div>
                 <div class="row list hide">
-                    <div style="height:auto">
-                    </div>
                     <div class="col-xs-24 col-md-12">
-                        <a class="btn btn-danger" onclick="if(confirm('Изтриване на @c.Name')){deleteCompamy(@c.CompanyId, this)}" href="javascript:void(0)">
+                        <a @(c.hasReceipt ? "disabled" : "") class="btn btn-danger" onclick="if(confirm('Изтриване на @c.Name')){deleteCompamy(@c.CompanyId, this)}" href="javascript:void(0)">
                             <span class="glyphicon glyphicon-trash">
                             </span>
                         </a>
@@ -52,17 +51,15 @@
                             <span class="glyphicon glyphicon-edit">
                             </span>Редакция
                         </a>
-                        <a style="float:right" class="btn btn-warning" onclick="alert('Не е готово')" href="javascript:void(0)">
+                        <a style="float:right" class="btn btn-warning" href="/receipt/?companyId=@c.CompanyId">
                             <span class="glyphicon glyphicon-barcode">
                             </span>Добави
                         </a>
                     </div>
                 </div>
-
             </div>
         </div>
     </div>
 }
-
 
 

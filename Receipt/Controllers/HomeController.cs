@@ -57,7 +57,6 @@ namespace Receipt.Controllers
             switch (result)
             {
                 case SignInStatus.Success:
-                    ViewBag.loginError = true;
                     var user = UserManager.FindByEmail(model.Email);
                     var t = await UserManager.AddClaimAsync(user.Id, new Claim("FullName", user.FirstName + " " + user.LastName));
                     return RedirectToLocal(returnUrl);
@@ -67,8 +66,8 @@ namespace Receipt.Controllers
                     return RedirectToAction("SendCode", new { ReturnUrl = returnUrl, RememberMe = model.RememberMe });
                 case SignInStatus.Failure:
                 default:
-                    ModelState.AddModelError("", "Invalid login attempt.");
-                    
+                    ModelState.AddModelError("", "Невалиден email или парола.");
+                    ViewBag.loginError = true;
                     return View("Index", model);
             }
 

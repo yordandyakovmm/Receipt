@@ -22,7 +22,7 @@ namespace Receipt.Controllers
 
         public ActionResult Index()
         {
-            List<WorkList> list = dc.WorkList.ToList();
+            List<WorkList> list = dc.WorkLists.ToList();
             return View(list);
         }
 
@@ -42,13 +42,13 @@ namespace Receipt.Controllers
         {
             if (id.HasValue && id != 0)
             {
-                var list = dc.WorkList.Where(w => w.WorkListId == id).SingleOrDefault();
+                var list = dc.WorkLists.Where(w => w.WorkListId == id).SingleOrDefault();
                 list.Name = name;
                 dc.SaveChanges();
             }
             else
             {
-                dc.WorkList.Where(l => l.IsActive).ToList().ForEach(l =>
+                dc.WorkLists.Where(l => l.IsActive).ToList().ForEach(l =>
                 {
                     l.IsActive = false;
                 });
@@ -61,7 +61,7 @@ namespace Receipt.Controllers
                     Date = DateTime.Now,
                     User = _user
                 };
-                dc.WorkList.Add(wl);
+                dc.WorkLists.Add(wl);
                 dc.SaveChanges();
             }
             return true;
@@ -71,11 +71,11 @@ namespace Receipt.Controllers
         public bool SetActive(int id)
         {
 
-            dc.WorkList.Where(l => l.IsActive).ToList().ForEach(l =>
+            dc.WorkLists.Where(l => l.IsActive).ToList().ForEach(l =>
             {
                 l.IsActive = false;
             });
-            dc.WorkList.Where(l => l.WorkListId == id).SingleOrDefault().IsActive = true;
+            dc.WorkLists.Where(l => l.WorkListId == id).SingleOrDefault().IsActive = true;
             dc.SaveChanges();
 
             return true;
@@ -88,7 +88,7 @@ namespace Receipt.Controllers
         [HttpGet]
         public ActionResult Details(int id)
         {
-            var wl = dc.WorkList.Where(w => w.WorkListId == id).SingleOrDefault();
+            var wl = dc.WorkLists.Where(w => w.WorkListId == id).SingleOrDefault();
             var model = new WorkListViewModel
             {
                 id = wl.WorkListId,
@@ -100,6 +100,7 @@ namespace Receipt.Controllers
                 {
                     CompanyId = receipt.Company.CompanyId,
                     ReceiptId = receipt.ReceiptId,
+                    BugNumber = receipt.UniqueNumber,
                     Articles = receipt.Articles.Select(a => new ArticleViewModel
                     {
                         ArticleName = a.Name,
@@ -114,7 +115,8 @@ namespace Receipt.Controllers
                         Description = receipt.Company.Description
                     },
                     Operator = receipt.OperatorS,
-                    Date = receipt.Date
+                    Date = receipt.Date,
+                    DateF = receipt.Date.ToString("dd-MM-yyyy hh:mm:ss")
                 }).ToList()
             };
 
@@ -128,7 +130,7 @@ namespace Receipt.Controllers
             var rec = dc.Receipts.Where(w => w.ReceiptId == id).SingleOrDefault();
             rec.Articles.ToList().ForEach(a =>
             {
-                dc.Article.Remove(a);
+                dc.Articles.Remove(a);
             });
             var workListId = rec.WorkList.WorkListId;
             rec.WorkList.Receipts.Remove(rec);
@@ -143,17 +145,45 @@ namespace Receipt.Controllers
         [HttpGet]
         public ActionResult generatePdf(int id)
         {
-            var wl = dc.WorkList.Where(w => w.WorkListId == id).SingleOrDefault();
+            var wl = dc.WorkLists.Where(w => w.WorkListId == id).SingleOrDefault();
+            Random ran = new Random();
+            wl.Receipts.ToList().ForEach(res => {
+                var oldR = dc.Receipts.Where(tr => tr.Company.CompanyId == res.Company.CompanyId && tr.Date < res.Date).ToList();
+                var newR = dc.Receipts.Where(tr => tr.Company.CompanyId == res.Company.CompanyId && tr.Date > res.Date).ToList();
+
+                if (oldR.Count() == 0 && newR.Count == 0)
+                {
+                    res.OrderNumner = ran.Next(5600, 8900);
+                    dc.SaveChanges();
+                }
+                else if (oldR.Count() > 0 && newR.Count == 0)
+                {
+                    res.OrderNumner = oldR.Max(rr => rr.OrderNumner) + ran.Next(12, 23);
+                    dc.SaveChanges();
+                }
+                else if (oldR.Count() == 0 && newR.Count > 0)
+                {
+                    res.OrderNumner = newR.Min(rr => rr.OrderNumner) - ran.Next(12, 23);
+                    dc.SaveChanges();
+                }
+                else if (oldR.Count() > 0 && newR.Count > 0)
+                {
+                    res.OrderNumner = ran.Next(oldR.Max(rr => rr.OrderNumner), newR.Min(rr => rr.OrderNumner));
+                    dc.SaveChanges();
+                }
+            });
+
             var model = new WorkListViewModel
             {
                 id = wl.WorkListId,
-                name = wl.Name,
+                name = wl.Name.Replace(" ",""),
                 user = wl.User,
                 dateCreated = wl.Date,
                 isActive = wl.IsActive,
                 receipts = wl.Receipts.Select(receipt => new ReceiptViewModel
                 {
                     CompanyId = receipt.Company.CompanyId,
+                    BugNumber = receipt.UniqueNumber,
                     ReceiptId = receipt.ReceiptId,
                     Articles = receipt.Articles.Select(a => new ArticleViewModel
                     {
@@ -169,7 +199,9 @@ namespace Receipt.Controllers
                         Description = receipt.Company.Description
                     },
                     Operator = receipt.OperatorS,
-                    Date = receipt.Date
+                    Date = receipt.Date,
+                    Number = receipt.OrderNumner.ToString("0000000"),
+                    DateF = receipt.Date.ToString("dd-MM-yyyy hh:mm:ss")
                 }).ToList()
             };
 

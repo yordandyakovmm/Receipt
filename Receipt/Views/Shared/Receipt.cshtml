@@ -1,26 +1,133 @@
-﻿@model Receipt.Models.ReceiptViewModel
+﻿@using System
+@model Receipt.Models.ReceiptViewModel
 
-@if (Model.Company != null)
+
+
+@if (Model.ReceiptId != 0)
 {
-<div  padding:0; margin:0; width: 20em">
-    <div style="text-align: center">Папур груп ООД</div>
-    <div style="text-align: center">ЕИК: 563456456</div>
-    <div style="text-align: center">гр. Горна Оряховица</div>
-    <div style="text-align: center">ул. Бузлоджа #2 ET.3</div>
-    <div style="width:100%">
-        <div style="width:15%; text-align:left; display: inline-block;">
-            01
-        </div>
-        <div style="width:70%; text-align:center; display: inline-block;">
-            ОПЕРАТОР
-        </div>
-        <div style="width:15%; display: inline-block;">
-
+    <div class="dotet">
+        <div class="rfont main">
+            <div style="text-align: center; font-size:3mm">@Model.Company.Name</div>
+            <div style="text-align: center">@(Model.Company.City+", "+Model.Company.Address)</div>
+            <div style="text-align: center">ЕИК: @Model.Company.Eik</div>
+            <div style="text-align: center; font-size:3mm">@Model.Company.Name</div>
+            <div style="text-align: center">@(Model.Company.City + ", " + Model.Company.Address)</div>
+            <div style="text-align: center">@("ЗДДС: N:BG"+ @Model.Company.Eik)</div>
+            <div style="min-height:2mm">&nbsp;</div>
+            <div class="aParent">
+                <div style="width:20%; text-align:left; display: inline-block;" class="allCaps">
+                    @Model.Operator.Split(new[] { " " }, StringSplitOptions.None)[0]
+                </div>
+                <div style="width:60%; text-align:left; display: inline-block;" class="allCaps">
+                    @Model.Operator.Split(new[] { " " }, StringSplitOptions.None)[1]
+                </div>
+                <div style="width:20%; text-align:right; display: inline-block;">
+                    @Model.Operator.Split(new[] { " " }, StringSplitOptions.None)[2]
+                </div>
+            </div>
+            <div style="min-height:2mm">&nbsp;</div>
+            @foreach (var c in Model.Articles)
+            {
+                <div class="aParent allCaps">
+                    <div style="width:80%; text-align:left; display: inline-block;">
+                        @c.ArticleName
+                    </div>
+                    <div style="width:20%; text-align:right; display: inline-block;">
+                        @c.Price.ToString("0.00")
+                    </div>
+                </div>
+            }
+            <div style="text-align: center">---------------------------------------------------------</div>
+            <div class="aParent allCaps tbold">
+                <div style="width:40%; text-align:left; display: inline-block;">
+                    ОБЩО
+                </div>
+                <div style="width:60%; text-align:right; display: inline-block;">
+                    @Model.Articles.Sum(a => a.Price).ToString("0.00")
+                </div>
+            </div>
+            <div class="aParent allCaps">
+                <div style="width:80%; text-align:left; display: inline-block;">
+                    В БРОЙ
+                </div>
+                <div style="width:20%; text-align:right; display: inline-block;">
+                    @Model.Articles.Sum(a => a.Price).ToString("0.00")
+                </div>
+            </div>
+            <div style="text-align: center">Б Л А Г О Д А Р И М &nbsp;&nbsp; В И !</div>
+            <div style="text-align: center">@Model.Articles.Count() @(Model.Articles.Count() == 1 ? "АРТИКУЛ" : "АРТИКУЛА")</div>
+            <div class="aParent allCaps">
+                <div style="width:20%; text-align:left; display: inline-block;">
+                    0000000
+                </div>
+                <div style="width:80%; text-align:right; display: inline-block;">
+                    @Model.DateF
+                </div>
+            </div>
+            <div class="aParent allCaps">
+                <div style="width:18%; text-align:center; display: inline-block;">
+                    <img class="img" src="~/Content/img/bg.png">
+                </div>
+                <div class="tbold" style="width:82%; text-align:left; display: inline-block;">
+                    ФИСКАЛЕН БОН
+                </div>
+               
+            </div>
+            <div class="aParent allCaps">
+                <div style="width:50%; text-align:left; display: inline-block;">
+                    @Model.Company.LeftNumber
+                </div>
+                <div style="width:50%; text-align:right; display: inline-block;">
+                    @Model.Company.RigthNumber
+                </div>
+            </div>
+            <div class="clearFix smalFont">@Model.BugNumber</div>
         </div>
     </div>
-</div>
 }
 else
 {
-    <label class="glyphicon-ban-circle" />
+    <span>режим преглед е наличен след запис</span>
 }
+
+<style type="text/css">
+    .rfont {
+        font-size: 3mm !important;
+        line-height: normal;
+    }
+    .smalFont {
+        font-size:2.5mm;
+    }
+    .main {
+        width: 57mm !important;
+        padding: 0;
+        margin: 0;
+        margin-left: 3mm;
+        margin-right: 4mm;
+        margin-top: 8mm;
+        margin-bottom: 8mm;
+    }
+    .dotet {
+        padding: 0;
+        margin: 0;
+        border-style: dashed;
+        border-width: 1px;
+    }
+    .allCaps {
+        text-transform: uppercase;
+    }
+    .aParent div {
+        float: left;
+        clear: none;
+    }
+    .tbold {
+        font-weight: bolder;
+        font-size: 4mm;
+    }
+    .clearFix {
+        clear:both;
+    }
+    .img {
+        height: 4mm;
+    }
+</style>

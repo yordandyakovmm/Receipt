@@ -63,7 +63,7 @@
                                 <label class="control-label"> Дата </label>
                                 <div>
                                     <div class='input-group date' id='datetimepicker1'>
-                                        <input type='text' id="iDate" class="form-control" value="@(Model.Date != null ? Model.Date.ToString() : string.Empty)" />
+                                        <input type='text' id="iDate" class="form-control" value="@(Model.Date != null ? Model.Date.Value.ToString("dd.MM.yyyy hh:mm") : "")" />
                                         <span class="input-group-addon">
                                             <span class="glyphicon glyphicon-calendar"></span>
                                         </span>
@@ -86,8 +86,9 @@
                                             <span class="caret"></span>
                                         </button>
                                         <ul class="dropdown-menu option" role="menu">
-                                            <li id="op1"><a href="javascript:void(0)">01 Оператор</a></li>
-                                            <li id="op2"><a href="javascript:void(0)">02 Оператор</a></li>
+                                            <li id="op1"><a href="javascript:void(0)">00001 ЮЛИЯ #01</a></li>
+                                            <li id="op2"><a href="javascript:void(0)">00002 СИЛВИЯ #02</a></li>
+                                            <li id="op2"><a href="javascript:void(0)">00003 МИМИ #03</a></li>
                                         </ul>
                                     </div>
                                 </div>
@@ -107,6 +108,8 @@
                                         <ul class="dropdown-menu option" id="uArticle" role="menu">
                                             <li id="ar1"><a href="javascript:void(0)">Услуги</a></li>
                                             <li id="ar2"><a href="javascript:void(0)">Стоки</a></li>
+                                            <li id="ar1"><a href="javascript:void(0)">Материали</a></li>
+                                            <li id="ar2"><a href="javascript:void(0)">Други</a></li>
                                         </ul>
                                     </div>
                                 </div>
@@ -174,8 +177,8 @@
                 <div class="panel-heading" style="text-align: center">Преглед</div>
                 <div class="panel-body" style="min-height: 450px;">
                     <div style="position: absolute; top: 50%; left: 50%; transform: scale(2, 2); transform: translate(-50%, -50%);">
-                        <div style="transform: scale(1.5, 1.5);">
-                             @Html.Partial("Receipt", model: Model)
+                        <div style="transform: scale(1, 1);">
+                            @Html.Partial("Receipt", model: Model)
                         </div>
                     </div>
                 </div>
@@ -253,7 +256,7 @@
         }
         var receiptId = $('#receiptId').val();
         var companyId = $('[idd="sCompany"]').attr('id');
-        var date = $('#iDate').val();
+        var date = $('#datetimepicker1').data("DateTimePicker").date().toISOString();
         var operator = $('[idd="sOperator"]').text();
         var rows = $('#tArticle tr');
 

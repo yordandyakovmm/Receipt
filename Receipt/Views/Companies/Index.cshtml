@@ -33,7 +33,7 @@
                             @c.Name
                         </h4>
                         <p class="group inner list-group-item-text">
-                            @c.Address
+                            @c.City @c.Address
                         </p>
                         <p class="group inner list-group-item-text list hide">
                             @c.Description
@@ -119,7 +119,50 @@
         }
     }
 
+    function validateForm()
+    {
+        var result = true;
+        $('.form-group').removeClass('has-error');
+
+        var name = $('#Name');
+        if (name.val() == '') {
+            name.closest('.form-group').addClass('has-error');
+            result = false;
+        }
+
+        var city = $('#City');
+        if (city.val()== '') {
+            city.closest('.form-group').addClass('has-error');
+            result = false;
+        }
+        debugger;
+        var address = $('#Address');
+        var aText = address.text() || address.val();
+        if (aText.length < 4)
+        {
+            address.closest('.form-group').addClass('has-error');
+            result = false;
+        }
+        var eik = $('#Eik');
+        var num = parseInt(eik.val()) || 0;
+        if (num == 0) {
+            eik.closest('.form-group').addClass('has-error');
+            result = false;
+        }
+        else if (num >= 1000000000 || num < 100000000)
+        {
+            eik.closest('.form-group').addClass('has-error');
+            result = false;
+        }
+
+        return result;
+    }
+
     function submitSave(obj) {
+        if (!validateForm())
+        {
+            return;
+        }
         var $form = $('form[action^="/Companies/Edit"]');
         $.post($form.attr("action"), $form.serialize(), function (data) {
             $("#products").html(data);
