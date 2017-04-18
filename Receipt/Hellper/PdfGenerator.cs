@@ -40,13 +40,16 @@ namespace Receipt.Hellper
         }
 
 
-        public static byte[] GeneratePdf(object model)
+        public static byte[] GeneratePdf(object model, string path)
         {
             HtmlToPdfConverter converter = new HtmlToPdfConverter();
             converter.Margins = new PageMargins() { Bottom = 5, Top = 5, Left = 5, Right = 5 };
+            converter.PdfToolPath = path;
             var html = GenerateHtml(model);
             return converter.GeneratePdf(html);
         }
+
+      
 
     }
 }
