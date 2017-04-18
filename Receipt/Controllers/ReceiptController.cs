@@ -32,7 +32,7 @@ namespace Receipt.Controllers
                 {
                     CompanyId = receipt.Company.CompanyId,
                     ReceiptId = receipt.ReceiptId,
-                    BugNumber = Hellper.Hellper.GenerateBigNumber(),
+                    BugNumber =receipt.UniqueNumber,
                     Number = "0000000",
                     Articles = receipt.Articles.Select(a => new ArticleViewModel
                     {
@@ -69,7 +69,7 @@ namespace Receipt.Controllers
             model = new ReceiptViewModel
             {
                 CompanyId = companyId.HasValue ? companyId.Value : 0,
-                BugNumber = Hellper.Hellper.GenerateBigNumber(),
+                BugNumber = "",
                 Company = companyId.HasValue ? new CompanyViewModel {
                     CompanyId = company.CompanyId,
                     Name = company.Name,
@@ -114,7 +114,8 @@ namespace Receipt.Controllers
                     Date = (DateTime)model.Date,
                     Company = company,
                     OperatorS = model.Operator,
-                    Operator = _user
+                    Operator = _user,
+                    UniqueNumber = Hellper.Hellper.GenerateBigNumber()
                 };
 
                 dc.Receipts.Add(receipt);

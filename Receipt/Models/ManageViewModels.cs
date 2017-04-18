@@ -178,6 +178,8 @@ namespace Receipt.Models
 
         public ApplicationUser user { get; set; }
 
+        public string link { get; set; }
+
     }
 
     public class UserViewModel

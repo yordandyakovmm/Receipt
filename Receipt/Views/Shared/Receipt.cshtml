@@ -58,7 +58,7 @@
             <div style="text-align: center">@Model.Articles.Count() @(Model.Articles.Count() == 1 ? "АРТИКУЛ" : "АРТИКУЛА")</div>
             <div class="aParent allCaps">
                 <div style="width:20%; text-align:left; display: inline-block;">
-                    0000000
+                    @Model.Number
                 </div>
                 <div style="width:80%; text-align:right; display: inline-block;">
                     @Model.DateF
@@ -106,8 +106,10 @@ else
         margin-right: 4mm;
         margin-top: 8mm;
         margin-bottom: 8mm;
+        font-family: Arial, Helvetica;
     }
     .dotet {
+        display: inline-block;
         padding: 0;
         margin: 0;
         border-style: dashed;

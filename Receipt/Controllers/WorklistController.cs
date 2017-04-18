@@ -112,7 +112,9 @@ namespace Receipt.Controllers
                         Name = receipt.Company.Name,
                         Address = receipt.Company.Address,
                         Eik = receipt.Company.Bulstat,
-                        Description = receipt.Company.Description
+                        Description = receipt.Company.Description,
+                        LeftNumber = receipt.Company.LeftNumber,
+                        RigthNumber = receipt.Company.RigthNumber
                     },
                     Operator = receipt.OperatorS,
                     Date = receipt.Date,
@@ -180,9 +182,11 @@ namespace Receipt.Controllers
                 user = wl.User,
                 dateCreated = wl.Date,
                 isActive = wl.IsActive,
+                link = GetBaseUrl() + "/Content/img/bg.png",
                 receipts = wl.Receipts.Select(receipt => new ReceiptViewModel
                 {
                     CompanyId = receipt.Company.CompanyId,
+                    Number = receipt.OrderNumner.ToString("0000000"),
                     BugNumber = receipt.UniqueNumber,
                     ReceiptId = receipt.ReceiptId,
                     Articles = receipt.Articles.Select(a => new ArticleViewModel
@@ -196,11 +200,12 @@ namespace Receipt.Controllers
                         Name = receipt.Company.Name,
                         Address = receipt.Company.Address,
                         Eik = receipt.Company.Bulstat,
-                        Description = receipt.Company.Description
+                        Description = receipt.Company.Description,
+                        LeftNumber = receipt.Company.LeftNumber,
+                        RigthNumber = receipt.Company.RigthNumber
                     },
                     Operator = receipt.OperatorS,
                     Date = receipt.Date,
-                    Number = receipt.OrderNumner.ToString("0000000"),
                     DateF = receipt.Date.ToString("dd-MM-yyyy hh:mm:ss")
                 }).ToList()
             };

@@ -8,7 +8,7 @@
 
     <div style="text-align:center">
         <h4>
-            Образец за сканиране на белажките за отчета
+            Образец за сканиране на белажките
         </h4>
     </div>
     <div>
@@ -46,7 +46,7 @@
                             </div>
                         </div>
                     }
-                    <div style="text-align: center">---------------------------------------------------------</div>
+                    <div style="text-align: center">----------------------------------------------------</div>
                     <div class="aParent allCaps tbold">
                         <div style="width:40%; text-align:left; display: inline-block;">
                             ОБЩО
@@ -67,7 +67,7 @@
                     <div style="text-align: center">@c.Articles.Count() @(c.Articles.Count() == 1 ? "АРТИКУЛ" : "АРТИКУЛА")</div>
                     <div class="aParent allCaps">
                         <div style="width:20%; text-align:left; display: inline-block;">
-                            0000000
+                            @c.Number
                         </div>
                         <div style="width:80%; text-align:right; display: inline-block;">
                             @c.DateF
@@ -75,7 +75,7 @@
                     </div>
                     <div class="aParent allCaps">
                         <div style="width:18%; text-align:center; display: inline-block;">
-                            <img class="img" src="~/Content/img/bg.png">
+                            <img class="img" src="@Model.link">
                         </div>
                         <div class="tbold" style="width:82%; text-align:left; display: inline-block;">
                             ФИСКАЛЕН БОН
@@ -117,13 +117,15 @@
             margin-right: 4mm;
             margin-top: 8mm;
             margin-bottom: 8mm;
+            font-family: Arial, Helvetica;
         }
 
         .dotet {
             padding: 0;
-            margin: 0;
-            border-style: dashed;
+            margin: 5mm;
+            border-style: dotted;
             border-width: 1px;
+            display: inline-block;
         }
 
         .allCaps {
@@ -148,9 +150,5 @@
             height: 4mm;
         }
     </style>
-
-
-
-
 </body>
 </html>
