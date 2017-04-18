@@ -33,6 +33,7 @@ namespace Receipt.Controllers
             return View(model);
         }
 
+        [AllowAnonymous]
         public ActionResult Download(string file)
         {
             file += ".pdf";

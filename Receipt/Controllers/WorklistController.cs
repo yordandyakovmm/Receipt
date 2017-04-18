@@ -101,6 +101,7 @@ namespace Receipt.Controllers
                     CompanyId = receipt.Company.CompanyId,
                     ReceiptId = receipt.ReceiptId,
                     BugNumber = receipt.UniqueNumber,
+                    ArticleRow = receipt.Articles.Count().ToString() + " " + (receipt.Articles.Count() == 1 ? "артикул" : "артикула"),
                     Articles = receipt.Articles.Select(a => new ArticleViewModel
                     {
                         ArticleName = a.Name,
@@ -150,8 +151,18 @@ namespace Receipt.Controllers
             var wl = dc.WorkLists.Where(w => w.WorkListId == id).SingleOrDefault();
             Random ran = new Random();
             wl.Receipts.ToList().ForEach(res => {
-                var oldR = dc.Receipts.Where(tr => tr.Company.CompanyId == res.Company.CompanyId && tr.Date < res.Date).ToList();
-                var newR = dc.Receipts.Where(tr => tr.Company.CompanyId == res.Company.CompanyId && tr.Date > res.Date).ToList();
+                var oldR = dc.Receipts.Where(tr => tr.Company.CompanyId == res.Company.CompanyId 
+                && tr.Date.Year < res.Date.Year
+                && tr.Date.Month < res.Date.Month
+                && tr.Date.Day < res.Date.Day
+                && tr.Date.Hour < res.Date.Hour
+                && tr.Date.Minute < res.Date.Minute).ToList();
+                var newR = dc.Receipts.Where(tr => tr.Company.CompanyId == res.Company.CompanyId 
+                && tr.Date.Year > res.Date.Year
+                && tr.Date.Month > res.Date.Month
+                && tr.Date.Day > res.Date.Day
+                && tr.Date.Hour > res.Date.Hour
+                && tr.Date.Minute > res.Date.Minute).ToList();
 
                 if (oldR.Count() == 0 && newR.Count == 0)
                 {
@@ -189,6 +200,7 @@ namespace Receipt.Controllers
                     Number = receipt.OrderNumner.ToString("0000000"),
                     BugNumber = receipt.UniqueNumber,
                     ReceiptId = receipt.ReceiptId,
+                    ArticleRow = receipt.Articles.Count().ToString() + " " + (receipt.Articles.Count() == 1 ? "артикул" : "артикула"),
                     Articles = receipt.Articles.Select(a => new ArticleViewModel
                     {
                         ArticleName = a.Name,
@@ -198,6 +210,7 @@ namespace Receipt.Controllers
                     {
                         CompanyId = receipt.Company.CompanyId,
                         Name = receipt.Company.Name,
+                        City = receipt.Company.City,
                         Address = receipt.Company.Address,
                         Eik = receipt.Company.Bulstat,
                         Description = receipt.Company.Description,
@@ -217,7 +230,10 @@ namespace Receipt.Controllers
             var _user = dc.Users.Where(u => u.Id == userID).SingleOrDefault();
             var name = string.Format("{0}-{1}-{2}", wl.Name.Replace(" ", "") != "" ? wl.Name : "XXXXXX", DateTime.Now.ToString("dd.MM.yyyy"), securityCode);
             var url = string.Format("{0}/Content/pdf/{1}.pdf", GetBaseUrl(), name);
-            byte[] data = Hellper.PdfGenerator.GeneratePdf(model, Server.MapPath("~/Content/pdf/"));
+
+            //return PartialView("/views/pdf/template.cshtml", model);
+            var path = Path.Combine(Server.MapPath("~/Content/pdf/"), name + ".pdf");
+            Hellper.ReceiptPdfGenerator.GeneratePdf(model, path);
             var pdf = new Pdf
             {
                 Date = DateTime.Now,
@@ -228,8 +244,8 @@ namespace Receipt.Controllers
             };
             dc.Pdfs.Add(pdf);
             dc.SaveChanges();
-            var path = Path.Combine(Server.MapPath("~/Content/pdf/"), name + ".pdf");
-            System.IO.File.WriteAllBytes(path, data);
+            
+            //System.IO.File.WriteAllBytes(path, data);
 
             return RedirectToAction("Details", "pdf", new { id = pdf.PdfId});
 

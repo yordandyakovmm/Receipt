@@ -19,7 +19,7 @@
                     <div style="text-align: center; font-size:3mm">@c.Company.Name</div>
                     <div style="text-align: center">@(c.Company.City + ", " + c.Company.Address)</div>
                     <div style="text-align: center">ЕИК: @c.Company.Eik</div>
-                    <div style="text-align: center; font-size:3mm">c.Company.Name</div>
+                    <div style="text-align: center; font-size:3mm">@c.Company.Name</div>
                     <div style="text-align: center">@(c.Company.City + ", " + c.Company.Address)</div>
                     <div style="text-align: center">@("ЗДДС: N:BG" + c.Company.Eik)</div>
                     <div style="min-height:2mm">&nbsp;</div>
@@ -47,24 +47,24 @@
                         </div>
                     }
                     <div style="text-align: center">----------------------------------------------------</div>
-                    <div class="aParent allCaps tbold">
+                    <div class="aparent allcaps tbold">
                         <div style="width:40%; text-align:left; display: inline-block;">
-                            ОБЩО
+                            общо
                         </div>
                         <div style="width:60%; text-align:right; display: inline-block;">
-                            @c.Articles.Sum(a => a.Price).ToString("0.00")
+                            @c.TotalPrice.ToString("0.00")
                         </div>
                     </div>
-                    <div class="aParent allCaps">
+                    <div class="aparent allcaps">
                         <div style="width:80%; text-align:left; display: inline-block;">
-                            В БРОЙ
+                            в брой
                         </div>
                         <div style="width:20%; text-align:right; display: inline-block;">
-                            @c.Articles.Sum(a => a.Price).ToString("0.00")
+                            @c.TotalPrice.ToString("0.00")
                         </div>
                     </div>
-                    <div style="text-align: center">Б Л А Г О Д А Р И М &nbsp;&nbsp; В И !</div>
-                    <div style="text-align: center">@c.Articles.Count() @(c.Articles.Count() == 1 ? "АРТИКУЛ" : "АРТИКУЛА")</div>
+                    <div style="text-align: center">б л а г о д а р и м &nbsp;&nbsp; в и !</div>
+                    <div style="text-align: center">@c.ArticleRow</div>
                     <div class="aParent allCaps">
                         <div style="width:20%; text-align:left; display: inline-block;">
                             @c.Number

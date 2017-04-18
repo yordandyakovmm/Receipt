@@ -32,8 +32,9 @@ namespace Receipt.Controllers
                 {
                     CompanyId = receipt.Company.CompanyId,
                     ReceiptId = receipt.ReceiptId,
-                    BugNumber =receipt.UniqueNumber,
+                    BugNumber = receipt.UniqueNumber,
                     Number = "0000000",
+                    ArticleRow = receipt.Articles.Count().ToString() + " " + (receipt.Articles.Count() == 1 ? "артикул" : "артикула"),
                     Articles = receipt.Articles.Select(a => new ArticleViewModel
                     {
                         ArticleName = a.Name,

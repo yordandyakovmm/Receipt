@@ -154,6 +154,8 @@ namespace Receipt.Models
 
         public string BugNumber { get; set; }
 
+        public string ArticleRow { get; set; }
+
     }
 
 
@@ -179,6 +181,8 @@ namespace Receipt.Models
         public ApplicationUser user { get; set; }
 
         public string link { get; set; }
+
+        
 
     }
 

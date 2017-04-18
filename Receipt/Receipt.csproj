@@ -45,12 +45,33 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="EO.Base, Version=17.1.14.0, Culture=neutral, PublicKeyToken=e92353a6bf73fffc, processorArchitecture=MSIL">
+      <HintPath>..\packages\EO.Pdf.17.1.14.0\lib\EO.Base.dll</HintPath>
+    </Reference>
+    <Reference Include="EO.Pdf, Version=17.1.14.0, Culture=neutral, PublicKeyToken=e92353a6bf73fffc, processorArchitecture=MSIL">
+      <HintPath>..\packages\EO.Pdf.17.1.14.0\lib\EO.Pdf.dll</HintPath>
+    </Reference>
+    <Reference Include="EO.Pdf.Mvc, Version=17.1.14.0, Culture=neutral, PublicKeyToken=e92353a6bf73fffc, processorArchitecture=MSIL">
+      <HintPath>..\packages\EO.Pdf.Mvc.17.1.14.0\lib\EO.Pdf.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="EO.WebBrowser, Version=17.1.14.0, Culture=neutral, PublicKeyToken=e92353a6bf73fffc, processorArchitecture=MSIL">
+      <HintPath>..\packages\EO.Pdf.17.1.14.0\lib\EO.WebBrowser.dll</HintPath>
+    </Reference>
+    <Reference Include="EO.WebEngine, Version=17.1.14.0, Culture=neutral, PublicKeyToken=e92353a6bf73fffc, processorArchitecture=MSIL">
+      <HintPath>..\packages\EO.Pdf.17.1.14.0\lib\EO.WebEngine.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform, Version=1.0.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.3\lib\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="NReco.PdfGenerator, Version=1.1.15.0, Culture=neutral, PublicKeyToken=231663d50a41b451, processorArchitecture=MSIL">
       <HintPath>..\packages\NReco.PdfGenerator.1.1.15\lib\net20\NReco.PdfGenerator.dll</HintPath>
+    </Reference>
+    <Reference Include="PdfSharp, Version=1.32.3057.0, Culture=neutral, PublicKeyToken=f94615aa0424f9eb, processorArchitecture=MSIL">
+      <HintPath>..\packages\PDFsharp.1.32.3057.0\lib\net20\PdfSharp.dll</HintPath>
+    </Reference>
+    <Reference Include="PdfSharp.Charting, Version=1.32.3057.0, Culture=neutral, PublicKeyToken=f94615aa0424f9eb, processorArchitecture=MSIL">
+      <HintPath>..\packages\PDFsharp.1.32.3057.0\lib\net20\PdfSharp.Charting.dll</HintPath>
     </Reference>
     <Reference Include="RazorEngine, Version=3.9.3.0, Culture=neutral, PublicKeyToken=9ee697374c7e744a, processorArchitecture=MSIL">
       <HintPath>..\packages\RazorEngine.3.9.3\lib\net45\RazorEngine.dll</HintPath>
@@ -251,10 +272,26 @@
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="App_Data\aspnet-Receipt-20170322064956.mdf" />
-    <Content Include="App_Data\aspnet-Receipt-20170322064956_log.ldf">
-      <DependentUpon>aspnet-Receipt-20170322064956.mdf</DependentUpon>
-    </Content>
+    <Content Include="App_Data\wkhtmltopdf\api-ms-win-crt-conio-l1-1-0.dll" />
+    <Content Include="App_Data\wkhtmltopdf\api-ms-win-crt-convert-l1-1-0.dll" />
+    <Content Include="App_Data\wkhtmltopdf\api-ms-win-crt-environment-l1-1-0.dll" />
+    <Content Include="App_Data\wkhtmltopdf\api-ms-win-crt-filesystem-l1-1-0.dll" />
+    <Content Include="App_Data\wkhtmltopdf\api-ms-win-crt-heap-l1-1-0.dll" />
+    <Content Include="App_Data\wkhtmltopdf\api-ms-win-crt-locale-l1-1-0.dll" />
+    <Content Include="App_Data\wkhtmltopdf\api-ms-win-crt-math-l1-1-0.dll" />
+    <Content Include="App_Data\wkhtmltopdf\api-ms-win-crt-multibyte-l1-1-0.dll" />
+    <Content Include="App_Data\wkhtmltopdf\api-ms-win-crt-private-l1-1-0.dll" />
+    <Content Include="App_Data\wkhtmltopdf\api-ms-win-crt-process-l1-1-0.dll" />
+    <Content Include="App_Data\wkhtmltopdf\api-ms-win-crt-runtime-l1-1-0.dll" />
+    <Content Include="App_Data\wkhtmltopdf\api-ms-win-crt-stdio-l1-1-0.dll" />
+    <Content Include="App_Data\wkhtmltopdf\api-ms-win-crt-string-l1-1-0.dll" />
+    <Content Include="App_Data\wkhtmltopdf\api-ms-win-crt-time-l1-1-0.dll" />
+    <Content Include="App_Data\wkhtmltopdf\api-ms-win-crt-utility-l1-1-0.dll" />
+    <Content Include="App_Data\wkhtmltopdf\concrt140.dll" />
+    <Content Include="App_Data\wkhtmltopdf\msvcp140.dll" />
+    <Content Include="App_Data\wkhtmltopdf\ucrtbase.dll" />
+    <Content Include="App_Data\wkhtmltopdf\vcruntime140.dll" />
+    <Content Include="App_Data\wkhtmltopdf\wkhtmltopdf.exe" />
     <Content Include="Content\bootstrap-datetimepicker.css" />
     <Content Include="Content\bootstrap-datetimepicker.min.css" />
     <Content Include="Content\bootstrap-theme.css" />
@@ -402,7 +439,9 @@
     <Content Include="Scripts\qrcode.min.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>

@@ -7,12 +7,16 @@ using System;
 using System.IO;
 using System.Web.Hosting;
 using System.Collections.Generic;
+using PdfSharp.Pdf;
+using EO.Pdf;
 
 namespace Receipt.Hellper
 {
-    public class PdfGenerator
+    public class ReceiptPdfGenerator
     {
-        private static string GenerateHtml(object model)
+        public static object TheArtOfDev { get; private set; }
+
+        private static string ReceiptGenerateHtml(object model)
         {
             var config = new TemplateServiceConfiguration
             {
@@ -30,6 +34,7 @@ namespace Receipt.Hellper
             config.Namespaces.Add("Receipt.Models");
             config.Namespaces.Add("System.Collections");
             config.Namespaces.Add("System.Collections.Generic");
+            config.Namespaces.Add("System.Runtime");
 
             Engine.Razor = RazorEngineService.Create(config);
 
@@ -40,13 +45,12 @@ namespace Receipt.Hellper
         }
 
 
-        public static byte[] GeneratePdf(object model, string path)
+        public static void GeneratePdf(object model , string path)
         {
-            HtmlToPdfConverter converter = new HtmlToPdfConverter();
-            converter.Margins = new PageMargins() { Bottom = 5, Top = 5, Left = 5, Right = 5 };
-            converter.PdfToolPath = path;
-            var html = GenerateHtml(model);
-            return converter.GeneratePdf(html);
+            var html = ReceiptGenerateHtml(model);
+            HtmlToPdf.ConvertHtml(html, path);
+            return;
+            
         }
 
       
