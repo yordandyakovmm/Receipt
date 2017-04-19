@@ -292,6 +292,7 @@
     <Content Include="App_Data\wkhtmltopdf\ucrtbase.dll" />
     <Content Include="App_Data\wkhtmltopdf\vcruntime140.dll" />
     <Content Include="App_Data\wkhtmltopdf\wkhtmltopdf.exe" />
+    <Content Include="BS\Index.html" />
     <Content Include="Content\bootstrap-datetimepicker.css" />
     <Content Include="Content\bootstrap-datetimepicker.min.css" />
     <Content Include="Content\bootstrap-theme.css" />

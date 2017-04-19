@@ -1,0 +1,82 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Brout Force</title>
+    <script src="../Scripts/jquery-1.10.2.js"></script>
+    <script src="../Scripts/bootstrap.js"></script>
+    <link href="../Content/bootstrap.css" rel="stylesheet" />
+    <link href="../Content/bootstrap-theme.css" rel="stylesheet" />
+
+
+</head>
+<body>
+
+    <div class="container body-content" style="padding: 8px;">
+        <div class="row col-lg-12">
+            <div class="col-lg-6">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">Result</div>
+                    <div class="panel-body" style="min-height: 450px;">
+                        <textarea id="result" style="width:100%; height:400px; padding-top:10px;" class="col-lg-5">
+                       </textarea>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-6">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">Result</div>
+                    <div class="panel-body" style="min-height: 450px;">
+                        <input type="number" id="x" class="input-sm" />
+                        <button class="btn btn-default btn-sm" onclick="calc()">clac</button>
+                        <div>
+                            <textarea id="source" style="width:100%; height:400px; padding-top:10px;" class="col-lg-5">
+                                function f(x)
+                                {
+                                    return (x * x - 3 * x + 5) * Math.sin(x);
+                                }
+                            </textarea>
+                        </div>
+                        <button class="btn btn-default btn-sm" onclick="eval(('#source').val())">update</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <script id="mScript" type="text/javascript">
+        function calc()
+        {
+            $('#result').val('');
+            var x = $('#x').val();
+            x = parseFloat(x);
+            X = f(x);
+            $('#result').val(x.toFixed() + '\n' + X.toFixed(5));
+            x = X;
+            var i = 0;
+            while (Math.abs(X - x) > 0.0001 || i < 20)    
+            {
+                X = f(x);
+                var oldValue = $('#result').val();
+                $('#result').val(oldValue + '\n' + X.toFixed(5));
+                x = X;
+                i++;
+            };
+        }
+
+        function f(x)
+        {
+            return (x * x - 3 * x + 5) * Math.sin(x);
+        }
+
+    </script>
+
+    <script id="function" type="text/javascript">
+
+    </script>
+
+</body>
+</html>
+
