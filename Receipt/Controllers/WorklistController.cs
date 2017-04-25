@@ -13,16 +13,19 @@ namespace Receipt.Controllers
     [Authorize]
     public class WorklistController : Controller
     {
+        private ReceiptDataContext dc = new ReceiptDataContext();
+
         public WorklistController()
         {
             ViewBag.location = "worklist";
         }
 
-        private ReceiptDataContext dc = new ReceiptDataContext();
-
         public ActionResult Index()
         {
-            List<WorkList> list = dc.WorkLists.ToList();
+            var userID = User.Identity.GetUserId();
+            var isAdmin = User.IsInRole("Admin");
+            var _user = dc.Users.Where(u => u.Id == userID).SingleOrDefault();
+            List<WorkList> list = dc.WorkLists.Where(wl => wl.User.Id == _user.Id || isAdmin).ToList();
             return View(list);
         }
 
@@ -36,6 +39,19 @@ namespace Receipt.Controllers
             return null;
         }
 
+        [HttpGet]
+        public ActionResult Delete(int id)
+        {
+            var receipts = dc.Receipts.Where(r => r.WorkList.WorkListId == id).ToList();
+            receipts.ForEach(r => {
+                r.Articles.ToList().ForEach(a => { dc.Articles.Remove(a); });
+                dc.Receipts.Remove(r);
+            });
+            var wl = dc.WorkLists.SingleOrDefault(w => w.WorkListId == id);
+            dc.WorkLists.Remove(wl);
+            dc.SaveChanges();
+            return RedirectToAction("Index");
+        }
 
         [HttpPost]
         public bool Edit(int? id, string name)
@@ -80,11 +96,7 @@ namespace Receipt.Controllers
 
             return true;
         }
-
-
-
-
-
+        
         [HttpGet]
         public ActionResult Details(int id)
         {
@@ -244,8 +256,7 @@ namespace Receipt.Controllers
             };
             dc.Pdfs.Add(pdf);
             dc.SaveChanges();
-            
-            //System.IO.File.WriteAllBytes(path, data);
+           
 
             return RedirectToAction("Details", "pdf", new { id = pdf.PdfId});
 
@@ -255,6 +266,8 @@ namespace Receipt.Controllers
         {
             return Request.Url.AbsoluteUri.Replace(Request.Url.PathAndQuery, "");
         }
+
+        
 
     }
 }

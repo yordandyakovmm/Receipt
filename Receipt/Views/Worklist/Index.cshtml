@@ -23,24 +23,29 @@
         <tbody>
             @foreach (var c in Model)
             {
+                var isMine = c.User.Id == User.Identity.GetUserId() || User.IsInRole("Admin");
 
-                <tr class='@(@c.IsActive ? "success" : "")'>
+                <tr class='@(c.IsActive && isMine ? "success" : "")  @(!isMine ? "danger" : "")'>
                     <td>
-                        @if (c.IsActive)
+                        @if (isMine)
                         {
                             <span class='glyphicon glyphicon-check'></span>
                         }
                     </td>
                     <td><span class="badge">@c.Receipts.Count()</span></td>
-                    <td>@(c.Name == "" ? "--" : c.Name)</td>
+                    <td>@(c.Name == "" ? "####" : c.Name)</td>
                     <td>@c.Date.ToString("dd.MM.yyyy")</td>
                     <td>@(c.User != null ? c.User.FirstName + " " + c.User.LastName : "")</td>
                     <td align="right">
-                        <a class="btn btn-default btn-sm" onclick="" href="/worklist/details/@c.WorkListId">
+                        <a class="btn btn-default btn-sm" @(!User.IsInRole("Admin") ? "disabled" : "") onclick="" href="/worklist/delete/@c.WorkListId">
+                            <span class="glyphicon glyphicon-remove">
+                            </span>
+                        </a>
+                        <a class="btn btn-default btn-sm"  @(!isMine ? "disabled" : "") onclick="" href="/worklist/details/@c.WorkListId">
                             <span class="glyphicon glyphicon-compressed">
                             </span>Детаили
                         </a>
-                        <a class="btn btn-default btn-sm" @(c.IsActive ? "disabled" : "") onclick="SetActive(@c.WorkListId)" href="javascript:void(0)">
+                        <a class="btn btn-default btn-sm" @(!isMine || c.IsActive ? "disabled" : "") onclick="SetActive(@c.WorkListId)" href="javascript:void(0)">
                             <span class="glyphicon glyphicon-adjust">
                             </span>Активирай
                         </a>
