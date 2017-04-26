@@ -25,7 +25,9 @@ namespace Receipt.Controllers
             var userID = User.Identity.GetUserId();
             var isAdmin = User.IsInRole("Admin");
             var _user = dc.Users.Where(u => u.Id == userID).SingleOrDefault();
-            List<WorkList> list = dc.WorkLists.Where(wl => wl.User.Id == _user.Id || isAdmin).ToList();
+            List<WorkList> list = dc.WorkLists
+                //.Where(wl => wl.User.Id == _user.Id || isAdmin)
+                .ToList();
             return View(list);
         }
 

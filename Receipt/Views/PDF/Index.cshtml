@@ -16,30 +16,34 @@
             <div class="item  col-xs-4 col-lg-4">
                 <div style="display:none" id="data">@c.Name|@c.Date</div>
                 <div class="thumbnail">
-                    <img class="group list-group-image" height="200" src="~/Content/img/pdf-flat.png" alt="" />
+                    <img class="group list-group-image" height="140" src="~/Content/img/pdf-flat.png" alt="" />
                     <div class="caption">
                         <h4 class="group inner list-group-item-heading">
-                            @c.User.FirstName
+                            @(c.User.FirstName + " " + c.User.LastName)
                         </h4>
-                        <p class="group inner list-group-item-text list hide">
-                            (@c.Name == "" ? "###" : @c.Name 
+                        <p class="group inner list-group-item-text list">
+                            @(c.Name == "" ? "###" : c.Name) 
                         </p>
                         <p class="lead list hide">
                             
                         </p>
                         <div class="row grid">
-                            <div class="col-xs-10 col-md-5">
-                                <a class="btn btn-danger btn-sm" onclick="" href="/pdf/download/?file=@c.Name">
+                            <div class="col-xs-8 col-md-3">
+                                <a class="btn btn-info btn-sm" onclick="" href="/pdf/download/?file=@c.Name">
                                     <span class="glyphicon glyphicon-download">
                                     </span>Свали
                                 </a>
                             </div>
-                            <div class="col-xs-14 col-md-7">
-                                 <a class="btn btn-warning btn-sm" onclick="" href="@c.url" target="_blank">
+                            <div class="col-xs-16 col-md-9">
+                                <a class="btn btn-danger btn-sm" @(!User.IsInRole("Admin") ? "disabled" : "") onclick="return confirm('Изтриване не @(c.Name == "" ? "###" : c.Name)')" href="/pdf/delete/@c.PdfId" >
+                                    <span class="glyphicon glyphicon-trash">
+                                    </span>
+                                </a>
+                                <a class="btn btn-warning btn-sm" onclick="" href="@c.url" target="_blank">
                                     <span class="glyphicon glyphicon-camera">
                                     </span>Преглед
                                 </a>
-                                <a style="float:right" class="btn btn-success btn-sm" href="/pdf/details/@c.PdfId">
+                                <a class="btn btn-success btn-sm" href="/pdf/details/@c.PdfId">
                                     <span class="glyphicon glyphicon-barcode">
                                     </span>Детайли
                                 </a>
@@ -104,13 +108,13 @@
         -webkit-border-radius: 0px;
         -moz-border-radius: 0px;
         border-radius: 0px;
-        background-color: #333;
+        background-color: #fff;
     }
 
     .item.list-group-item {
         float: none;
         width: 100%;
-        background-color: #777;
+        background-color: #fff;
         margin-bottom: 10px;
     }
 

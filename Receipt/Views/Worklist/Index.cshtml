@@ -23,7 +23,7 @@
         <tbody>
             @foreach (var c in Model)
             {
-                var isMine = c.User.Id == User.Identity.GetUserId() || User.IsInRole("Admin");
+                var isMine = c.User.Id == User.Identity.GetUserId();
 
                 <tr class='@(c.IsActive && isMine ? "success" : "")  @(!isMine ? "danger" : "")'>
                     <td>
@@ -37,8 +37,8 @@
                     <td>@c.Date.ToString("dd.MM.yyyy")</td>
                     <td>@(c.User != null ? c.User.FirstName + " " + c.User.LastName : "")</td>
                     <td align="right">
-                        <a class="btn btn-default btn-sm" @(!User.IsInRole("Admin") ? "disabled" : "") onclick="" href="/worklist/delete/@c.WorkListId">
-                            <span class="glyphicon glyphicon-remove">
+                        <a class="btn btn-default btn-sm" @(!User.IsInRole("Admin") ? "disabled" : "") onclick="return confirm('@(c.Name == "" ? "####" : c.Name)')" href="/worklist/delete/@c.WorkListId">
+                            <span class="glyphicon glyphicon-trash">
                             </span>
                         </a>
                         <a class="btn btn-default btn-sm"  @(!isMine ? "disabled" : "") onclick="" href="/worklist/details/@c.WorkListId">

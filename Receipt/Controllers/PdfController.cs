@@ -33,6 +33,14 @@ namespace Receipt.Controllers
             return View(model);
         }
 
+        public ActionResult Delete(int id)
+        {
+            var pdf = dc.Pdfs.Where(p => p.PdfId == id).SingleOrDefault();
+            dc.Pdfs.Remove(pdf);
+            dc.SaveChanges();
+            return RedirectToAction("Index");
+        }
+
         [AllowAnonymous]
         public ActionResult Download(string file)
         {

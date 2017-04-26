@@ -1,9 +1,8 @@
 ﻿@model Receipt.DataContext.Pdf
 
 <div class="container">
-
     <div class="row">
-        <div class="col-lg-12" style="min-height:300px;">
+        <div class="col-lg-12" style="min-height:400px;">
             <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);">
                 <div id="qr" />
             </div>
@@ -48,7 +47,7 @@
         maxVersion: 40,
 
         // error correction level: 'L', 'M', 'Q' or 'H'
-        ecLevel: 'Q',
+        ecLevel: 'L',
 
         // offset in pixel if drawn onto existing canvas
         left: 0,
@@ -58,7 +57,7 @@
         size: 500,
 
         // code color or image element
-        fill: '#567812',
+        fill: '#еее',
 
         // background color or image element, null for transparent background
         background: '#efefef',
