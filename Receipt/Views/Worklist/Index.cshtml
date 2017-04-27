@@ -41,7 +41,7 @@
                             <span class="glyphicon glyphicon-trash">
                             </span>
                         </a>
-                        <a class="btn btn-default btn-sm"  @(!isMine ? "disabled" : "") onclick="" href="/worklist/details/@c.WorkListId">
+                        <a class="btn btn-default btn-sm"  @(!isMine && !User.IsInRole("Admin") ? "disabled" : "") onclick="" href="/worklist/details/@c.WorkListId">
                             <span class="glyphicon glyphicon-compressed">
                             </span>Детаили
                         </a>

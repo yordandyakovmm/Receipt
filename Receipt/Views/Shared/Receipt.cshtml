@@ -58,9 +58,9 @@
             <div style="text-align: center">@Model.ArticleRow</div>
             <div class="aParent allCaps">
                 <div style="width:20%; text-align:left; display: inline-block;">
-                    @Model.Number
+                    @(!string.IsNullOrEmpty(Model.Number) ? Model.Number : "xxxxxx")
                 </div>
-                <div style="width:80%; text-align:right; display: inline-block;">
+                <div class="scaleH" style="width:80%; text-align:right; display: inline-block;">
                     @Model.DateF
                 </div>
             </div>
@@ -91,12 +91,15 @@ else
 }
 
 <style type="text/css">
+    .scaleH text {
+        transform: scaleY(1.2);
+    }
     .rfont {
         font-size: 3mm !important;
         line-height: normal;
     }
     .smalFont {
-        font-size:2.5mm;
+        font-size:2.4mm;
     }
     .main {
         width: 57mm !important;
