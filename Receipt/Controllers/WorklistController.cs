@@ -124,6 +124,7 @@ namespace Receipt.Controllers
                     Company = new CompanyViewModel
                     {
                         CompanyId = receipt.Company.CompanyId,
+                        City = receipt.Company.City,
                         Name = receipt.Company.Name,
                         Address = receipt.Company.Address,
                         Eik = receipt.Company.Bulstat,
