@@ -66,12 +66,12 @@ namespace Receipt.Controllers
             }
             else
             {
-                dc.WorkLists.Where(l => l.IsActive).ToList().ForEach(l =>
+                var userID = User.Identity.GetUserId();
+                var _user = dc.Users.Where(u => u.Id == userID).SingleOrDefault();
+                dc.WorkLists.Where(l => l.IsActive && l.User.Id == userID).ToList().ForEach(l =>
                 {
                     l.IsActive = false;
                 });
-                var userID = User.Identity.GetUserId();
-                var _user = dc.Users.Where(u => u.Id == userID).SingleOrDefault();
                 WorkList wl = new WorkList
                 {
                     IsActive = true,
@@ -88,8 +88,8 @@ namespace Receipt.Controllers
         [HttpPost]
         public bool SetActive(int id)
         {
-
-            dc.WorkLists.Where(l => l.IsActive).ToList().ForEach(l =>
+            var userID = User.Identity.GetUserId();
+            dc.WorkLists.Where(l => l.IsActive).Where(wl => wl.IsActive && wl.User.Id == userID).ToList().ForEach(l =>
             {
                 l.IsActive = false;
             });

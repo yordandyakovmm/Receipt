@@ -27,6 +27,7 @@
 
                 <tr class='@(c.IsActive && isMine ? "success" : "")  @(!isMine ? "danger" : "")'>
                     <td>
+                        <div style="display:none" id="data">@c.Name|@c.Date|@c.User.FirstName|@c.User.LastName</div>
                         @if (isMine)
                         {
                             <span class='glyphicon glyphicon-check'></span>
@@ -89,11 +90,11 @@
     function search(obj) {
         var text = $(obj).val().toLowerCase();
         if (text == '' || text.length < 3) {
-            $('.item').show();
+            $('tr').show();
         }
         else {
-            $('.item').hide();
-            $('.item').each(function (index) {
+            $('tr').hide();
+            $('tr').each(function (index) {
                 if ($(this).find('#data:contains("' + text + '")').length > 0) {
                     $(this).show();
                 }
